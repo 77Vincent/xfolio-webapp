@@ -1,19 +1,15 @@
 # Client Documentation
 
-## Run
+## Development 
 ```js
 npm i
 npm start
 ```
 
-## Build 
+## Production 
 ```js
 npm run build 
 ```
-
-## Code Convention
-* No semi-colon
-* Use async / await instead of Promise
 
 ## Structure
 * Entry file: ./app/index.js
