@@ -120,7 +120,7 @@ export default class extends React.Component {
             placeholder='老师当前所在地'
             onChange={this.onChangeSelect('city')}
           >
-            <Select.Option value=''>全国</Select.Option>
+            <Select.Option value=''>不限</Select.Option>
             {
               this.state.provinces.map((province, index) => {
                 return (
