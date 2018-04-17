@@ -104,13 +104,14 @@ class SignUp extends React.Component {
 
         <Form.Item>
           <Row gutter={12}>
-            <Col span={15}>
               {getFieldDecorator('captcha', {
-                rules: [{ required: true, message: '请填写您收到的验证码' }],
+                rules: [{ required: true, message: '请填写验证码' }],
               })(
-                <Input type='text' placeholder='验证码'/>
+                <Col span={15}>
+                  <Input type='text' placeholder='验证码'/>
+                </Col>
               )}
-            </Col>
+
             <Col span={9}>
               <Button>获取验证码</Button>
             </Col>
@@ -118,13 +119,6 @@ class SignUp extends React.Component {
         </Form.Item>
 
         <Form.Item >
-          {/* {getFieldDecorator('agreement', {
-            rules: [{ required: true, message: '请阅读服务协议' }],
-            valuePropName: 'checked',
-          })(
-            <Checkbox>我已经阅读<a onClick={this.setProvision(true)}>服务协议</a></Checkbox>
-          )} */}
-
           <Button style={{width: '100%'}} type='primary' htmlType='submit'>注册</Button>
           <Button style={{width: '100%'}} >
             <Link to='/sign-in'>已有账号，立即登录</Link>
