@@ -140,30 +140,22 @@ class Info extends React.Component {
                     this.field(user.bio)
                 }
               </section>
+
               <section>
                 <h4>专业</h4>
                 {
                   this.state.isEdit ? 
                     <Form.Item className='Info-Form'>
                       {getFieldDecorator('majors', {
-                        initialValue: user.majors.map(major => major.id)
+                        initialValue: user.majors.map(major => major)
                       })(
                         <Checkbox.Group options={majorsList} />
                       )}
                     </Form.Item> : 
-                    user.majors.map((major, index) => <Tag key={index}>{majorsList[major.id - 1].label}</Tag>)
+                    user.majors.map((major, index) => <Tag key={index}>{majorsList[major - 1].label}</Tag>)
                 }
               </section>
-              <section>
-                <h4>用户名</h4>
-                {
-                  this.state.isEdit ? 
-                    <Form.Item className='Info-Form'>
-                      {getFieldDecorator('username', { initialValue: user.username })( <Input type="text" />)}
-                    </Form.Item> :
-                    this.field(user.username)
-                }
-              </section>
+
               <section>
                 <h4>手机号</h4>
                 {
