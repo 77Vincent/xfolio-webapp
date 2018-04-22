@@ -1,8 +1,8 @@
 import React from 'react'
 import { Route, Link } from 'react-router-dom'
 import { Layout, Menu, Icon } from 'antd'
-import { Info, Schedule, Order, Account } from 'components'
-import { Request } from 'utils'
+import { Info, Schedule, Order, Account } from '../../components'
+import { Request } from '../../utils'
 import './index.less'
 
 export default class extends React.Component {

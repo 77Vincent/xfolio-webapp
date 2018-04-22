@@ -21,9 +21,6 @@ const webpackConfigBase = {
   resolve: {
     extensions: ['.js', '.json'],
     alias: {
-      components: resolve('./app/components'),
-      pages: resolve('./app/pages'),
-      utils: resolve('./app/utils'),
       images: resolve('./app/assets/images'),
       ducks: resolve('./app/ducks'),
       store: resolve('./app/store'),

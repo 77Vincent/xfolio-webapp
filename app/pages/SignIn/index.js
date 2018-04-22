@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, message, Form, Icon, Input, Checkbox } from 'antd'
 import { Link } from 'react-router-dom'
-import { Request } from 'utils'
+import { Request } from '../../utils'
 
 class SignIn extends React.Component {
   constructor(props) {

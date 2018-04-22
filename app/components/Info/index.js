@@ -1,6 +1,6 @@
 import React from 'react'
 import { Checkbox, Radio, Form, Input, Tag, Icon, Button } from 'antd'
-import { Request } from 'utils'
+import { Fn, Request } from '../../utils'
 import './index.less'
 
 class Info extends React.Component {
@@ -79,6 +79,21 @@ class Info extends React.Component {
                 }
                 <h3>{user.certified && '认证老师'}</h3>
               </hgroup>
+              <section>
+                <h4>头像</h4>
+                {
+                  this.state.isEdit ? 
+                    <Form.Item className='Info-Form'>
+                      {getFieldDecorator('avatar', {
+                        rules: [{ max: 20, message: '不能超过20个字符' }],
+                        initialValue: user.avatar
+                      })(
+                        <Input type='file' id='avatar' accept='.jpg, .jpeg, .png' />
+                      )}
+                    </Form.Item> :
+                    this.field(user.avatar)
+                }
+              </section>
               <section>
                 <h4>学校</h4>
                 {

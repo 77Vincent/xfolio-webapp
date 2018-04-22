@@ -2,7 +2,7 @@
 import React from 'react'
 import { Layout } from 'antd'
 import { Route } from 'react-router-dom'
-import { Request } from 'utils'
+import { Request } from '../utils'
 
 // Custom styles, components and functions
 import './App.less'
@@ -10,7 +10,7 @@ import {
   Header, 
   Footer, 
   Loading, 
-} from 'components';
+} from '../components';
 import {
   About, 
   Dashboard,
@@ -20,7 +20,7 @@ import {
   SignUp, 
   Teachers,
   Welcome, 
-} from 'pages';
+} from '../pages';
 
 export default class App extends React.Component {
   constructor(props) {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Checkbox, Select, Radio } from 'antd'
-import { Request } from 'utils'
+import { Request } from '../../utils'
 import './index.less'
 
 export default class extends React.Component {
