@@ -1,6 +1,6 @@
 import About from './About'
-import Dashboard from './Dashboard';
-import Forgot from './Forgot';
+import Dashboard from './Dashboard'
+import Forgot from './Forgot'
 import Orientation from './Orientation'
 import SignIn from './SignIn'
 import SignUp from './SignUp'
@@ -16,4 +16,4 @@ export {
   SignUp, 
   Teachers,
   Welcome, 
-};
+}

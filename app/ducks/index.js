@@ -1,5 +1,5 @@
-import fooDuck from './foo';
+import fooDuck from './foo'
 
 export {
   fooDuck,
-};
+}

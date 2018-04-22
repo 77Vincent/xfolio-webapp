@@ -1,4 +1,4 @@
-import Duck from 'extensible-duck';
+import Duck from 'extensible-duck'
 
 export default new Duck({
   namespace: 'xfolio',
@@ -10,19 +10,19 @@ export default new Duck({
     data: null,
   },
   reducer: (state, action, duck) => {
-    const { type, ...nextState } = action;
+    const { type, ...nextState } = action
     switch (type) {
-      case duck.types.CALL_FOO:
-        console.log('call fooo');
-        return {
-          ...state,
-          ...nextState,
-        };
-      default:
-        return state;
+    case duck.types.CALL_FOO:
+      console.log('call fooo')
+      return {
+        ...state,
+        ...nextState,
+      }
+    default:
+      return state
     }
   },
   creators: duck => ({
     callFoo: (data) => ({ type: duck.types.CALL_FOO, data }),
   }),
-});
+})

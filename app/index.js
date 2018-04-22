@@ -2,15 +2,15 @@
  * Xfolio entry file 
  */
 
- 'use strict'
+'use strict'
 
 import 'babel-polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { HashRouter } from 'react-router-dom'
 
-import { Provider } from 'react-redux';
-import { store } from 'store/configureStore';
+import { Provider } from 'react-redux'
+import { store } from 'store/configureStore'
 
 import App from './base/App.js'
 

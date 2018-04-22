@@ -10,7 +10,7 @@ import {
   Header, 
   Footer, 
   Loading, 
-} from '../components';
+} from '../components'
 import {
   About, 
   Dashboard,
@@ -20,7 +20,10 @@ import {
   SignUp, 
   Teachers,
   Welcome, 
-} from '../pages';
+} from '../pages'
+
+let a = true
+if (a !== true) console.log(11)
 
 export default class App extends React.Component {
   constructor(props) {
