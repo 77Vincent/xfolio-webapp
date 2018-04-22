@@ -8,6 +8,7 @@ npm start
 
 ## Production 
 ```js
+npm i
 npm run build 
 ```
 
@@ -17,7 +18,8 @@ npm run build
 * Base layout: ./app/base
 * Functions: ./app/utils
 * Components: ./app/components
+* Pages: ./app/pages
 * Static files: ./app/assets
 
-## REST API
-* [For server REST API check here](https://github.com/77Vincent/xfolio/tree/master/server)
+## API
+* [REST API](http://39.104.108.82:3001/doc/index.html)
