@@ -12,6 +12,9 @@ npm i
 npm run build 
 ```
 
+## Runtime
+* node@8+
+
 ## Structure
 * Entry file: ./app/index.js
 * Less variables: ./theme.less
