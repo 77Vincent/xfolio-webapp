@@ -15,14 +15,24 @@ npm run build
 ## Runtime
 * node@8+
 
-## Structure
-* Entry file: ./app/index.js
-* Less variables: ./theme.less
-* Base layout: ./app/base
-* Functions: ./app/utils
-* Components: ./app/components
-* Pages: ./app/pages
-* Static files: ./app/assets
+## File Structure
+```
+xfolio-webapp/
+    |---app/
+        |   index.js    // Entry file
+        |   theme.less  // Global less variables
+        |
+        |---assets/     // Static files
+        |
+        |---base/       // Base layout for the whole app
+        |
+        |---pages/      // Components that represent pages
+        |
+        |---components/ // Components
+        |
+        |---utils/      // Functions
+```
 
 ## API
 * [REST API](http://39.104.108.82:3001/doc/index.html)
+
