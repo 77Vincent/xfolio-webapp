@@ -34,5 +34,4 @@ xfolio-webapp/
 ```
 
 ## API
-* [REST API](http://39.104.108.82:3001/doc/index.html)
-
+* [REST API](https://xfolio.cn/doc/index.html)
