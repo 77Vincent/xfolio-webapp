@@ -1,5 +1,3 @@
 import fooDuck from './foo'
 
-export {
-  fooDuck,
-}
+export default { fooDuck }

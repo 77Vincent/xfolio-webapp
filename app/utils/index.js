@@ -1,21 +1,22 @@
-import {
-  Request
-} from './request'
+import { Request } from './request'
+
+import Log from './Log'
 
 const Fn = {
   getBase64(file) {
-    var reader = new FileReader()
+    const reader = new FileReader()
     reader.readAsDataURL(file)
-    reader.onload = function () {
-      console.log(reader.result)
+    reader.onload = () => {
+      Log.info(reader.result)
     }
-    reader.onerror = function (error) {
-      console.log('Error: ', error)
+    reader.onerror = (error) => {
+      Log.info('Error: ', error)
     }
-  }
+  },
 }
 
 export {
   Fn,
+  Log,
   Request,
 }

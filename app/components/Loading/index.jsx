@@ -1,11 +1,19 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 export default class Loading extends React.Component {
-  constructor(props) {
-    super(props)
-  }
+  static propTypes = {
+    isLoading: PropTypes.bool,
+    children: PropTypes.node,
+  };
+
+  static defaultProps = {
+    isLoading: true,
+    children: null,
+  };
+
   render() {
-    const isLoading = this.props.isLoading
+    const { isLoading } = this.props
     return (
       <div className={isLoading ? 'App-spinner' : null}>
         <div className={isLoading ? 'App-translucent' : null}>

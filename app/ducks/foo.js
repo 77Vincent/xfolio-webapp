@@ -13,7 +13,6 @@ export default new Duck({
     const { type, ...nextState } = action
     switch (type) {
     case duck.types.CALL_FOO:
-      console.log('call fooo')
       return {
         ...state,
         ...nextState,
@@ -23,6 +22,6 @@ export default new Duck({
     }
   },
   creators: duck => ({
-    callFoo: (data) => ({ type: duck.types.CALL_FOO, data }),
+    callFoo: data => ({ type: duck.types.CALL_FOO, data }),
   }),
 })

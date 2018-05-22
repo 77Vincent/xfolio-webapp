@@ -1,19 +1,19 @@
-import About from './About'
-import Dashboard from './Dashboard'
-import Forgot from './Forgot'
-import Orientation from './Orientation'
-import SignIn from './SignIn'
-import SignUp from './SignUp'
-import Teachers from './Teachers'
-import Welcome from './Welcome'
+import About from './About/index'
+import Dashboard from './Dashboard/index'
+import Forgot from './Forgot/index'
+import Orientation from './Orientation/index'
+import SignIn from './SignIn/index'
+import SignUp from './SignUp/index'
+import Teachers from './Teachers/index'
+import Welcome from './Welcome/index'
 
 export {
-  About, 
+  About,
   Dashboard,
-  Forgot, 
+  Forgot,
   Orientation,
-  SignIn, 
-  SignUp, 
+  SignIn,
+  SignUp,
   Teachers,
-  Welcome, 
+  Welcome,
 }

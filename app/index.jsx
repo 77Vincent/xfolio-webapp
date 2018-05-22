@@ -1,8 +1,7 @@
 /**
- * Xfolio entry file 
+ * Xfolio entry file
  */
 
-'use strict'
 
 import 'babel-polyfill'
 import React from 'react'
@@ -10,9 +9,9 @@ import ReactDOM from 'react-dom'
 import { HashRouter } from 'react-router-dom'
 
 import { Provider } from 'react-redux'
-import { store } from 'store/configureStore'
+import { store } from './store/configureStore'
 
-import App from './base/App.js'
+import App from './base/App'
 
 ReactDOM.render(
   <Provider store={store}>
@@ -24,5 +23,5 @@ ReactDOM.render(
   () => {
     // remove initial spinning loader after react dom is rendered
     document.getElementById('root').classList.remove('App-spinner')
-  }
+  },
 )

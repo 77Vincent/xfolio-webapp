@@ -19,7 +19,7 @@ npm run build
 ```
 xfolio-webapp/
     |---app/
-        |   index.js    // Entry file
+        |   index.jsx    // Entry file
         |   theme.less  // Global less variables
         |
         |---assets/     // Static files

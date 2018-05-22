@@ -11,7 +11,7 @@ const themeVariables = lessToJs(fs.readFileSync(resolve('./app/theme.less'), 'ut
 
 const webpackConfigBase = {
   entry: {
-    client: resolve('./app/index.js'),
+    client: resolve('./app/index.jsx'),
   },
   output: {
     path: resolve('./build'),

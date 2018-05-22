@@ -1,12 +1,23 @@
 import React from 'react'
-import { Button, message, Form, Icon, Input, Checkbox } from 'antd'
+import PropTypes from 'prop-types'
+import { Button, message, Form, Icon, Input } from 'antd'
 import { Link } from 'react-router-dom'
 import { Request } from '../../utils'
 
 class SignIn extends React.Component {
-  constructor(props) {
-    super(props)
-  }
+  static propTypes = {
+    user: PropTypes.bool,
+    history: PropTypes.object,
+    form: PropTypes.object.isRequired,
+    setLoading: PropTypes.func.isRequired,
+    setUser: PropTypes.func.isRequired,
+  };
+
+  static defaultProps = {
+    user: false,
+    history: {},
+  };
+
   componentDidMount = () => {
     if (this.props.user) {
       this.props.history.push('/dashboard')
@@ -37,34 +48,41 @@ class SignIn extends React.Component {
   }
   message = {
     id: '手机号/电子邮箱',
-    password: '密码'
+    password: '密码',
   }
   render() {
     const { getFieldDecorator } = this.props.form
 
     return (
-      <Form onSubmit={this.submit} style={{maxWidth: '300px', margin: '0 auto'}}>
+      <Form onSubmit={this.submit} style={{ maxWidth: '300px', margin: '0 auto' }}>
         <Form.Item>
           {getFieldDecorator('id', {
             rules: [{ required: true, message: `请输入${this.message.id}` }],
-          })(
-            <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.message.id} />
-          )}
+          })((
+            <Input
+              prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              placeholder={this.message.id}
+            />
+          ))}
         </Form.Item>
         <Form.Item>
           {getFieldDecorator('password', {
             rules: [{ required: true, message: `请输入${this.message.password}` }],
-          })(
-            <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder={this.message.password} />
-          )}
+          })((
+            <Input
+              prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              type="password"
+              placeholder={this.message.password}
+            />
+          ))}
         </Form.Item>
 
         <Form.Item>
-          <Link to='/forgot' style={{float: 'left'}}>忘记密码</Link>
-          <Link to='/sign-up' style={{float: 'right'}}>立即注册</Link>
+          <Link to="/forgot" style={{ float: 'left' }}>忘记密码</Link>
+          <Link to="/sign-up" style={{ float: 'right' }}>立即注册</Link>
 
-          <Button type='primary' style={{width: '100%'}} htmlType="submit">账号登录</Button>
-          <Button style={{width: '100%'}} htmlType="submit">微信登录</Button>
+          <Button type="primary" style={{ width: '100%' }} htmlType="submit">账号登录</Button>
+          <Button style={{ width: '100%' }} htmlType="submit">微信登录</Button>
         </Form.Item>
       </Form>
     )

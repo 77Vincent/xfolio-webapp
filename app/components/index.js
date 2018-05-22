@@ -7,7 +7,7 @@ import Order from './Order'
 
 import Header from './Header'
 import Footer from './Footer'
-import Loading from './Loading.js'
+import Loading from './Loading'
 import Button from './Button'
 
 export {
@@ -21,5 +21,5 @@ export {
   Header,
   Footer,
   Loading,
-  Button
+  Button,
 }

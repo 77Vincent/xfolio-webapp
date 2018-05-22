@@ -2,24 +2,29 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { fooDuck } from 'ducks'
+import { fooDuck } from '../../ducks'
 
+// TODO
+/* eslint-disable react/no-unused-prop-types */
 class About extends React.Component {
-  constructor(props){
+  static propTypes = {
+    foo: PropTypes.object.isRequired,
+    fooActions: PropTypes.object.isRequired,
+  }
+
+  static defaultProps = {
+  };
+
+  constructor(props) {
     super(props)
     this.props.fooActions.callFoo()
   }
-  render(){
+
+  render() {
     return (
-      <div className='About'>
-      </div>
+      <div className="About" />
     )
   }
-}
-
-About.propTypes = {
-  foo: PropTypes.object,
-  fooActions: PropTypes.object,
 }
 
 const mapStateToProps = state => ({
