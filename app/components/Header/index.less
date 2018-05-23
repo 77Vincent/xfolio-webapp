@@ -1,26 +1,35 @@
-@import '../../theme.less';
+@import "../../theme";
 
-.Header {
-  max-width: @layout-max-width;
-  margin: 0 auto;
-  padding: 0 50px;
+.header-wrap {
+  width: 100%;
+  height: @layout-header-height;
+  background-color: @layout-header-background;
 
-  .Menu {
-    height: 48px;
-    font-size: 12px;
-    line-height: 48px;
-    border-bottom: none;
+  .header-content-wrap {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
   }
 
-  .Menu-Item {
-    position: relative;
+  .position-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
   }
 
-  .Menu-user {
-    float: right;
+  .button-wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
   }
 
-  .Icon {
-    font-size: 16px;
+  .icon-logo {
+    margin-right: 35px;
   }
 }

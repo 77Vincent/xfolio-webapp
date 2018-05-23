@@ -4,7 +4,7 @@ import _ from 'lodash'
 
 import './index.less'
 
-export default class Footer extends Component {
+export default class AAA extends Component {
   static propTypes = {
     style: PropTypes.object,
   };
@@ -25,11 +25,8 @@ export default class Footer extends Component {
     const wrapStyle = _.assign({}, this.props.style)
 
     return (
-      <div className="footer-wrap" style={wrapStyle}>
-        <div className="footer-content-wrap">
-          <span>CopyRight 2018</span>
-          <span>ICP备案号 123</span>
-        </div>
+      <div className="aaa_comp_wrap" style={wrapStyle}>
+        aaa_comp_wrap
       </div>
     )
   }

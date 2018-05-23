@@ -7,7 +7,7 @@ const webpackConfigProd = {
     // 定义环境变量为开发环境
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
-      IS_DEVELOPMETN: false,
+      IS_DEVELOPMENT: false,
     }),
     // 提取css
     // 根据入口文件，提取重复引用的公共代码类库，打包到单独文件中

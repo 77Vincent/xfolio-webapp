@@ -1,0 +1,19 @@
+@import "../../theme";
+
+.header-button-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 90px;
+  color: #fff;
+  font-size: @font-size-base;
+
+  &:hover {
+    background-color: @layout-header-button-hover-background;
+    cursor: pointer;
+  }
+  &:active {
+    background-color: @layout-header-button-active-background;
+  }
+}

@@ -1,47 +1,58 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Icon } from 'antd'
-import { Link } from 'react-router-dom'
 import _ from 'lodash'
 
+import HeaderButton from '../HeaderButton'
 import './index.less'
 
-export default class Header extends React.Component {
+export default class AAA extends Component {
   static propTypes = {
-    user: PropTypes.object.isRequired,
+    style: PropTypes.object,
+  };
+
+  static defaultProps = {
+    style: {},
+  };
+
+  componentDidMount() {
+
   }
 
-  static defaultProps = {}
+  componentWillUnmount() {
 
-  links = [{
-    label: '寻找导师', to: '/teachers',
-  }, {
-    label: '关于Xfolio', to: '/about',
-  }]
+  }
 
   render() {
+    const wrapStyle = _.assign({}, this.props.style)
+
     return (
-      <div className="Header">
-        <Menu mode="horizontal" theme="dark" className="Menu">
-          <Menu.Item>
-            <Link to="/">
-              <div className="App-logo">Xfolio</div>
-            </Link>
-          </Menu.Item>
-          {
-            _.map(this.links, (link, index) => (
-              <Menu.Item className="Menu-Item" key={index}>
-                <Link to={link.to}>{link.label}</Link>
-              </Menu.Item>
-            ))
-          }
-          <Menu.Item className="Menu-user">
-            <Link to="/dashboard">
-              <Icon type="user" className="Icon" />
-              {this.props.user ? this.props.user.name : '未登录'}
-            </Link>
-          </Menu.Item>
-        </Menu>
+      <div className="header-wrap" style={wrapStyle}>
+        <div className="header-content-wrap">
+          <div className="position-wrap">
+            <span className="icon-logo">xfolio logo</span>
+            <div className="button-wrap">
+              <HeaderButton
+                content="寻找导师"
+              />
+              <HeaderButton
+                content="成为导师"
+              />
+              <HeaderButton
+                content="资源"
+              />
+              <HeaderButton
+                content="帮助"
+              />
+            </div>
+          </div>
+          <div className="position-wrap">
+            <div className="button-wrap">
+              <HeaderButton
+                content="登录"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

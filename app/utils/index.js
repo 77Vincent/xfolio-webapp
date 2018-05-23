@@ -1,5 +1,4 @@
-import { Request } from './request'
-
+import Request from './request'
 import Log from './Log'
 
 const Fn = {

@@ -19,7 +19,7 @@ const webpackConfigBase = {
     chunkFilename: 'chunks/[name].[hash:4].js',
   },
   resolve: {
-    extensions: ['.js', '.json'],
+    extensions: ['.js', '.jsx', '.json'],
     alias: {
       images: resolve('./app/assets/images'),
       ducks: resolve('./app/ducks'),
@@ -32,7 +32,7 @@ const webpackConfigBase = {
   module: {
     rules: [
       {
-        test: /\.js[x]?$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel',
         options: {
