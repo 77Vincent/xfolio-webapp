@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
+import { Link } from 'react-router-dom'
 
 import HeaderButton from '../HeaderButton'
 import './index.less'
 
-export default class AAA extends Component {
+export default class Header extends Component {
   static propTypes = {
     style: PropTypes.object,
   };
@@ -29,28 +30,28 @@ export default class AAA extends Component {
       <div className="header-wrap" style={wrapStyle}>
         <div className="header-content-wrap">
           <div className="position-wrap">
-            <span className="icon-logo">xfolio logo</span>
+            <Link to="/" >
+              <span className="icon-logo">xfolio logo</span>
+            </Link>
             <div className="button-wrap">
-              <HeaderButton
-                content="寻找导师"
-              />
-              <HeaderButton
-                content="成为导师"
-              />
-              <HeaderButton
-                content="资源"
-              />
-              <HeaderButton
-                content="帮助"
-              />
+              <HeaderButton>
+                <Link to="/teachers" >寻找导师</Link>
+              </HeaderButton>
+              <HeaderButton>
+                <Link to="/be-teacher" >成为导师</Link>
+              </HeaderButton>
+              <HeaderButton>
+                <Link to="/resource" >资源</Link>
+              </HeaderButton>
+              <HeaderButton>
+                <Link to="/help" >帮助</Link>
+              </HeaderButton>
             </div>
           </div>
           <div className="position-wrap">
-            <div className="button-wrap">
-              <HeaderButton
-                content="登录"
-              />
-            </div>
+            <HeaderButton>
+              <Link to="/signin" >登录</Link>
+            </HeaderButton>
           </div>
         </div>
       </div>

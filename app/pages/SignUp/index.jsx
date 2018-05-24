@@ -4,15 +4,13 @@ import _ from 'lodash'
 
 import './index.less'
 
-export default class HeaderButton extends Component {
+export default class SignUp extends Component {
   static propTypes = {
     style: PropTypes.object,
-    children: PropTypes.node,
   };
 
   static defaultProps = {
     style: {},
-    children: null,
   };
 
   componentDidMount() {
@@ -27,8 +25,8 @@ export default class HeaderButton extends Component {
     const wrapStyle = _.assign({}, this.props.style)
 
     return (
-      <div className="header-button-wrap" style={wrapStyle}>
-        {this.props.children}
+      <div className="sign-up-wrap" style={wrapStyle}>
+        sign-up-wrap
       </div>
     )
   }

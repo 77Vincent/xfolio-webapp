@@ -3,7 +3,7 @@ const fs = require('fs')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const CleanWebpackPlugin = require('clean-webpack-plugin') 
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 const lessToJs = require('less-vars-to-js')
 
 const resolve = path.resolve
@@ -27,7 +27,7 @@ const webpackConfigBase = {
     },
   },
   resolveLoader: {
-    moduleExtensions: ['-loader']
+    moduleExtensions: ['-loader'],
   },
   module: {
     rules: [
@@ -37,8 +37,8 @@ const webpackConfigBase = {
         loader: 'babel',
         options: {
           plugins: [
-            ['import', { libraryName: 'antd', style: true }]
-          ]
+            ['import', {libraryName: 'antd', style: true}],
+          ],
         },
       },
       {
@@ -46,8 +46,8 @@ const webpackConfigBase = {
         loader: ExtractTextPlugin.extract({
           fallback: 'style',
           use: [
-            { loader: 'css', options: { sourceMap: true } }
-          ]
+            {loader: 'css', options: {sourceMap: true}},
+          ],
         }),
       },
       {
@@ -55,18 +55,18 @@ const webpackConfigBase = {
         loader: ExtractTextPlugin.extract({
           fallback: 'style',
           use: [
-            { 
-              loader: 'css', 
-              options: { sourceMap: true }
+            {
+              loader: 'css',
+              options: {sourceMap: true},
             },
-            { 
-              loader: 'less', 
-              options: { 
+            {
+              loader: 'less',
+              options: {
                 sourceMap: true,
-                modifyVars: themeVariables
-              }
-            }
-          ]
+                modifyVars: themeVariables,
+              },
+            },
+          ],
         }),
       },
       {
@@ -74,16 +74,16 @@ const webpackConfigBase = {
         loader: 'url',
         options: {
           limit: 8192,
-          name: 'img/[name].[hash:4].[ext]'
-        }
+          name: 'img/[name].[hash:4].[ext]',
+        },
       },
       {
         test: /\.(woff|eot|ttf|svg|gif)$/,
         loader: 'url',
         options: {
           limit: 8192,
-          name: 'font/[name].[hash:4].[ext]'
-        }
+          name: 'font/[name].[hash:4].[ext]',
+        },
       },
     ],
   },
@@ -91,16 +91,16 @@ const webpackConfigBase = {
     // 在打包前先移除build文件夹
     new CleanWebpackPlugin(['build'], {
       root: resolve(),
-      verbose:  true,
-      dry:      false
+      verbose: true,
+      dry: false,
     }),
     // 提取css
     new ExtractTextPlugin('build.[hash:4].css'),
     // 将打包后的资源注入到html文件内    
     new HtmlWebpackPlugin({
       template: resolve('./app/index.html'),
-    })
-  ]
+    }),
+  ],
 }
 
 module.exports = webpackConfigBase

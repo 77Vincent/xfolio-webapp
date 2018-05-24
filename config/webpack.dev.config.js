@@ -37,10 +37,10 @@ const webpackConfigDev = {
       publicPath: false
     },  
     proxy: {
-      '/': {
-        target: 'http://localhost:3001',
-        changeOrigin: true
-      }
+      // '/': {
+      //   target: 'http://localhost:3001',
+      //   changeOrigin: true
+      // }
     }
   }
 }

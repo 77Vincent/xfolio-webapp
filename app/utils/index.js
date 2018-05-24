@@ -1,5 +1,6 @@
 import Request from './request'
 import Log from './Log'
+import getImage from './getImage'
 
 const Fn = {
   getBase64(file) {
@@ -18,4 +19,5 @@ export {
   Fn,
   Log,
   Request,
+  getImage,
 }

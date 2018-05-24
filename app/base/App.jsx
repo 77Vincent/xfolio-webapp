@@ -2,12 +2,17 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { Layout } from 'antd'
+import { Route, Redirect, Switch } from 'react-router-dom'
 
 import {
   Header,
   Footer,
 } from '../components'
-import { DashBoard } from '../pages'
+import {
+  DashBoard,
+  SignUp,
+  SignIn,
+} from '../pages'
 import './App.less'
 
 export default class App extends Component {
@@ -38,13 +43,17 @@ export default class App extends Component {
               position: 'fixed',
               top: 0,
               left: 0,
-              padding: '0 60px',
             }}
           />
         </Layout.Header>
         <Layout.Content>
           <div className="main-content-wrap">
-            <DashBoard />
+            <Switch>
+              <Route exact path="/" component={DashBoard} />
+              <Route path="/signup" component={SignUp} />
+              <Route path="/signin" component={SignIn} />
+              <Redirect to="/" push={false} />
+            </Switch>
           </div>
         </Layout.Content>
         <Layout.Footer>
