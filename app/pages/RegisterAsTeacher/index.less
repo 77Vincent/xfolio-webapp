@@ -1,0 +1,138 @@
+@import "../../theme";
+
+.register-as-teacher-wrap {
+  width: @layout-max-width;
+  margin: 0 auto;
+
+  .input-account-info {
+    width: 290px;
+    margin: 0 auto;
+    padding: 145px 0 70px 0;
+
+    label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .input-tip {
+        display: flex;
+        flex: 1 0 auto;
+        text-align: left;
+        font-size: 14px;
+        color: #000;
+      }
+      .input-wrap {
+        display: flex;
+        flex: 0 0 auto;
+        justify-content: space-between;
+        align-items: center;
+        width: 220px;
+        height: 36px;
+
+        input {
+          width: 220px;
+          height: 36px;
+        }
+
+        &.input-captcha-wrap {
+
+          input {
+            width: 160px;
+          }
+          .ant-btn {
+            padding: 0 10px;
+            height: 36px;
+            line-height: 36px;
+            background-color: #e5e5e5;
+            font-size: 14px;
+            color: #000;
+          }
+        }
+      }
+    }
+  }
+
+  .cut-line {
+    width: 1030px;
+    height: 1px;
+    background-color: #eee;
+    margin: 0 auto;
+  }
+
+  .input-user-experience {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 880px;
+    margin: 0 auto;
+    padding: 20px 0 200px 0;
+
+    .ant-form {
+      width: 100%;
+      display: inline-flex;
+      justify-content: space-between;
+      align-items: flex-start;
+
+      .ant-form-item {
+        padding-bottom: 0;
+        margin-bottom: 20px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        label {
+          color: #000;
+        }
+        .icon-ellipsis {
+
+          &:before {
+          }
+        }
+      }
+    }
+
+    .user-base-info {
+      display: flex;
+      flex-direction: column;
+      width: 220px;
+    }
+    .user-education-info {
+      display: flex;
+      flex-direction: column;
+      width: 220px;
+    }
+    .user-works-info {
+      display: flex;
+      flex-direction: column;
+      width: 220px;
+    }
+
+    .btn-submit-form {
+      background-color: #e4007f;
+      font-size: 16px;
+      color: #fff;
+      height: 42px;
+      width: 300px;
+      line-height: 42px;
+      border-radius: 21px;
+      margin-top: 90px;
+
+      &:hover {
+        background-color: #f19ec2;
+        border-color: #f19ec2;
+      }
+    }
+    .slogan {
+      font-size: 14px;
+      color: #000;
+      margin-top: 15px;
+    }
+  }
+}

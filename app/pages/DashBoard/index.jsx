@@ -58,7 +58,7 @@ export default class DashBoard extends Component {
             type="primary"
             className="slide-button"
           >
-            <Link to="/be-teacher">寻找导师</Link>
+            <Link to="/teachers">寻找导师</Link>
           </Button>
         </div>
         <div className="dashboard-content-wrap">

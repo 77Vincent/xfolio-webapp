@@ -12,7 +12,9 @@ import {
   DashBoard,
   SignUp,
   SignIn,
+  RegisterAsTeacher,
 } from '../pages'
+
 import './App.less'
 
 export default class App extends Component {
@@ -38,18 +40,13 @@ export default class App extends Component {
     return (
       <div className="app_wrap" style={wrapStyle}>
         <Layout.Header className="layout-header-wrap">
-          <Header
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-            }}
-          />
+          <Header />
         </Layout.Header>
         <Layout.Content>
           <div className="main-content-wrap">
             <Switch>
               <Route exact path="/" component={DashBoard} />
+              <Route exact path="/be-teacher" component={RegisterAsTeacher} />
               <Route path="/signup" component={SignUp} />
               <Route path="/signin" component={SignIn} />
               <Redirect to="/" push={false} />
