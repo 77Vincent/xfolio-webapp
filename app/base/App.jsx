@@ -14,6 +14,7 @@ import {
   SignUpAsStudent,
   SignUpChooseRole,
   SignUpAsTeacher,
+  InitTeacherFilter,
 } from '../pages'
 
 import './App.less'
@@ -50,6 +51,7 @@ export default class App extends Component {
               <Route exact path="/signup-choose-role" component={SignUpChooseRole} />
               <Route exact path="/signup-as-teacher" component={SignUpAsTeacher} />
               <Route exact path="/signup-as-student" component={SignUpAsStudent} />
+              <Route exact path="/init-teacher-filter" component={InitTeacherFilter} />
               <Route exact path="/signin" component={SignIn} />
               <Redirect to="/" push={false} />
             </Switch>
