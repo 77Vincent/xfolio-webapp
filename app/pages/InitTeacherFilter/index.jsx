@@ -73,7 +73,7 @@ export default class InitTeacherFilter extends Component {
             <div className="filter-step filter-step-one">
               <p className="title">{currentFilterStepInfo.title}</p>
               {
-                currentFilterStepInfo.type === 'radio' ? (
+                currentFilterStepInfo.type === 'radio' && (
                   <Radio.Group
                     name={currentFilterStepInfo.name}
                     value={this.state.filterInitResult[this.state.stepIndex]}
@@ -88,7 +88,10 @@ export default class InitTeacherFilter extends Component {
                       ))
                     }
                   </Radio.Group>
-                ) : ((() => {
+                )
+              }
+              {
+                currentFilterStepInfo.type === 'select' && ((() => {
                   const result = this.state.filterInitResult[this.state.stepIndex]
                   return (
                     <Select
