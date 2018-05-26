@@ -10,9 +10,10 @@ import {
 } from '../components'
 import {
   DashBoard,
-  SignUp,
   SignIn,
-  RegisterAsTeacher,
+  SignUpAsStudent,
+  SignUpChooseRole,
+  SignUpAsTeacher,
 } from '../pages'
 
 import './App.less'
@@ -46,9 +47,10 @@ export default class App extends Component {
           <div className="main-content-wrap">
             <Switch>
               <Route exact path="/" component={DashBoard} />
-              <Route exact path="/be-teacher" component={RegisterAsTeacher} />
-              <Route path="/signup" component={SignUp} />
-              <Route path="/signin" component={SignIn} />
+              <Route exact path="/signup-choose-role" component={SignUpChooseRole} />
+              <Route exact path="/signup-as-teacher" component={SignUpAsTeacher} />
+              <Route exact path="/signup-as-student" component={SignUpAsStudent} />
+              <Route exact path="/signin" component={SignIn} />
               <Redirect to="/" push={false} />
             </Switch>
           </div>

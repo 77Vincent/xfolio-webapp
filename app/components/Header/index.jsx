@@ -38,7 +38,7 @@ export default class Header extends Component {
                 <Link to="/teachers" >寻找导师</Link>
               </HeaderButton>
               <HeaderButton>
-                <Link to="/be-teacher" >成为导师</Link>
+                <Link to="/signup-as-teacher" >成为导师</Link>
               </HeaderButton>
               <HeaderButton>
                 <Link to="/resource" >资源</Link>
