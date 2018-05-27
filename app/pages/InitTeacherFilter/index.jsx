@@ -54,7 +54,7 @@ export default class InitTeacherFilter extends Component {
     })
     setTimeout(() => {
       this.updateStepIndex(1)
-    }, 50)
+    }, 300)
   }
 
   render() {
@@ -95,7 +95,8 @@ export default class InitTeacherFilter extends Component {
                   const result = this.state.filterInitResult[this.state.stepIndex]
                   return (
                     <Select
-                      value={result === -1 ? currentFilterStepInfo.options[0].value : result}
+                      placeholder="未选择"
+                      value={result === -1 ? undefined : result}
                       onSelect={(value) => {
                         this.handleUserSelectStepOption(this.state.stepIndex, value)
                       }}
