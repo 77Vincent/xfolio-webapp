@@ -26,7 +26,9 @@ export default class Teachers extends Component {
 
     return (
       <div className="teachers-wrap" style={wrapStyle}>
+        <div className="teachers-filter-wrap">
 
+        </div>
       </div>
     )
   }

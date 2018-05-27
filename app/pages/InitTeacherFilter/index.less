@@ -76,8 +76,26 @@
     width: 200px;
     flex: 0 0 200px;
 
+    .ant-progress {
+
+      &.ant-progress-status-success {
+
+        .ant-progress-circle-path {
+          stroke: @primary-color;
+        }
+        .ant-progress-text {
+          display: block;
+          color: @primary-color;
+        }
+      }
+    }
+
     .ant-progress-circle-trail {
       stroke: #e6e6e6;
+    }
+
+    .ant-progress-text {
+      display: none;
     }
   }
 }

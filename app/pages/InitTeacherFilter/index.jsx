@@ -19,7 +19,7 @@ export default class InitTeacherFilter extends Component {
 
   state = {
     stepIndex: 0,
-    filterInitResult: _.times(filterStepInfo.length, () => -1), // 初始化结果，默认值为-1，表示都跳过
+    filterInitResult: [], // 存储用户选择的结果，整数表示选择过，-1表示未选择
   }
 
   componentDidMount() {
@@ -39,19 +39,25 @@ export default class InitTeacherFilter extends Component {
     }
   }
 
+  updateFilterInitResult = (stepIndex, payload) => {
+    this.state.filterInitResult[stepIndex] = payload
+    this.setState({
+      filterInitResult: this.state.filterInitResult,
+    })
+  }
+
   handleClickStepBack = () => {
     this.updateStepIndex(-1)
   }
 
   handleClickStepSkip = () => {
+    const stepResult = this.state.filterInitResult[this.state.stepIndex]
+    this.updateFilterInitResult(this.state.stepIndex, stepResult === undefined ? -1 : stepResult)
     this.updateStepIndex(1)
   }
 
   handleUserSelectStepOption = (stepIndex, optionIndex) => {
-    this.state.filterInitResult[stepIndex] = optionIndex
-    this.setState({
-      filterInitResult: this.state.filterInitResult,
-    })
+    this.updateFilterInitResult(stepIndex, optionIndex)
     setTimeout(() => {
       this.updateStepIndex(1)
     }, 300)
@@ -62,9 +68,10 @@ export default class InitTeacherFilter extends Component {
     const currentFilterStepInfo = filterStepInfo[this.state.stepIndex]
     const filterStepInitedNumber = (
       _.sumBy(this.state.filterInitResult, value => (
-        value === -1 ? 0 : 1
+        value === undefined ? 0 : 1
       ))
     ) // 已经选择过的步骤数
+    const { stepIndex, filterInitResult } = this.state
 
     return (
       <div className="init-teacher-filter" style={wrapStyle}>
@@ -76,9 +83,9 @@ export default class InitTeacherFilter extends Component {
                 currentFilterStepInfo.type === 'radio' && (
                   <Radio.Group
                     name={currentFilterStepInfo.name}
-                    value={this.state.filterInitResult[this.state.stepIndex]}
+                    value={filterInitResult[stepIndex]}
                     onChange={(e) => {
-                      this.handleUserSelectStepOption(this.state.stepIndex, e.target.value)
+                      this.handleUserSelectStepOption(stepIndex, e.target.value)
                     }}
                     key={uuidv4()}
                   >
@@ -92,13 +99,13 @@ export default class InitTeacherFilter extends Component {
               }
               {
                 currentFilterStepInfo.type === 'select' && ((() => {
-                  const result = this.state.filterInitResult[this.state.stepIndex]
+                  const result = filterInitResult[stepIndex]
                   return (
                     <Select
                       placeholder="未选择"
                       value={result === -1 ? undefined : result}
                       onSelect={(value) => {
-                        this.handleUserSelectStepOption(this.state.stepIndex, value)
+                        this.handleUserSelectStepOption(stepIndex, value)
                       }}
                     >
                       {
@@ -116,7 +123,7 @@ export default class InitTeacherFilter extends Component {
                 href="javascript:;"
                 className={cx({
                   'opera-btn': true,
-                  hide: this.state.stepIndex === 0,
+                  hide: stepIndex === 0,
                 })}
                 onClick={this.handleClickStepBack}
               >
@@ -126,7 +133,9 @@ export default class InitTeacherFilter extends Component {
                 href="javascript:;"
                 className={cx({
                   'opera-btn': true,
-                  hide: this.state.stepIndex === filterStepInfo.length - 1,
+                  hide: (
+                    stepIndex === filterStepInfo.length - 1 && filterInitResult[filterStepInfo.length - 1] !== undefined
+                  ),
                 })}
                 onClick={this.handleClickStepSkip}
               >
@@ -138,7 +147,7 @@ export default class InitTeacherFilter extends Component {
         <div className="filter-init-progress">
           <Progress
             type="circle"
-            percent={(filterStepInitedNumber / filterStepInfo.length) * 100}
+            percent={20 + ((filterStepInitedNumber / filterStepInfo.length) * 80)}
             width={200}
           />
         </div>
