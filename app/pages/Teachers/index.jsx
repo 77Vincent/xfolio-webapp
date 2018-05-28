@@ -100,8 +100,8 @@ export default class Teachers extends Component {
         <div className="teacher-list-wrap">
           <div className="content-wrap">
             {
-              _.times(10, () => (
-                <div className="teacher-info-item">
+              _.times(10, i => (
+                <div className="teacher-info-item" key={i}>
                   <img src={getImage('default-teacher-avatar-470-21-.png')} alt="" className="teacher-avatar" />
                   <div className="teacher-info-detail">
                     <p className="teacher-name">马天驰</p>

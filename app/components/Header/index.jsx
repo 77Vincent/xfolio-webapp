@@ -35,7 +35,7 @@ export default class Header extends Component {
             </Link>
             <div className="button-wrap">
               <HeaderButton>
-                <Link to={true ? '/teachers' : '/init-teacher-filter'} >寻找导师</Link>
+                <Link to={false ? '/teachers' : '/init-teacher-filter'} >寻找导师</Link>
               </HeaderButton>
               <HeaderButton>
                 <Link to="/signup-as-teacher" >成为导师</Link>

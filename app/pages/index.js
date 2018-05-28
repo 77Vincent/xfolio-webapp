@@ -1,4 +1,4 @@
-export { default as DashBoard } from './DashBoard'
+export { default as HomePage } from './HomePage'
 export { default as SignIn } from './SignIn'
 export { default as SignUpAsStudent } from './SignUpAsStudent'
 export { default as SignUpAsTeacher } from './SignUpAsTeacher'

@@ -8,7 +8,7 @@ import './index.less'
 export default class UpdateAccountInfoItem extends Component {
   static propTypes = {
     style: PropTypes.object,
-    inputType: PropTypes.oneOf('input', 'select'),
+    inputType: PropTypes.oneOf(['input', 'select']),
     placeholder: PropTypes.string,
     options: PropTypes.array,
   };

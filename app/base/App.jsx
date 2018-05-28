@@ -9,7 +9,7 @@ import {
   Footer,
 } from '../components'
 import {
-  DashBoard,
+  HomePage,
   SignIn,
   SignUpAsStudent,
   SignUpChooseRole,
@@ -49,7 +49,7 @@ export default class App extends Component {
         <Layout.Content>
           <div className="main-content-wrap">
             <Switch>
-              <Route exact path="/" component={DashBoard} />
+              <Route exact path="/" component={HomePage} />
               <Route exact path="/signup-choose-role" component={SignUpChooseRole} />
               <Route exact path="/signup-as-teacher" component={SignUpAsTeacher} />
               <Route exact path="/signup-as-student" component={SignUpAsStudent} />

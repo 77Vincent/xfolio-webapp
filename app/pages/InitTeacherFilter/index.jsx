@@ -11,10 +11,12 @@ import './index.less'
 export default class InitTeacherFilter extends Component {
   static propTypes = {
     style: PropTypes.object,
+    history: PropTypes.object,
   };
 
   static defaultProps = {
     style: {},
+    history: {},
   };
 
   state = {
@@ -44,6 +46,11 @@ export default class InitTeacherFilter extends Component {
     this.setState({
       filterInitResult: this.state.filterInitResult,
     })
+
+    // 所有步骤都做了选择
+    if (this.state.filterInitResult.length === filterStepInfo.length) {
+      this.props.history.push('/teachers')
+    }
   }
 
   handleClickStepBack = () => {
@@ -58,9 +65,12 @@ export default class InitTeacherFilter extends Component {
 
   handleUserSelectStepOption = (stepIndex, optionIndex) => {
     this.updateFilterInitResult(stepIndex, optionIndex)
-    setTimeout(() => {
-      this.updateStepIndex(1)
-    }, 300)
+    // 所有步骤都已选择
+    if (this.state.filterInitResult.length !== filterStepInfo.length) {
+      setTimeout(() => {
+        this.updateStepIndex(1)
+      }, 200)
+    }
   }
 
   render() {

@@ -9,10 +9,12 @@ import './index.less'
 export default class SignIn extends Component {
   static propTypes = {
     style: PropTypes.object,
+    history: PropTypes.object,
   };
 
   static defaultProps = {
     style: {},
+    history: {},
   };
 
   componentDidMount() {
@@ -58,7 +60,13 @@ export default class SignIn extends Component {
             <Link to="/forgot">忘记密码</Link>
             <Link to="/signup-choose-role">注册用户</Link>
           </div>
-          <Button className="button-signin">登录</Button>
+          <Button
+            className="button-signin"
+            onClick={() => {
+              this.props.history.push('/dashboard')
+            }}
+          >登录
+          </Button>
         </Form>
       </div>
     )

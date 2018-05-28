@@ -8,7 +8,7 @@ import uuidv4 from 'uuid/v4'
 import { getImage } from '../../utils'
 import './index.less'
 
-export default class DashBoard extends Component {
+export default class HomePage extends Component {
   static propTypes = {
     style: PropTypes.object,
   };
@@ -29,7 +29,7 @@ export default class DashBoard extends Component {
     const wrapStyle = _.assign({}, this.props.style)
 
     return (
-      <div className="dashboard-wrap" style={wrapStyle}>
+      <div className="home-page-wrap" style={wrapStyle}>
         <div className="slide-playground-wrap">
           <Carousel
             effect="fade"
@@ -61,7 +61,7 @@ export default class DashBoard extends Component {
             <Link to="/teachers">寻找导师</Link>
           </Button>
         </div>
-        <div className="dashboard-content-wrap">
+        <div className="content-wrap">
           <div className="content-tabs">
             <a href="#about" className="content-tab">关于我们</a>
             <a href="#stories" className="content-tab">ta的故事</a>
