@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import cx from 'classnames'
-import { Anchor, Divider, Select, Radio, Button, Icon, Tag } from 'antd'
+import { Anchor, Divider, Select, Radio, Button, Icon, Tag, Pagination } from 'antd'
 
 import { getImage } from '../../utils'
 import './index.less'
@@ -98,49 +98,52 @@ export default class Teachers extends Component {
           </div>
         </Anchor>
         <div className="teacher-list-wrap">
-          {
-            _.times(10, () => (
-              <div className="teacher-info-item">
-                <img src={getImage('default-teacher-avatar-470-21-.png')} alt="" className="teacher-avatar" />
-                <div className="teacher-info-detail">
-                  <p className="teacher-name">马天驰</p>
-                  <div className="teacher-tags">
-                    <Tag>名校毕业</Tag>
-                    <Tag>风趣</Tag>
-                    <Tag>教学经验</Tag>
-                    <Tag>工作经验</Tag>
-                  </div>
-                  <div className="education-detail">
-                    <p className="item">毕业于：Architectual Association</p>
-                    <p className="item">指导学生数：100</p>
-                    <p className="item">现有学生：10</p>
-                    <p className="item">学生录取院校：AA；UCL</p>
-                    <p className="item">本周可约课时：0</p>
-                  </div>
-                  <div className="operas-wrap">
-                    <a href="javascript:;" className="btn-favorite">
-                      {
-                        false ? (
-                          <Icon type="star-o" />
-                        ) : (
-                          <Icon type="star" />
-                        )
-                      }
-                    </a>
-                    <Button
-                      className={cx({
-                        'btn-order': true,
-                        disabled: false,
-                      })}
-                      disabled
-                    >
-                      预约
-                    </Button>
+          <div className="content-wrap">
+            {
+              _.times(10, () => (
+                <div className="teacher-info-item">
+                  <img src={getImage('default-teacher-avatar-470-21-.png')} alt="" className="teacher-avatar" />
+                  <div className="teacher-info-detail">
+                    <p className="teacher-name">马天驰</p>
+                    <div className="teacher-tags">
+                      <Tag>名校毕业</Tag>
+                      <Tag>风趣</Tag>
+                      <Tag>教学经验</Tag>
+                      <Tag>工作经验</Tag>
+                    </div>
+                    <div className="education-detail">
+                      <p className="item">毕业于：Architectual Association</p>
+                      <p className="item">指导学生数：100</p>
+                      <p className="item">现有学生：10</p>
+                      <p className="item">学生录取院校：AA；UCL</p>
+                      <p className="item">本周可约课时：0</p>
+                    </div>
+                    <div className="operas-wrap">
+                      <a href="javascript:;" className="btn-favorite">
+                        {
+                          false ? (
+                            <Icon type="star-o" />
+                          ) : (
+                            <Icon type="star" />
+                          )
+                        }
+                      </a>
+                      <Button
+                        className={cx({
+                          'btn-order': true,
+                          disabled: false,
+                        })}
+                        disabled
+                      >
+                        预约
+                      </Button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))
-          }
+              ))
+            }
+          </div>
+          <Pagination defaultCurrent={6} total={500} />
         </div>
       </div>
     )
