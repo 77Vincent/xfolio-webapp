@@ -86,7 +86,7 @@ export default class Teachers extends Component {
               </Select>
             </div>
             <div className="filter-item-wrap">
-              <h4 className="title">城市</h4>
+              <h4 className="title">价格</h4>
               <Divider />
               <Radio.Group
                 defaultValue={1}

@@ -1,9 +1,7 @@
-import Header from './Header'
-import Footer from './Footer'
-import SignUpInputAccountInfo from './SignUpInputAccountInfo'
-
-export {
-  Header,
-  Footer,
-  SignUpInputAccountInfo,
-}
+export { default as Header } from './Header'
+export { default as Footer } from './Footer'
+export { default as SignUpInputAccountInfo } from './SignUpInputAccountInfo'
+export { default as UploadAvatar } from './UploadAvatar'
+export { default as StudentBasicAccountInfo } from './StudentBasicAccountInfo'
+export { default as TeacherBasicAccountInfo } from './TeacherBasicAccountInfo'
+export { default as UpdateAccountInfoItem } from './UpdateAccountInfoItem'

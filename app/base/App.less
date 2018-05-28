@@ -4,16 +4,22 @@
   width: 100%;
   min-width: @layout-min-width;
   min-height: 100%;
-  flex: 1;
   display: flex;
+  flex: 1;
   flex-direction: column;
 
-  .layout-header-wrap {
+  .ant-layout-header {
     padding: 0;
     position: relative;
     z-index: 10;
   }
-  .main-content-wrap {
+  .ant-layout-content {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
 
+    .main-content-wrap {
+      min-height: 100%;
+    }
   }
 }

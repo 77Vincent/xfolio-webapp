@@ -1,0 +1,36 @@
+@import "../../theme";
+
+.student-basic-account-info {
+  display: flex;
+  flex-direction: column;
+
+  .account-info-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-bottom: 11px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .current-info {
+      width: 260px;
+
+      .item-title, .item-value {
+        font-size: 14px;
+        line-height: 18px;
+        color: #000;
+        margin-bottom: 0;
+        letter-spacing: 2px;
+
+        &.item-value {
+          color: #7d7d7d;
+        }
+      }
+    }
+
+    .update-account-info-item {
+    }
+  }
+}

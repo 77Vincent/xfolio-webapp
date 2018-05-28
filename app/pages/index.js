@@ -1,17 +1,9 @@
-import DashBoard from './DashBoard'
-import SignIn from './SignIn'
-import SignUpAsStudent from './SignUpAsStudent'
-import SignUpAsTeacher from './SignUpAsTeacher'
-import SignUpChooseRole from './SignUpChooseRole'
-import InitTeacherFilter from './InitTeacherFilter'
-import Teachers from './Teachers'
-
-export {
-  DashBoard,
-  SignIn,
-  SignUpAsStudent,
-  SignUpAsTeacher,
-  SignUpChooseRole,
-  InitTeacherFilter,
-  Teachers,
-}
+export { default as DashBoard } from './DashBoard'
+export { default as SignIn } from './SignIn'
+export { default as SignUpAsStudent } from './SignUpAsStudent'
+export { default as SignUpAsTeacher } from './SignUpAsTeacher'
+export { default as SignUpChooseRole } from './SignUpChooseRole'
+export { default as InitTeacherFilter } from './InitTeacherFilter'
+export { default as Teachers } from './Teachers'
+export { default as StudentControlPanel } from './StudentControlPanel'
+export { default as TeacherControlPanel } from './TeacherControlPanel'
