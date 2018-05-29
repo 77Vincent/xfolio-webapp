@@ -9,6 +9,7 @@ export const NotificationTypes = {
   CONFIRM_ORDER: 'CONFIRM_ORDER',
   BOOK_COURSE: 'BOOK_COURSE',
   CONFIRM_COURSE: 'CONFIRM_COURSE',
+  SELF_CONFIRM_COURSE: 'SELF_CONFIRM_COURSE',
   REFUSE_COURSE: 'REFUSE_COURSE',
 }
 
@@ -76,6 +77,17 @@ export default class NotificationItem extends Component {
               <span className="user-name">马天驰</span>
               <span className="colon">:</span>
               <span className="statement">确认了您</span>
+              <span className="time-format">2018/05/16，上午10:00-11:00</span>
+              <span className="statement">的</span>
+              <span className="course-name">首课</span>
+            </p>
+          )
+        }
+        {
+          this.props.type === NotificationTypes.SELF_CONFIRM_COURSE && (
+            <p className="item-detail-wrap item-submit-order">
+              <span className="user-name">您</span>
+              <span className="statement">确认了</span>
               <span className="time-format">2018/05/16，上午10:00-11:00</span>
               <span className="statement">的</span>
               <span className="course-name">首课</span>

@@ -50,6 +50,37 @@ export default class Notification extends Component {
         </div>
         <div className="notification-item-wrap">
           <NotificationItem
+            type={NotificationTypes.SELF_CONFIRM_COURSE}
+          />
+        </div>
+        <div className="notification-item-wrap">
+          <NotificationItem
+            type={NotificationTypes.REFUSE_COURSE}
+          />
+        </div>
+
+        <div className="notification-item-wrap">
+          <NotificationItem
+            type={NotificationTypes.REFUSE_COURSE}
+          />
+        </div>
+        <div className="notification-item-wrap">
+          <NotificationItem
+            type={NotificationTypes.REFUSE_COURSE}
+          />
+        </div>
+        <div className="notification-item-wrap">
+          <NotificationItem
+            type={NotificationTypes.REFUSE_COURSE}
+          />
+        </div>
+        <div className="notification-item-wrap">
+          <NotificationItem
+            type={NotificationTypes.REFUSE_COURSE}
+          />
+        </div>
+        <div className="notification-item-wrap">
+          <NotificationItem
             type={NotificationTypes.REFUSE_COURSE}
           />
         </div>
