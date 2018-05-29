@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
+import { Button } from 'antd'
 
 import { NotificationItem } from '../index'
 import { NotificationTypes } from '../NotificationItem/index'
@@ -42,6 +43,15 @@ export default class Notification extends Component {
           <NotificationItem
             type={NotificationTypes.BOOK_COURSE}
           />
+          <div className="opera-wrap">
+            <span className="left-refuse-times">
+              剩余退回
+              <span className="number">3</span>
+              次数
+            </span>
+            <Button className="opera-btn">退回</Button>
+            <Button className="opera-btn">确认</Button>
+          </div>
         </div>
         <div className="notification-item-wrap">
           <NotificationItem
