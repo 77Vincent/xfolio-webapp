@@ -49,7 +49,9 @@ export default class InitTeacherFilter extends Component {
 
     // 所有步骤都做了选择
     if (this.state.filterInitResult.length === filterStepInfo.length) {
-      this.props.history.push('/teachers')
+      setTimeout(() => {
+        this.props.history.push('/teachers')
+      }, 700)
     }
   }
 
