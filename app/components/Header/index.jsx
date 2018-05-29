@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
-import HeaderButton from '../HeaderButton'
 import './index.less'
 
 export default class Header extends Component {
@@ -34,24 +33,46 @@ export default class Header extends Component {
               <span className="icon-logo">xfolio logo</span>
             </Link>
             <div className="button-wrap">
-              <HeaderButton>
-                <Link to={false ? '/teachers' : '/init-teacher-filter'} >寻找导师</Link>
-              </HeaderButton>
-              <HeaderButton>
-                <Link to="/signup-as-teacher" >成为导师</Link>
-              </HeaderButton>
-              <HeaderButton>
-                <Link to="/resource" >资源</Link>
-              </HeaderButton>
-              <HeaderButton>
-                <Link to="/help" >帮助</Link>
-              </HeaderButton>
+              <NavLink
+                to={false ? '/teachers' : '/init-teacher-filter'}
+                className="header-nav-button"
+                activeClassName="current"
+              >
+                寻找导师
+              </NavLink>
+              <NavLink
+                to="/signup-as-teacher"
+                className="header-nav-button"
+                activeClassName="current"
+              >
+                成为导师
+              </NavLink>
+              <NavLink
+                to="/resource"
+                className="header-nav-button"
+                activeClassName="current"
+              >
+                资源
+              </NavLink>
+              <NavLink
+                to="/help"
+                className="header-nav-button"
+                activeClassName="current"
+              >
+                帮助
+              </NavLink>
             </div>
           </div>
           <div className="position-wrap">
-            <HeaderButton>
-              <Link to="/signin" >登录</Link>
-            </HeaderButton>
+            <div className="button-wrap">
+              <NavLink
+                to="/signin"
+                className="header-nav-button"
+                activeClassName="current"
+              >
+                登录
+              </NavLink>
+            </div>
           </div>
         </div>
       </div>

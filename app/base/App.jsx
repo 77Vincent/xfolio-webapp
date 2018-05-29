@@ -7,6 +7,8 @@ import { Route, Redirect, Switch } from 'react-router-dom'
 import {
   Header,
   Footer,
+  Notification,
+  StudentProfiles,
 } from '../components'
 import {
   HomePage,
@@ -55,7 +57,24 @@ export default class App extends Component {
               <Route exact path="/signup-as-student" component={SignUpAsStudent} />
               <Route exact path="/init-teacher-filter" component={InitTeacherFilter} />
               <Route exact path="/teachers" component={Teachers} />
-              <Route exact path="/dashboard" component={StudentControlPanel} />
+              <Route
+                exact
+                path="/dashboard/profile"
+                render={() => (
+                  <StudentControlPanel
+                    content={StudentProfiles}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/dashboard/notification"
+                render={() => (
+                  <StudentControlPanel
+                    content={Notification}
+                  />
+                )}
+              />
               <Route exact path="/signin" component={SignIn} />
               <Redirect to="/" push={false} />
             </Switch>

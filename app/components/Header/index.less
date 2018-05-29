@@ -28,6 +28,23 @@
     justify-content: center;
     align-items: center;
     height: 100%;
+
+    .header-nav-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      padding: 0 20px;
+      color: #fff;
+      font-size: @font-size-base;
+      user-select: none;
+      text-decoration: none;
+
+      &:hover, &.current {
+        background-color: @layout-header-button-hover-background;
+        cursor: pointer;
+      }
+    }
   }
 
   .icon-logo {

@@ -39,7 +39,7 @@ export default class SignIn extends Component {
               span: 5,
             }}
             wrapperCol={{
-              span: 17,
+              span: 19,
             }}
           >
             <Input />
@@ -51,7 +51,7 @@ export default class SignIn extends Component {
               span: 5,
             }}
             wrapperCol={{
-              span: 17,
+              span: 19,
             }}
           >
             <Input />
@@ -63,7 +63,7 @@ export default class SignIn extends Component {
           <Button
             className="button-signin"
             onClick={() => {
-              this.props.history.push('/dashboard')
+              this.props.history.push('/dashboard/profile')
             }}
           >登录
           </Button>

@@ -2,17 +2,16 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 
+import { StudentBasicAccountInfo, UploadAvatar } from '../index'
 import './index.less'
 
-export default class HeaderButton extends Component {
+export default class StudentProfiles extends Component {
   static propTypes = {
     style: PropTypes.object,
-    children: PropTypes.node,
   };
 
   static defaultProps = {
     style: {},
-    children: null,
   };
 
   componentDidMount() {
@@ -27,8 +26,9 @@ export default class HeaderButton extends Component {
     const wrapStyle = _.assign({}, this.props.style)
 
     return (
-      <div className="header-button-wrap" style={wrapStyle}>
-        {this.props.children}
+      <div className="student-profiles-wrap" style={wrapStyle}>
+        <UploadAvatar />
+        <StudentBasicAccountInfo />
       </div>
     )
   }

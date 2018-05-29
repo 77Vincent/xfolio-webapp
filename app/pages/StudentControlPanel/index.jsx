@@ -1,17 +1,19 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
+import { NavLink } from 'react-router-dom'
 
-import { StudentBasicAccountInfo, UploadAvatar } from '../../components'
 import './index.less'
 
 export default class StudentControlPanel extends Component {
   static propTypes = {
     style: PropTypes.object,
+    content: PropTypes.func,
   };
 
   static defaultProps = {
     style: {},
+    content: _.noop,
   };
 
   componentDidMount() {
@@ -28,14 +30,13 @@ export default class StudentControlPanel extends Component {
     return (
       <div className="student-control-panel" style={wrapStyle}>
         <div className="menus-wrap">
-          <a href="javascript:;" className="menu-item current">基本信息</a>
-          <a href="javascript:;" className="menu-item">我的消息</a>
-          <a href="javascript:;" className="menu-item">课程安排</a>
-          <a href="javascript:;" className="menu-item">我的账户</a>
+          <NavLink to="/dashboard/profile" className="menu-item" activeClassName="current">基本信息</NavLink>
+          <NavLink to="/dashboard/notification" className="menu-item" activeClassName="current">我的消息</NavLink>
+          <NavLink to="/dashboard/schedule" className="menu-item" activeClassName="current">课程安排</NavLink>
+          <NavLink to="/dashboard/account" className="menu-item" activeClassName="current">我的账户</NavLink>
         </div>
         <div className="content-wrap">
-          <UploadAvatar />
-          <StudentBasicAccountInfo />
+          { React.createElement(this.props.content) }
         </div>
       </div>
     )
