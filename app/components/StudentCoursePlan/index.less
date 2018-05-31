@@ -1,0 +1,85 @@
+@import "../../theme";
+
+.student-course-plan {
+  display: flex;
+  padding-top: 40px;
+
+  .module-wrap {
+
+    .title {
+      font-size: 16px;
+      color: #000;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .list-wrap {
+      display: flex;
+      flex-direction: column;
+      border-left: 1px solid #eee;
+      border-right: 1px solid #eee;
+
+      &.teacher-name-list {
+        min-width: 110px;
+        max-width: 120px;
+        border-left: none;
+
+        .teacher-name {
+          font-size: 14px;
+          line-height: 22px;
+          height: 22px;
+          white-space: pre;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          color: #000;
+          background-color: #fff;
+          text-align: center;
+          text-decoration: none;
+
+          &.current {
+            background-color: #e4007f;
+            color: #fff;
+          }
+          &:hover {
+            background-color: #eee;
+          }
+        }
+      }
+
+      &.teacher-info-list {
+        padding: 0 8px;
+
+        .teacher-info {
+          width: 250px;
+          border-radius: 5px;
+          margin-bottom: 5px;
+          border: 2px solid transparent;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          &.current, &:hover {
+            border-color: #e4007f;
+          }
+
+          img {
+            width: 100%;
+            border-radius: 3px;
+          }
+        }
+      }
+
+      &.course-list {
+        padding: 0 18px;
+
+        .course-list-item {
+          margin-bottom: 10px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}

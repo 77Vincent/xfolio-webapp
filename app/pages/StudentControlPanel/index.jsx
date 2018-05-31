@@ -32,7 +32,7 @@ export default class StudentControlPanel extends Component {
         <div className="menus-wrap">
           <NavLink to="/dashboard/profile" className="menu-item" activeClassName="current">基本信息</NavLink>
           <NavLink to="/dashboard/notification" className="menu-item" activeClassName="current">我的消息</NavLink>
-          <NavLink to="/dashboard/schedule" className="menu-item" activeClassName="current">课程安排</NavLink>
+          <NavLink to="/dashboard/plan" className="menu-item" activeClassName="current">课程安排</NavLink>
           <NavLink to="/dashboard/account" className="menu-item" activeClassName="current">我的账户</NavLink>
         </div>
         <div className="content-wrap">

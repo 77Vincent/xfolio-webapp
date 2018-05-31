@@ -1,6 +1,4 @@
 import React, { Component, Fragment } from 'react'
-import PropTypes from 'prop-types'
-import _ from 'lodash'
 import { Layout } from 'antd'
 import { Route, Redirect, Switch } from 'react-router-dom'
 
@@ -9,6 +7,7 @@ import {
   Footer,
   Notification,
   StudentProfiles,
+  StudentCoursePlan,
 } from '../components'
 import {
   HomePage,
@@ -62,6 +61,15 @@ export default class App extends Component {
                 render={() => (
                   <StudentControlPanel
                     content={Notification}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/dashboard/plan"
+                render={() => (
+                  <StudentControlPanel
+                    content={StudentCoursePlan}
                   />
                 )}
               />
