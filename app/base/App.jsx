@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { Layout } from 'antd'
@@ -24,14 +24,6 @@ import {
 import './App.less'
 
 export default class App extends Component {
-  static propTypes = {
-    style: PropTypes.object,
-  };
-
-  static defaultProps = {
-    style: {},
-  };
-
   componentDidMount() {
 
   }
@@ -41,10 +33,8 @@ export default class App extends Component {
   }
 
   render() {
-    const wrapStyle = _.assign({}, this.props.style)
-
     return (
-      <div className="app_wrap" style={wrapStyle}>
+      <Fragment>
         <Layout.Header className="layout-header-wrap">
           <Header />
         </Layout.Header>
@@ -83,7 +73,7 @@ export default class App extends Component {
         <Layout.Footer>
           <Footer />
         </Layout.Footer>
-      </div>
+      </Fragment>
     )
   }
 }

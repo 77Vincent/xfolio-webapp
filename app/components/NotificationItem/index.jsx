@@ -43,7 +43,7 @@ export default class NotificationItem extends Component {
               <span className="user-name">张三</span>
               <span className="colon">:</span>
               <span className="statement">提交了</span>
-              <span className="order-name"> 20h常规课程</span>
+              <span className="order-name">20h常规课程</span>
               <span className="statement">订单</span>
             </p>
           )
