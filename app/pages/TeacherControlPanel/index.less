@@ -1,1 +1,46 @@
 @import "../../theme";
+
+.teacher-control-panel {
+  display: flex;
+  width: 1020px;
+  margin: 0 auto;
+  height: 100%;
+  min-height: 100%;
+
+  .menus-wrap {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    width: 160px;
+    height: 100%;
+    padding: 30px 0;
+    border-right: 2px solid #e4007f;
+
+    .menu-item {
+      width: 100%;
+      height: 30px;
+      font-size: 16px;
+      line-height: 30px;
+      color: #000;
+      text-align: right;
+      padding-right: 40px;
+      margin-bottom: 16px;
+      background-color: #fff;
+      text-decoration: none;
+      letter-spacing: 1px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &.current, &:hover {
+        background-color: #f19ec2;
+      }
+    }
+  }
+
+  .content-wrap {
+    display: flex;
+    flex: 1;
+  }
+}

@@ -7,7 +7,7 @@ import {
   Footer,
   Notification,
   StudentProfiles,
-  StudentCoursePlan,
+  StudentCoursePlan, TeacherCoursePlan,
 } from '../components'
 import {
   HomePage,
@@ -18,6 +18,7 @@ import {
   InitTeacherFilter,
   Teachers,
   StudentControlPanel,
+  TeacherControlPanel,
 } from '../pages'
 
 import './App.less'
@@ -66,10 +67,19 @@ export default class App extends Component {
               />
               <Route
                 exact
-                path="/dashboard/plan"
+                path="/dashboard/plan/t"
                 render={() => (
                   <StudentControlPanel
                     content={StudentCoursePlan}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/dashboard/plan/s"
+                render={() => (
+                  <TeacherControlPanel
+                    content={TeacherCoursePlan}
                   />
                 )}
               />
