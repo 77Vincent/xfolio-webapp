@@ -7,7 +7,7 @@ import { getImage } from '../../utils'
 import { CourseListItem, EditNewCourseItem } from '../../components'
 import './index.less'
 
-export default class StudentCoursePlan extends Component {
+export default class TeacherCoursePlan extends Component {
   static propTypes = {
     style: PropTypes.object,
   };
@@ -31,10 +31,10 @@ export default class StudentCoursePlan extends Component {
       <div className="teacher-course-plan" style={wrapStyle}>
         <div className="my-student module-wrap">
           <h5 className="title">我的学生</h5>
-          <div className="teacher-name-list list-wrap">
-            <a href="javascript:;" className="teacher-name" title="张赛男">张赛男</a>
-            <a href="javascript:;" className="teacher-name current" title="李思思">李思思</a>
-            <a href="javascript:;" className="teacher-name" title="王二毛">王二毛啦啦啦</a>
+          <div className="student-name-list list-wrap">
+            <a href="javascript:;" className="student-name" title="张赛男">张赛男</a>
+            <a href="javascript:;" className="student-name current" title="李思思">李思思</a>
+            <a href="javascript:;" className="student-name" title="王二毛">王二毛啦啦啦</a>
           </div>
         </div>
         <div className="student-info  module-wrap">
