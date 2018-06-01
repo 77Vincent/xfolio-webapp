@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
+import { Icon } from 'antd'
 
 import { getImage } from '../../utils'
-import { CourseListItem } from '../../components'
+import { CourseListItem, EditNewCourseItem } from '../../components'
 import './index.less'
 
 export default class StudentCoursePlan extends Component {
@@ -91,6 +92,12 @@ export default class StudentCoursePlan extends Component {
                 }}
               />
             }
+            <EditNewCourseItem />
+            <div className="add-course-item">
+              <Icon type="plus" />
+              <span className="content">增加一节课</span>
+            </div>
+            <a href="" className="btn-lesson-plan-tip">遇到瓶颈了？看看其他人的教案吧</a>
           </div>
         </div>
       </div>
