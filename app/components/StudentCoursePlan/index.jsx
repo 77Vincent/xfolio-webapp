@@ -81,17 +81,15 @@ export default class StudentCoursePlan extends Component {
               }}
             />
             {
-              false && (
-                <CourseListItem
-                  userRole="teacher"
-                  courseInfo={{
-                    order: 2,
-                    content: '对学生进行评估，讲解专业概况\n制定学习计划和课表，明确学习目标',
-                    time: '2018/05/03\n上午8:00-9:00',
-                    finished: true,
-                  }}
-                />
-              )
+              <CourseListItem
+                userRole="teacher"
+                courseInfo={{
+                  order: 2,
+                  content: '对学生进行评估，讲解专业概况\n制定学习计划和课表，明确学习目标',
+                  time: '2018/05/03\n上午8:00-9:00',
+                  finished: false,
+                }}
+              />
             }
           </div>
         </div>

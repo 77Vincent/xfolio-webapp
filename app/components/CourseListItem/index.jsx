@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { Rate, Calendar } from 'antd'
+import anime from 'animejs'
 
 import './index.less'
 
@@ -14,11 +15,12 @@ export default class CourseListItem extends Component {
 
   static defaultProps = {
     style: {},
-    showDatePicker: false,
   };
 
   state = {
     showRatePanel: false,
+    showDatePicker: false,
+    courseInfo: this.props.courseInfo,
   }
 
   componentDidMount() {
@@ -41,9 +43,39 @@ export default class CourseListItem extends Component {
     })
   }
 
+  endCourseProgressElem;
+  endCourseProgressAnimation;
+
+  handleClickEndCourseStart = () => {
+    if (this.endCourseProgressAnimation === undefined || this.endCourseProgressAnimation.completed === false) {
+      this.endCourseProgressAnimation = anime({
+        targets: this.endCourseProgressElem,
+        width: '100%',
+        duration: 1000,
+        easing: 'linear',
+        complete: () => {
+          this.setState({
+            courseInfo: _.assign(this.state.courseInfo, {
+              finished: true,
+              rated: true, // TODO 老师的课程表默认评价过
+            }),
+          })
+        },
+      })
+    }
+  }
+
+  handleClickEndCourseFinish = () => {
+    if (this.endCourseProgressAnimation.completed !== true) {
+      this.endCourseProgressAnimation.pause()
+      this.endCourseProgressElem.style.width = '0px'
+    }
+  }
+
   render() {
     const wrapStyle = _.assign({}, this.props.style)
-    const { courseInfo, userRole } = this.props
+    const { userRole } = this.props
+    const { courseInfo } = this.state
 
     // 公共
     const courseOrder = (
@@ -73,7 +105,13 @@ export default class CourseListItem extends Component {
       <div className="course-finished-not-rated">
         { courseOrder }
         { courseContentWrap }
-        <a href="javascript:;" className="opera-btn btn-rate" onClick={this.handleToggleRatePanel}>评价</a>
+        <a
+          href="javascript:;"
+          className="opera-btn btn-rate"
+          onClick={this.handleToggleRatePanel}
+        >
+          评价
+        </a>
       </div>
     )
     const rateCourse = (
@@ -83,7 +121,13 @@ export default class CourseListItem extends Component {
           <div className="rate-wrap">
             <Rate value={3} style={{ fontSize: 25 }} />
           </div>
-          <a href="javascript:;" className="opera-btn btn-submit-rate" onClick={this.handleToggleRatePanel}>确定</a>
+          <a
+            href="javascript:;"
+            className="opera-btn btn-submit-rate"
+            onClick={this.handleToggleRatePanel}
+          >
+            确定
+          </a>
         </div>
       </div>
     )
@@ -92,7 +136,13 @@ export default class CourseListItem extends Component {
         { courseOrder }
         <div className="content-wrap">
           { courseContent }
-          <a href="javascript:;" className="opera-btn btn-appoint-time" onClick={this.handleToggleDatePicker}>预约时间</a>
+          <a
+            href="javascript:;"
+            className="opera-btn btn-appoint-time"
+            onClick={this.handleToggleDatePicker}
+          >
+            {'预约\n时间'}
+          </a>
         </div>
         {
           this.state.showDatePicker && (
@@ -108,11 +158,23 @@ export default class CourseListItem extends Component {
     const endCourse = (
       <div className="end-course-wrap">
         <div className="content-wrap">
-          { courseOrder }
-          { courseContentWrap }
-          <div className="end-course-progress-tip" />
+          <div className="content">
+            { courseOrder }
+            { courseContentWrap }
+          </div>
+          <div
+            className="end-course-progress-tip"
+            ref={(r) => { this.endCourseProgressElem = r }}
+          />
         </div>
-        <a href="javascript:;" className="opera-btn btn-end-course">长按节课</a>
+        <a
+          href="javascript:;"
+          className="opera-btn btn-end-course"
+          onMouseDown={this.handleClickEndCourseStart}
+          onMouseUp={this.handleClickEndCourseFinish}
+        >
+          {'长按\n结课'}
+        </a>
       </div>
     )
 
@@ -151,7 +213,7 @@ export default class CourseListItem extends Component {
           )
         }
         {
-          userRole === 'teacher' && (
+          userRole === 'teacher' && courseInfo.finished === false && (
             endCourse
           )
         }

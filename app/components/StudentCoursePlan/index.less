@@ -5,6 +5,8 @@
   padding-top: 40px;
 
   .module-wrap {
+    display: flex;
+    flex-direction: column;
 
     .title {
       font-size: 16px;
@@ -14,14 +16,12 @@
     }
     .list-wrap {
       display: flex;
+      flex: 1;
       flex-direction: column;
-      border-left: 1px solid #eee;
-      border-right: 1px solid #eee;
 
       &.teacher-name-list {
         min-width: 110px;
         max-width: 120px;
-        border-left: none;
 
         .teacher-name {
           font-size: 14px;
@@ -47,6 +47,8 @@
 
       &.teacher-info-list {
         padding: 0 8px;
+        border-left: 1px solid #eee;
+        border-right: 1px solid #eee;
 
         .teacher-info {
           width: 250px;
@@ -80,6 +82,10 @@
           }
         }
       }
+    }
+
+    &.my-course-list {
+      padding-bottom: 40px;
     }
   }
 }

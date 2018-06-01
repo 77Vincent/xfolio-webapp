@@ -45,6 +45,7 @@
     cursor: pointer;
     background-color: #bfbfbf;
     text-decoration: none;
+    white-space: pre-wrap;
   }
   .course-content-wrap {
     display: flex;
@@ -129,11 +130,18 @@
     .content-wrap {
       position: relative;
 
+      .content {
+        display: flex;
+        flex: 1;
+        position: relative;
+        z-index: 2;
+      }
       .end-course-progress-tip {
         position: absolute;
         top: 0;
         left: 0;
-        width: 100%;
+        z-index: 1;
+        width: 0;
         height: 100%;
         background-color: #bfbfbf;
       }
