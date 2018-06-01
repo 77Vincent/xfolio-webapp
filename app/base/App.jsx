@@ -67,7 +67,7 @@ export default class App extends Component {
               />
               <Route
                 exact
-                path="/dashboard/plan/t"
+                path="/dashboard/plan/student"
                 render={() => (
                   <StudentControlPanel
                     content={StudentCoursePlan}
@@ -76,7 +76,7 @@ export default class App extends Component {
               />
               <Route
                 exact
-                path="/dashboard/plan/s"
+                path="/dashboard/plan/teacher"
                 render={() => (
                   <TeacherControlPanel
                     content={TeacherCoursePlan}
