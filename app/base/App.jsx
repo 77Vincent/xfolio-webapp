@@ -7,7 +7,9 @@ import {
   Footer,
   Notification,
   StudentProfiles,
-  StudentCoursePlan, TeacherCoursePlan,
+  StudentCoursePlan,
+  TeacherCoursePlan,
+  TeacherCalendarAndPrice,
 } from '../components'
 import {
   HomePage,
@@ -80,6 +82,15 @@ export default class App extends Component {
                 render={() => (
                   <TeacherControlPanel
                     content={TeacherCoursePlan}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/dashboard/price"
+                render={() => (
+                  <TeacherControlPanel
+                    content={TeacherCalendarAndPrice}
                   />
                 )}
               />

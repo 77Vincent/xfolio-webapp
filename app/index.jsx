@@ -6,12 +6,17 @@ import 'babel-polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { HashRouter } from 'react-router-dom'
+import { LocaleProvider } from 'antd'
+import zhCN from 'antd/lib/locale-provider/zh_CN'
+import 'moment/locale/zh-cn'
 
 import App from './base/App'
 
 ReactDOM.render(
   <HashRouter>
-    <App />
+    <LocaleProvider locale={zhCN}>
+      <App />
+    </LocaleProvider>
   </HashRouter>,
   document.getElementById('root'),
   () => {
