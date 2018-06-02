@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { Tag, Icon, Button } from 'antd'
+import { Link } from 'react-router-dom'
 
 import './index.less'
 import { getImage } from '../../utils'
@@ -10,10 +11,12 @@ import { getImage } from '../../utils'
 export default class TeacherInfoSnapshot extends Component {
   static propTypes = {
     style: PropTypes.object,
+    showAppointBtn: PropTypes.bool,
   };
 
   static defaultProps = {
     style: {},
+    showAppointBtn: true,
   };
 
   componentDidMount() {
@@ -55,14 +58,18 @@ export default class TeacherInfoSnapshot extends Component {
                 )
               }
             </a>
-            <Button
-              className={cx({
-                'btn-order': true,
-                disabled: false,
-              })}
-            >
-              预约
-            </Button>
+            {
+              this.props.showAppointBtn === true && (
+                <Button
+                  className={cx({
+                    'btn-order': true,
+                    disabled: false,
+                  })}
+                >
+                  <Link to="/submit-order">预约</Link>
+                </Button>
+              )
+            }
           </div>
         </div>
       </div>

@@ -1,0 +1,109 @@
+@import "../../theme";
+
+.submit-order-wrap {
+  padding: 30px 0 30px 100px;
+
+  .order-detail-wrap {
+
+    .order-info-item {
+
+      .title {
+        font-size: 16px;
+        color: #000;
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+    }
+
+    .teacher-price {
+      margin-bottom: 30px;
+
+      .price {
+        font-size: 16px;
+        color: #e4007f;
+        margin-bottom: 0;
+      }
+    }
+    .course-package {
+      margin-bottom: 25px;
+
+      .title {
+        margin-bottom: 5px;
+      }
+
+      .course-number-options {
+
+        .ant-btn {
+          width: 60px;
+          height: 30px;
+          font-size: 16px;
+          color: #000;
+          line-height: 30px;
+          text-align: center;
+          background-color: #eee;
+          border-radius: 15px;
+          border: none;
+          margin-right: 15px;
+
+          &:hover, &.current {
+            background-color: #e4007f;
+            color: #fff;
+          }
+        }
+      }
+    }
+    .course-number {
+
+      .course-number-opera {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: 8px;
+
+        .ant-btn, .number {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 40px;
+          height: 30px;
+          font-size: 16px;
+          color: #000;
+          background-color: #eee;
+          padding: 0;
+          border-radius: 0;
+          border: none;
+        }
+        .ant-btn {
+          &.disabled {
+            color: #bfbfbf;
+          }
+        }
+        .number {
+          margin: 0 2px;
+        }
+      }
+    }
+    .order-price {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-top: 50px;
+      font-size: 16px;
+
+      .price-number {
+        color: #e4007f;
+        margin-left: 24px;
+      }
+    }
+    .btn-submit-order {
+      width: 300px;
+      height: 40px;
+      font-size: 16px;
+      color: #fff;
+      background-color: #e4007f;
+      border-color: #e4007f;
+      border-radius: 20px;
+      margin-top: 10px;
+    }
+  }
+}

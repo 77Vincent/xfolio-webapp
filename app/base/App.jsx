@@ -21,6 +21,7 @@ import {
   Teachers,
   StudentControlPanel,
   TeacherControlPanel,
+  SubmitOrder,
 } from '../pages'
 
 import './App.less'
@@ -49,6 +50,7 @@ export default class App extends Component {
               <Route exact path="/signup-as-student" component={SignUpAsStudent} />
               <Route exact path="/init-teacher-filter" component={InitTeacherFilter} />
               <Route exact path="/teachers" component={Teachers} />
+              <Route exact path="/submit-order" component={SubmitOrder} />
               <Route
                 exact
                 path="/dashboard/profile"
