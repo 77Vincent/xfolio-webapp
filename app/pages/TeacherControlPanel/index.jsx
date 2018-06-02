@@ -31,6 +31,7 @@ export default class TeacherControlPanel extends Component {
       <div className="teacher-control-panel" style={wrapStyle}>
         <div className="menus-wrap">
           <NavLink to="/dashboard/profile" className="menu-item" activeClassName="current">基本信息</NavLink>
+          <NavLink to="/dashboard/profile" className="menu-item" activeClassName="current">编辑主页</NavLink>
           <NavLink to="/dashboard/notification" className="menu-item" activeClassName="current">我的消息</NavLink>
           <NavLink to="/dashboard/plan/student" className="menu-item" activeClassName="current">课程安排(学生)</NavLink>
           <NavLink to="/dashboard/plan/teacher" className="menu-item" activeClassName="current">课程安排(老师)</NavLink>
