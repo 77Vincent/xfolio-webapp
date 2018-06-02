@@ -38,7 +38,7 @@ export default class TeacherCoursePlan extends Component {
           </div>
         </div>
         <div className="student-info  module-wrap">
-          <h5 className="title">学生嘻嘻</h5>
+          <h5 className="title">学生信息</h5>
           <div className="student-info-detail">
             <img src={getImage('default-student-avatar-300-400.png')} alt="" className="student-avatar" />
             <div className="student-info-item">
@@ -71,7 +71,7 @@ export default class TeacherCoursePlan extends Component {
           <h5 className="title">课程</h5>
           <div className="course-list list-wrap">
             <CourseListItem
-              userRole="student"
+              userRole="teacher"
               courseInfo={{
                 order: 1,
                 content: '对学生进行评估，讲解专业概况\n制定学习计划和课表，明确学习目标',
@@ -81,36 +81,14 @@ export default class TeacherCoursePlan extends Component {
               }}
             />
             <CourseListItem
-              userRole="student"
+              userRole="teacher"
               courseInfo={{
                 order: 2,
                 content: '对学生进行评估，讲解专业概况\n制定学习计划和课表，明确学习目标',
                 time: '2018/05/03\n上午8:00-9:00',
-                finished: true,
-                rated: false,
-              }}
-            />
-            <CourseListItem
-              userRole="student"
-              courseInfo={{
-                order: 3,
-                content: '对学生进行评估，讲解专业概况\n制定学习计划和课表，明确学习目标',
-                time: '2018/05/03\n上午8:00-9:00',
                 finished: false,
-                rated: false,
               }}
             />
-            {
-              <CourseListItem
-                userRole="teacher"
-                courseInfo={{
-                  order: 2,
-                  content: '对学生进行评估，讲解专业概况\n制定学习计划和课表，明确学习目标',
-                  time: '2018/05/03\n上午8:00-9:00',
-                  finished: false,
-                }}
-              />
-            }
             <EditNewCourseItem />
             <div className="add-course-item">
               <Icon type="plus" />
