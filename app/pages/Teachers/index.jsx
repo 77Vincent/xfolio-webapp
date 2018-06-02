@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { Anchor, Divider, Select, Radio, Pagination } from 'antd'
+import uuidv4 from 'uuid/v4'
 
 import { TeacherInfoSnapshot } from '../../components'
 import './index.less'
@@ -30,6 +31,7 @@ export default class Teachers extends Component {
       <div className="teachers-wrap" style={wrapStyle}>
         <Anchor
           showInkInFixed={false}
+          getContainer={() => (document.body)}
         >
           <div className="teachers-filter-wrap">
             <div className="filter-item-wrap">
@@ -100,7 +102,7 @@ export default class Teachers extends Component {
           <div className="content-wrap">
             {
               _.times(10, () => (
-                <TeacherInfoSnapshot />
+                <TeacherInfoSnapshot key={uuidv4()} />
               ))
             }
           </div>

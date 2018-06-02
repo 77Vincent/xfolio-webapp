@@ -60,7 +60,6 @@ export default class TeacherInfoSnapshot extends Component {
                 'btn-order': true,
                 disabled: false,
               })}
-              disabled
             >
               预约
             </Button>

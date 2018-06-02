@@ -27,8 +27,8 @@ export default class Footer extends Component {
     return (
       <div className="footer-wrap" style={wrapStyle}>
         <div className="footer-content-wrap">
-          <span>CopyRight 2018</span>
-          <span>ICP备案号 123</span>
+          <span>© 2018 对页教育科技（上海）有限公司</span>
+          <span>沪ICP备18020158号</span>
         </div>
       </div>
     )

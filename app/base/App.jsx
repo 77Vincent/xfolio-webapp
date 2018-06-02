@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Layout } from 'antd'
+import { Layout, BackTop, Icon } from 'antd'
 import { Route, Redirect, Switch } from 'react-router-dom'
 
 import {
@@ -102,6 +102,12 @@ export default class App extends Component {
         <Layout.Footer>
           <Footer />
         </Layout.Footer>
+        <BackTop
+          visibilityHeight={100}
+          target={() => (document.body)}
+        >
+          <Icon type="up" />
+        </BackTop>
       </Fragment>
     )
   }
