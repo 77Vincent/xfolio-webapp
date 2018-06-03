@@ -2,17 +2,19 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { Link, NavLink } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import './index.less'
 
-export default class Header extends Component {
+class Header extends Component {
   static propTypes = {
     style: PropTypes.object,
-  };
+    teacherFilterInited: PropTypes.bool.isRequired,
+  }
 
   static defaultProps = {
     style: {},
-  };
+  }
 
   componentDidMount() {
 
@@ -34,7 +36,7 @@ export default class Header extends Component {
             </Link>
             <div className="button-wrap">
               <NavLink
-                to={false ? '/teachers' : '/init-teacher-filter'}
+                to={this.props.teacherFilterInited ? '/teachers' : '/init-teacher-filter'}
                 className="header-nav-button"
                 activeClassName="current"
               >
@@ -79,3 +81,9 @@ export default class Header extends Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  teacherFilterInited: state.AppStatus.teacherFilterInited,
+})
+
+export default connect(mapStateToProps)(Header)

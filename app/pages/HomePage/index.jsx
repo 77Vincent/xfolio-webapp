@@ -4,13 +4,15 @@ import _ from 'lodash'
 import { Carousel, Button } from 'antd'
 import { Link } from 'react-router-dom'
 import uuidv4 from 'uuid/v4'
+import { connect } from 'react-redux'
 
 import { getImage } from '../../utils'
 import './index.less'
 
-export default class HomePage extends Component {
+class HomePage extends Component {
   static propTypes = {
     style: PropTypes.object,
+    teacherFilterInited: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
@@ -58,7 +60,7 @@ export default class HomePage extends Component {
             type="primary"
             className="slide-button"
           >
-            <Link to="/teachers">寻找导师</Link>
+            <Link to={this.props.teacherFilterInited ? '/teachers' : '/init-teacher-filter'}>寻找导师</Link>
           </Button>
         </div>
         <div className="content-wrap">
@@ -104,3 +106,9 @@ export default class HomePage extends Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  teacherFilterInited: state.AppStatus.teacherFilterInited,
+})
+
+export default connect(mapStateToProps)(HomePage)

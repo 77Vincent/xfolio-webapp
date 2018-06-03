@@ -4,14 +4,16 @@ import _ from 'lodash'
 import { Progress, Radio, Select } from 'antd'
 import uuidv4 from 'uuid/v4'
 import cx from 'classnames'
+import { connect } from 'react-redux'
 
 import filterStepInfo from './filterStepInfo'
 import './index.less'
 
-export default class InitTeacherFilter extends Component {
+class InitTeacherFilter extends Component {
   static propTypes = {
     style: PropTypes.object,
     history: PropTypes.object,
+    updateTeacherFilterInitStatus: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -50,6 +52,7 @@ export default class InitTeacherFilter extends Component {
     // 所有步骤都做了选择
     if (this.state.filterInitResult.length === filterStepInfo.length) {
       setTimeout(() => {
+        this.props.updateTeacherFilterInitStatus(true)
         this.props.history.push('/teachers')
       }, 700)
     }
@@ -167,3 +170,9 @@ export default class InitTeacherFilter extends Component {
     )
   }
 }
+
+const mapDispatchToProps = dispatch => ({
+  updateTeacherFilterInitStatus: dispatch.AppStatus.updateTeacherFilterInitStatus,
+})
+
+export default connect(null, mapDispatchToProps)(InitTeacherFilter)

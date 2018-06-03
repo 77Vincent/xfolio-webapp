@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
+import { connect } from 'react-redux'
 
 import './index.less'
 
-export default class AAA extends Component {
+class AAA extends Component {
   static propTypes = {
     style: PropTypes.object,
-  };
+  }
 
   static defaultProps = {
     style: {},
-  };
+  }
 
   componentDidMount() {
 
@@ -31,3 +32,13 @@ export default class AAA extends Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+
+})
+
+const mapDispatchToProps = dispatch => ({
+
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AAA)

@@ -1,8 +1,19 @@
 const Counter = {
-  state: 0,
+  state: {
+    value: 0,
+    userInfo: {
+      name: 'xx',
+      age: 12,
+    },
+  },
   reducers: {
     increment(state, payload) {
-      return state + payload
+      state += payload
+      return state
+    },
+    updateUserAge(state, newAge) {
+      state.userInfo.age = newAge
+      return state
     },
   },
   effects: {
