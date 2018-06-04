@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { Link, NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { Icon } from 'antd'
 
 import './index.less'
 
@@ -10,6 +11,7 @@ class Header extends Component {
   static propTypes = {
     style: PropTypes.object,
     teacherFilterInited: PropTypes.bool.isRequired,
+    alreadySignIn: PropTypes.bool.isRequired,
   }
 
   static defaultProps = {
@@ -67,13 +69,21 @@ class Header extends Component {
           </div>
           <div className="position-wrap">
             <div className="button-wrap">
-              <NavLink
-                to="/signin"
-                className="header-nav-button"
-                activeClassName="current"
-              >
-                登录
-              </NavLink>
+              {
+                this.props.alreadySignIn === false ? (
+                  <NavLink
+                    to="/signin"
+                    className="header-nav-button"
+                    activeClassName="current"
+                  >
+                    登录
+                  </NavLink>
+                ) : (
+                  <NavLink to="/dashboard/profile" className="btn-homepage">
+                    <Icon type="user" />
+                  </NavLink>
+                )
+              }
             </div>
           </div>
         </div>
@@ -84,6 +94,7 @@ class Header extends Component {
 
 const mapStateToProps = state => ({
   teacherFilterInited: state.AppStatus.teacherFilterInited,
+  alreadySignIn: state.AppStatus.alreadySignIn,
 })
 
 export default connect(mapStateToProps)(Header)
