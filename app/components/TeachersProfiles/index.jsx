@@ -2,9 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { Button, Icon, Tag } from 'antd'
+import uuidv4 from 'uuid/v4'
 
 import { TeacherBasicAccountInfo, TeacherInfoSnapshot } from '../index'
 import './index.less'
+
+const commonTags = ['名师', '大牛', '设计师', '建筑师']
 
 export default class StudentProfiles extends Component {
   static propTypes = {
@@ -17,6 +20,7 @@ export default class StudentProfiles extends Component {
 
   state = {
     showTagInput: false,
+    tagList: ['名校毕业', '风趣', '教学经验', '工作经验'],
   }
 
   componentDidMount() {
@@ -25,6 +29,23 @@ export default class StudentProfiles extends Component {
 
   componentWillUnmount() {
 
+  }
+
+  inputTagElem = '';
+
+  handleCLickAddInputTag = () => {
+    const newTag = _.trim(this.inputTagElem.value)
+    if (newTag !== '') {
+      this.handleClickAddTag(newTag)
+      this.inputTagElem.value = ''
+    }
+  }
+
+  handleClickAddTag = (newTag) => {
+    this.state.tagList.push(newTag)
+    this.setState({
+      tagList: this.state.tagList,
+    })
   }
 
   toggleTagInput = () => {
@@ -45,34 +66,36 @@ export default class StudentProfiles extends Component {
               <Button className="btn-show-add-tags" onClick={this.toggleTagInput}>
                 <Icon type="plus" />
               </Button>
-              <Tag closable>123</Tag>
-              <Tag closable>123</Tag>
-              <Tag closable>123</Tag>
-              <Tag closable>123</Tag>
-              <Tag closable>123</Tag>
-              <Tag closable>123</Tag>
+              {
+                _.map(this.state.tagList, tagInfo => (
+                  <Tag closable key={uuidv4()}>{tagInfo}</Tag>
+                ))
+              }
             </div>
             {
               this.state.showTagInput === true && (
                 <div className="add-tag-input-wrap">
                   <div className="input-tag-wrap">
-                    <input className="input-tag" />
-                    <Button className="btn-add-tag">
+                    <input className="input-tag" ref={(r) => { this.inputTagElem = r }} placeholder="请输入新标签" />
+                    <Button className="btn-add-tag" onClick={this.handleCLickAddInputTag}>
                       <Icon type="plus" />
                     </Button>
                   </div>
                   <div className="common-tags-wrap">
                     <p className="title">常用标签</p>
                     <div className="tags-wrap">
-                      <Tag>123</Tag>
-                      <Tag>123</Tag>
-                      <Tag>123</Tag>
-                      <Tag>123</Tag>
-                      <Tag>123</Tag>
-                      <Tag>123</Tag>
-                      <Tag>123</Tag>
-                      <Tag>123</Tag>
-                      <Tag>123</Tag>
+                      {
+                        _.map(commonTags, tagInfo => (
+                          <Tag
+                            onClick={() => {
+                              this.handleClickAddTag(tagInfo)
+                            }}
+                            key={uuidv4()}
+                          >
+                            {tagInfo}
+                          </Tag>
+                        ))
+                      }
                     </div>
                   </div>
                 </div>
