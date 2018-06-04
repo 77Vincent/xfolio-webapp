@@ -60,7 +60,7 @@ export default class PriceDetail extends Component {
         {
           this.state.editMode === true && (
             <div className="edit-price-wrap">
-              <Input placeholder="请输入新价格" type="number"/>
+              <Input placeholder="请输入新价格" />
               <Button onClick={this.handleSubmitEditPrice}>确定</Button>
             </div>
           )

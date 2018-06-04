@@ -12,11 +12,13 @@ export default class TeacherInfoSnapshot extends Component {
   static propTypes = {
     style: PropTypes.object,
     showAppointBtn: PropTypes.bool,
+    showFavBtn: PropTypes.bool,
   };
 
   static defaultProps = {
     style: {},
     showAppointBtn: true,
+    showFavBtn: true,
   };
 
   componentDidMount() {
@@ -49,15 +51,19 @@ export default class TeacherInfoSnapshot extends Component {
             <p className="item">本周可约课时：0</p>
           </div>
           <div className="operas-wrap">
-            <a href="javascript:;" className="btn-favorite">
-              {
-                true ? (
-                  <Icon type="star-o" />
-                ) : (
-                  <Icon type="star" />
-                )
-              }
-            </a>
+            {
+              this.props.showFavBtn === true && (
+                <a href="javascript:;" className="btn-favorite">
+                  {
+                    true ? (
+                      <Icon type="star-o" />
+                    ) : (
+                      <Icon type="star" />
+                    )
+                  }
+                </a>
+              )
+            }
             {
               this.props.showAppointBtn === true && (
                 <Button

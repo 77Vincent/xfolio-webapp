@@ -62,6 +62,7 @@ const webpackConfigBase = {
             {
               loader: 'less',
               options: {
+                javascriptEnabled: true,
                 sourceMap: true,
                 modifyVars: themeVariables,
               },

@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { Input, Button, Select } from 'antd'
+import { Input, Button, Select, Tooltip, Icon } from 'antd'
 
 import './index.less'
 
@@ -11,6 +11,7 @@ export default class UpdateAccountInfoItem extends Component {
     inputType: PropTypes.oneOf(['input', 'select']),
     placeholder: PropTypes.string,
     options: PropTypes.array,
+    tip: PropTypes.string,
   };
 
   static defaultProps = {
@@ -18,6 +19,7 @@ export default class UpdateAccountInfoItem extends Component {
     inputType: 'input', // input select
     placeholder: '',
     options: [],
+    tip: '',
   };
 
   state = {
@@ -45,7 +47,18 @@ export default class UpdateAccountInfoItem extends Component {
       <div className="update-account-info-item" style={wrapStyle}>
         {
           this.state.showInput === false ? (
-            <a href="javascript:;" className="btn-start-update" onClick={this.toggleShowInput}>修改</a>
+            <div className="operas-wrap">
+              <a href="javascript:;" className="btn-start-update" onClick={this.toggleShowInput}>修改</a>
+              {
+                this.props.tip !== '' && (
+                  <Tooltip placement="rightBottom" title={this.props.tip}>
+                    <span className="btn-show-tip">
+                      <Icon type="exclamation" />
+                    </span>
+                  </Tooltip>
+                )
+              }
+            </div>
           ) : (
             <div className="input-wrap">
               {

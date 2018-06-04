@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react'
+import PropTypes from 'prop-types'
 import { Layout, BackTop, Icon } from 'antd'
-import { Route, Redirect, Switch } from 'react-router-dom'
+import { Route, Redirect, Switch, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import {
   Header,
@@ -8,8 +10,10 @@ import {
   Notification,
   StudentProfiles,
   StudentCoursePlan,
+  TeachersProfiles,
   TeacherCoursePlan,
   TeacherCalendarAndPrice,
+  PrivateRoute,
 } from '../components'
 import {
   HomePage,
@@ -23,10 +27,18 @@ import {
   TeacherControlPanel,
   SubmitOrder,
 } from '../pages'
+import { USER_ROLE } from '../Consts'
 
 import './App.less'
 
-export default class App extends Component {
+class App extends Component {
+  static propTypes = {
+    accountInfo: PropTypes.object.isRequired,
+  }
+
+  static defaultProps = {
+  }
+
   componentDidMount() {
 
   }
@@ -50,44 +62,53 @@ export default class App extends Component {
               <Route exact path="/signup-as-student" component={SignUpAsStudent} />
               <Route exact path="/init-teacher-filter" component={InitTeacherFilter} />
               <Route exact path="/teachers" component={Teachers} />
-              <Route exact path="/submit-order" component={SubmitOrder} />
-              <Route
+              <PrivateRoute exact path="/submit-order" component={SubmitOrder} />
+              <PrivateRoute
                 exact
                 path="/dashboard/profile"
                 render={() => (
-                  <StudentControlPanel
-                    content={StudentProfiles}
-                  />
+                  this.props.accountInfo.userRole === USER_ROLE.TEACHER ? (
+                    <TeacherControlPanel
+                      content={TeachersProfiles}
+                    />
+                  ) : (
+                    <StudentControlPanel
+                      content={StudentProfiles}
+                    />
+                  )
                 )}
               />
-              <Route
+              <PrivateRoute
                 exact
                 path="/dashboard/notification"
                 render={() => (
-                  <StudentControlPanel
-                    content={Notification}
-                  />
+                  this.props.accountInfo.userRole === USER_ROLE.TEACHER ? (
+                    <TeacherControlPanel
+                      content={Notification}
+                    />
+                  ) : (
+                    <StudentControlPanel
+                      content={Notification}
+                    />
+                  )
                 )}
               />
-              <Route
+              <PrivateRoute
                 exact
-                path="/dashboard/plan/student"
+                path="/dashboard/plan"
                 render={() => (
-                  <StudentControlPanel
-                    content={StudentCoursePlan}
-                  />
+                  this.props.accountInfo.userRole === USER_ROLE.TEACHER ? (
+                    <TeacherControlPanel
+                      content={TeacherCoursePlan}
+                    />
+                  ) : (
+                    <StudentControlPanel
+                      content={StudentCoursePlan}
+                    />
+                  )
                 )}
               />
-              <Route
-                exact
-                path="/dashboard/plan/teacher"
-                render={() => (
-                  <TeacherControlPanel
-                    content={TeacherCoursePlan}
-                  />
-                )}
-              />
-              <Route
+              <PrivateRoute
                 exact
                 path="/dashboard/price"
                 render={() => (
@@ -114,3 +135,15 @@ export default class App extends Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  accountInfo: state.AccountInfo,
+})
+
+const mapDispatchToProps = dispatch => ({
+
+})
+
+export default withRouter(connect(mapStateToProps)(App))
+
+// export default App

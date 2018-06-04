@@ -3,19 +3,24 @@ import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { Form, Input, Button } from 'antd'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { USER_ROLE } from '../../Consts'
 
+import { Log } from '../../utils'
 import './index.less'
 
-export default class SignIn extends Component {
+class SignIn extends Component {
   static propTypes = {
     style: PropTypes.object,
-    history: PropTypes.object,
-  };
+    form: PropTypes.object.isRequired,
+    updateAccountInfo: PropTypes.func.isRequired,
+    updateUserSignInStatus: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired,
+  }
 
   static defaultProps = {
     style: {},
-    history: {},
-  };
+  }
 
   componentDidMount() {
 
@@ -25,13 +30,39 @@ export default class SignIn extends Component {
 
   }
 
+  handleSubmit = (e) => {
+    e.preventDefault()
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        Log.log('Received values of form: ', values)
+        if (values.mobile === '13000000000') {
+          this.props.updateAccountInfo({
+            mobileNumber: values.mobile,
+            userRole: USER_ROLE.TEACHER,
+          })
+        } else {
+          this.props.updateAccountInfo({
+            mobileNumber: values.mobile,
+            userRole: USER_ROLE.STUDENT,
+          })
+        }
+        this.props.updateUserSignInStatus(true)
+        this.props.history.push('/dashboard/profile')
+      }
+    })
+  }
+
   render() {
     const wrapStyle = _.assign({}, this.props.style)
+    const { getFieldDecorator } = this.props.form
 
     return (
       <div className="sign-in-wrap" style={wrapStyle}>
-        <h2 className="page-title">登录</h2>
-        <Form layout="horizontal">
+        <Form
+          layout="horizontal"
+          hideRequiredMark
+          onSubmit={this.handleSubmit}
+        >
           <Form.Item
             label="手机号码"
             colon={false}
@@ -42,7 +73,17 @@ export default class SignIn extends Component {
               span: 19,
             }}
           >
-            <Input />
+            {
+              getFieldDecorator('mobile', {
+                initialValue: '13000000000',
+                rules: [
+                  { required: true, message: '请输入手机号' },
+                  { pattern: /^1\d{10}$/, message: '请输入11位手机号' },
+                ],
+              })((
+                <Input />
+              ))
+            }
           </Form.Item>
           <Form.Item
             label="账号密码"
@@ -54,7 +95,17 @@ export default class SignIn extends Component {
               span: 19,
             }}
           >
-            <Input />
+            {
+              getFieldDecorator('password', {
+                initialValue: '123456',
+                rules: [
+                  { required: true, message: '请输入密码' },
+                  { pattern: /.{6,20}/, message: '密码长度必须为6-20个字符' },
+                ],
+              })((
+                <Input type="current-password" />
+              ))
+            }
           </Form.Item>
           <div className="account-opera-buttons">
             <Link to="/forgot">忘记密码</Link>
@@ -62,13 +113,26 @@ export default class SignIn extends Component {
           </div>
           <Button
             className="button-signin"
-            onClick={() => {
-              this.props.history.push('/dashboard/profile')
-            }}
-          >登录
+            type="primary"
+            htmlType="submit"
+          >
+            登录
           </Button>
         </Form>
       </div>
     )
   }
 }
+
+const SignInWrapped = Form.create({})(SignIn)
+
+const mapStateToProps = state => ({
+
+})
+
+const mapDispatchToProps = dispatch => ({
+  updateAccountInfo: dispatch.AccountInfo.update,
+  updateUserSignInStatus: dispatch.AppStatus.updateUserSignInStatus,
+})
+
+export default connect(null, mapDispatchToProps)(SignInWrapped)

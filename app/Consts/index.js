@@ -1,5 +1,5 @@
 
-export const USER_TOLE = {
+export const USER_ROLE = {
   TEACHER: 'TEACHER',
   STUDENT: 'STUDENT',
 }
