@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Icon } from 'antd'
 
@@ -97,4 +97,4 @@ const mapStateToProps = state => ({
   alreadySignIn: state.AppStatus.alreadySignIn,
 })
 
-export default connect(mapStateToProps)(Header)
+export default withRouter(connect(mapStateToProps)(Header))

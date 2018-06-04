@@ -6,6 +6,7 @@ import { Route, Redirect } from 'react-router-dom'
 import './index.less'
 
 /* eslint-disable react/prop-types */
+/* eslint-disable no-nested-ternary */
 
 class PrivateRoute extends Component {
   static propTypes = {
@@ -25,7 +26,7 @@ class PrivateRoute extends Component {
         render={(
           props => (
             alreadySignIn ? (
-              render() || <Comp {...props} />
+              render ? render() : <Comp {...props} />
             ) : (
               <Redirect to="/signin" />
             )
