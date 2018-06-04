@@ -31,6 +31,8 @@ export default class PriceDetail extends Component {
 
   }
 
+  inputNewPriceElem;
+
   toggleEditMode = () => {
     this.setState({
       editMode: !this.state.editMode,
@@ -38,7 +40,14 @@ export default class PriceDetail extends Component {
   }
 
   handleSubmitEditPrice = () => {
-    this.toggleEditMode();
+    this.toggleEditMode()
+    const newPrice = _.trim(this.inputNewPriceElem.value)
+    this.inputNewPriceElem.value = ''
+    if (/^\d+$/.test(newPrice)) {
+      this.setState({
+        price: newPrice,
+      })
+    }
   }
 
   render() {
@@ -60,7 +69,7 @@ export default class PriceDetail extends Component {
         {
           this.state.editMode === true && (
             <div className="edit-price-wrap">
-              <Input placeholder="请输入新价格" />
+              <input className="input-price" placeholder="请输入新价格" ref={(r) => { this.inputNewPriceElem = r }} />
               <Button onClick={this.handleSubmitEditPrice}>确定</Button>
             </div>
           )
