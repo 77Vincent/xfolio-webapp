@@ -6,7 +6,7 @@ const AccountInfo = {
   state: {
     nickName: 'default',
     mobileNumber: 13000000000,
-    userRole: USER_ROLE.TEACHER,
+    userRole: USER_ROLE.STUDENT,
   },
   reducers: {
     updateUserRole(state, role) {
