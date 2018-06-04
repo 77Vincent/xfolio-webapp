@@ -67,8 +67,8 @@ export default class StudentProfiles extends Component {
                 <Icon type="plus" />
               </Button>
               {
-                _.map(this.state.tagList, tagInfo => (
-                  <Tag closable key={uuidv4()}>{tagInfo}</Tag>
+                _.map(this.state.tagList, (tagInfo, i) => (
+                  <Tag closable key={i}>{tagInfo}</Tag>
                 ))
               }
             </div>
