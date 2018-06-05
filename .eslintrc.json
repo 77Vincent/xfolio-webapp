@@ -33,6 +33,7 @@
     "no-script-url": [0],
     "no-param-reassign": [0],
     "no-return-await": [0],
+    "arrow-body-style": [0],
     "jsx-a11y/anchor-is-valid": [0],
     "jsx-a11y/click-events-have-key-events": [0],
     "react/forbid-prop-types": [2, { "forbid": ["any"] }],

@@ -59,7 +59,6 @@ class SignIn extends Component {
   render() {
     const wrapStyle = _.assign({}, this.props.style)
     const { getFieldDecorator } = this.props.form
-    console.log('signin props ', this.props)
 
     return (
       <div className="sign-in-wrap" style={wrapStyle}>
@@ -136,7 +135,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  updateAccountInfo: dispatch.AccountInfo.update,
+  updateAccountInfo: dispatch.AccountInfo.updateAccountInfo,
   updateUserSignInStatus: dispatch.AppStatus.updateUserSignInStatus,
 })
 

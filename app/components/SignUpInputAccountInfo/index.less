@@ -7,11 +7,19 @@
     .ant-form-item {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
+      align-items: flex-start;
+      margin-bottom: 19px;
 
-      &:last-child {
+      &:last-of-type {
+        margin-bottom: 25px;
+      }
+
+      &.ant-form-item-with-help {
         margin-bottom: 0;
+
+        &:last-of-type {
+          margin-bottom: 6px;
+        }
       }
 
       .ant-form-item-label {
@@ -19,6 +27,13 @@
 
         label {
           color: #000;
+        }
+      }
+
+      &.input-captcha-wrap {
+
+        .ant-btn {
+          width: 100%;
         }
       }
     }

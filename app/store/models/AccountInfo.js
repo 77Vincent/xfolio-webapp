@@ -1,6 +1,5 @@
-import _ from 'lodash'
-
 import { USER_ROLE } from '../../Consts'
+import { updateState } from '../../utils'
 
 const AccountInfo = {
   state: {
@@ -9,25 +8,8 @@ const AccountInfo = {
     userRole: USER_ROLE.TEACHER,
   },
   reducers: {
-    updateUserRole(state, role) {
-      state.userRole = role
-      return state
-    },
-    updateNickName(state, nickname) {
-      state.nickName = nickname
-      return state
-    },
-    updateMobileNumber(state, mobileNumber) {
-      state.mobileNumber = mobileNumber
-      return state
-    },
-    update(state, diff) {
-      _.forEach(_.entries(diff), ([key, value]) => {
-        if (key in state) {
-          state[key] = value
-        }
-      })
-      return state
+    updateAccountInfo(state, payload) {
+      return updateState(state, payload)
     },
   },
   effects: {

@@ -9,7 +9,7 @@ const AppStatus = {
       return state
     },
     updateUserSignInStatus(state, signin) {
-      state.alreadySignIn = signin
+      state.alreadySignIn = signin === true
       return state
     },
   },

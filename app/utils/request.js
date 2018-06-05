@@ -1,60 +1,17 @@
-import _ from 'lodash'
-
-const createFetchConfig = (method = 'GET', body = {}) => ({
-  method,
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  },
-  credentials: 'include',
-  body,
-})
+import request from 'superagent'
 
 const Request = {
   // users
-  getUser: async (filter = {}) => {
-    let queryString = ''
-    _.forEach(_.keys(filter), (key) => {
-      queryString += `&${key}=${filter[key].toString()}`
-    })
-    return await window.fetch(`/api/users?${queryString.slice(1)}`)
-  },
-  signUp: async (values) => {
-    const res = await window.fetch(
-      '/api/users',
-      createFetchConfig('PUT', JSON.stringify(values)),
-    )
-    return res
-  },
-  userUpdate: async (values) => {
-    const res = await window.fetch(
-      `/api/users/${values.id}`,
-      createFetchConfig('POST', JSON.stringify(values)),
-    )
-    return res
-  },
-  logout: async () => {
-    const res = await window.fetch(
-      '/api/users',
-      createFetchConfig('DELETE'),
-    )
-    return res
+  signUp: (values = {}) => {
+    return request.put('/api/users').send(values)
   },
 
   // sessions
-  signIn: async (values = { id: null, password: null }) => {
-    const res = await window.fetch(
-      '/api/sessions',
-      createFetchConfig('POST', JSON.stringify(values)),
-    )
-    return res
+  signIn: (values = { id: null, password: null }) => {
+    return request.post('/api/sessions').send(values)
   },
-  signOut: async () => {
-    const res = await window.fetch(
-      '/api/sessions',
-      createFetchConfig('DELETE'),
-    )
-    return res
+  signOut: () => {
+    return request.delete('/api/sessions')
   },
 }
 
