@@ -1,6 +1,6 @@
 const AppStatus = {
   state: {
-    teacherFilterInited: true,
+    teacherFilterInited: false,
     alreadySignIn: false,
   },
   reducers: {

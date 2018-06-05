@@ -28,7 +28,7 @@ class PrivateRoute extends Component {
             alreadySignIn ? (
               render ? render() : <Comp {...props} />
             ) : (
-              <Redirect to="/signin" />
+              <Redirect to={`/signin?to=${this.props.path}`} />
             )
           )
         )}

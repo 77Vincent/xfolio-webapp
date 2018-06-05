@@ -4,8 +4,9 @@ import _ from 'lodash'
 import { Form, Input, Button } from 'antd'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { USER_ROLE } from '../../Consts'
+import queryString from 'query-string'
 
+import { USER_ROLE } from '../../Consts'
 import { Log } from '../../utils'
 import './index.less'
 
@@ -16,6 +17,7 @@ class SignIn extends Component {
     updateAccountInfo: PropTypes.func.isRequired,
     updateUserSignInStatus: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
   }
 
   static defaultProps = {
@@ -47,7 +49,9 @@ class SignIn extends Component {
           })
         }
         this.props.updateUserSignInStatus(true)
-        this.props.history.push('/dashboard/profile')
+        const urlSearch = queryString.parse(this.props.location.search.substring(1))
+        // 重定向到登录前页面
+        this.props.history.push(urlSearch.to || '/dashboard/profile')
       }
     })
   }
@@ -55,6 +59,7 @@ class SignIn extends Component {
   render() {
     const wrapStyle = _.assign({}, this.props.style)
     const { getFieldDecorator } = this.props.form
+    console.log('signin props ', this.props)
 
     return (
       <div className="sign-in-wrap" style={wrapStyle}>
