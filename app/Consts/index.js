@@ -5,6 +5,11 @@ export const USER_ROLE = {
   STUDENT: 3,
 }
 
+export const GENDER = {
+  MALE: 1,
+  FEMALE: 0,
+}
+
 export const SEND_CAPTCHA_COUNT_DOWN = 60
 
 export const API_DOMAIN = {

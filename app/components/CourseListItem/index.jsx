@@ -4,12 +4,13 @@ import _ from 'lodash'
 import { Rate, Calendar } from 'antd'
 import anime from 'animejs'
 
+import { USER_ROLE } from '../../Consts'
 import './index.less'
 
 export default class CourseListItem extends Component {
   static propTypes = {
     style: PropTypes.object,
-    userRole: PropTypes.oneOf(['teacher', 'student']).isRequired,
+    userRole: PropTypes.oneOf([USER_ROLE.STUDENT, USER_ROLE.TEACHER]).isRequired,
     courseInfo: PropTypes.object.isRequired, //  order, content, time, finished, rated
   };
 
@@ -186,7 +187,7 @@ export default class CourseListItem extends Component {
           )
         }
         {
-          userRole === 'student' && (
+          userRole === USER_ROLE.STUDENT && (
             <Fragment>
               {
                 courseInfo.finished === true && courseInfo.rated === false && (
@@ -205,7 +206,7 @@ export default class CourseListItem extends Component {
                 )
               }
               {
-                userRole === 'student' && courseInfo.finished === false && (
+                userRole === USER_ROLE.STUDENT && courseInfo.finished === false && (
                   appointCourseTime
                 )
               }
@@ -213,7 +214,7 @@ export default class CourseListItem extends Component {
           )
         }
         {
-          userRole === 'teacher' && courseInfo.finished === false && (
+          userRole === USER_ROLE.TEACHER && courseInfo.finished === false && (
             endCourse
           )
         }

@@ -19,6 +19,9 @@
     "jsx-a11y",
     "import"
   ],
+  "globals": {
+    "Log": true
+  },
   "rules": {
     "indent": ["error", 2],
     "quotes": ["error", "single"],

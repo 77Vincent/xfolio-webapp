@@ -1,11 +1,10 @@
-import { USER_ROLE } from '../../Consts'
 import { updateState } from '../../utils'
 
 const AccountInfo = {
   state: {
-    nickName: 'default',
-    mobileNumber: 13000000000,
-    userRole: USER_ROLE.TEACHER,
+    id: -1,
+    mobilephone: null,
+    roleId: null,
   },
   reducers: {
     updateAccountInfo(state, payload) {

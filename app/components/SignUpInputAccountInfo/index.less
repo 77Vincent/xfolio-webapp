@@ -4,10 +4,22 @@
 
   .ant-form {
 
-    .ant-form-item {
-      display: flex;
-      justify-content: space-between;
+    .input-captcha-wrap {
       align-items: flex-start;
+
+      .btn-send-captcha-wrap {
+        height: 39px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .ant-btn {
+          width: 100%;
+        }
+      }
+    }
+
+    .ant-form-item {
       margin-bottom: 19px;
 
       &:last-of-type {
@@ -27,13 +39,6 @@
 
         label {
           color: #000;
-        }
-      }
-
-      &.input-captcha-wrap {
-
-        .ant-btn {
-          width: 100%;
         }
       }
     }

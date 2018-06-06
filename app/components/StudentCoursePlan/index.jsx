@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { Icon } from 'antd'
+import { USER_ROLE } from '../../Consts'
 
 import { getImage } from '../../utils'
-import { CourseListItem, EditNewCourseItem } from '../../components'
+import { CourseListItem } from '../../components'
 import './index.less'
 
 export default class StudentCoursePlan extends Component {
@@ -52,7 +52,7 @@ export default class StudentCoursePlan extends Component {
           <h5 className="title">课程</h5>
           <div className="course-list list-wrap">
             <CourseListItem
-              userRole="student"
+              userRole={USER_ROLE.STUDENT}
               courseInfo={{
                 order: 1,
                 content: '对学生进行评估，讲解专业概况\n制定学习计划和课表，明确学习目标',
@@ -62,7 +62,7 @@ export default class StudentCoursePlan extends Component {
               }}
             />
             <CourseListItem
-              userRole="student"
+              userRole={USER_ROLE.STUDENT}
               courseInfo={{
                 order: 2,
                 content: '对学生进行评估，讲解专业概况\n制定学习计划和课表，明确学习目标',
@@ -72,7 +72,7 @@ export default class StudentCoursePlan extends Component {
               }}
             />
             <CourseListItem
-              userRole="student"
+              userRole={USER_ROLE.STUDENT}
               courseInfo={{
                 order: 3,
                 content: '对学生进行评估，讲解专业概况\n制定学习计划和课表，明确学习目标',

@@ -5,6 +5,9 @@ const Request = {
   signUp: (values = {}) => {
     return request.put('/api/users').send(values)
   },
+  getUserInfo: (id) => {
+    return request.get(`/api/users/${id}`)
+  },
 
   // sessions
   signIn: (values = { id: null, password: null }) => {

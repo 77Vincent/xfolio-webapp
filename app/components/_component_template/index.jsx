@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { connect } from 'react-redux'
 
-import { Log } from '../../utils'
 import './index.less'
 
 class AAA extends Component {

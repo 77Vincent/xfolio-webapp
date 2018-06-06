@@ -21,9 +21,6 @@ const webpackConfigBase = {
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
     alias: {
-      images: resolve('./app/assets/images'),
-      ducks: resolve('./app/ducks'),
-      store: resolve('./app/store'),
     },
   },
   resolveLoader: {
@@ -89,6 +86,9 @@ const webpackConfigBase = {
     ],
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      Log: resolve(__dirname, '../app/utils/Log.js'),
+    }),
     // 在打包前先移除build文件夹
     new CleanWebpackPlugin(['build'], {
       root: resolve(),

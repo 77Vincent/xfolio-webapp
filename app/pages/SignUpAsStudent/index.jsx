@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import { SignUpInputAccountInfo } from '../../components'
 import { Request } from '../../utils'
 import { USER_ROLE } from '../../Consts'
+import apiTokenHolder from '../../store/apiTokenHolder'
 import './index.less'
 
 class SignUpAsStudent extends Component {
@@ -33,18 +34,21 @@ class SignUpAsStudent extends Component {
     Request.signUp({
       role_id: USER_ROLE.STUDENT,
       mobilephone: data.mobilephone,
-      password: data.passsword,
-    }).timeout(2000).catch(() => { // TODO then 的时候处理
-      this.handleSignUpSuccess(data)
-    }).then(() => {
-
+      password: data.password,
+    }).timeout(5000).then((res) => {
+      this.handleSignUpSuccess(res.body)
+    }).catch((err) => {
+      Log.info('signUp error ', err)
     })
   }
 
-  handleSignUpSuccess = (data) => {
+  handleSignUpSuccess = (responseBody) => {
+    const accountInfo = JSON.parse(responseBody.data)
+    window.accountInfo = accountInfo
+    apiTokenHolder.token = responseBody.token
     this.props.updateAccountInfo({
-      mobileNumber: data.mobilephone,
-      userRole: USER_ROLE.STUDENT,
+      mobilephone: accountInfo.mobilephone,
+      roleId: USER_ROLE.STUDENT,
     })
     this.props.updateUserSignInStatus(true)
     this.props.history.push('/dashboard/profile')

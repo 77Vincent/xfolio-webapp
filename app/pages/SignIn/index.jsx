@@ -7,7 +7,6 @@ import { connect } from 'react-redux'
 import queryString from 'query-string'
 
 import { USER_ROLE } from '../../Consts'
-import { Log } from '../../utils'
 import './index.less'
 
 class SignIn extends Component {
@@ -36,7 +35,6 @@ class SignIn extends Component {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        Log.log('Received values of form: ', values)
         if (values.mobile === '13000000000') {
           this.props.updateAccountInfo({
             mobileNumber: values.mobile,
