@@ -38,7 +38,7 @@ class SignIn extends Component {
     validateFields((err, values) => {
       if (!err) {
         Request.signIn({
-          id: values.mobile,
+          id: values.mobilephone,
           password: values.password,
         }).then(() => {
           this.props.updateAccountInfo({
@@ -126,7 +126,7 @@ class SignIn extends Component {
                 ],
                 validateFirst: true,
               })((
-                <Input type="current-password" />
+                <Input />
               ))
             }
           </Form.Item>
