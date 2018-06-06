@@ -1,5 +1,7 @@
 import request from 'superagent'
 
+import apiTokenHolder from '../store/apiTokenHolder'
+
 const Request = {
   // users
   signUp: (values = {}) => {

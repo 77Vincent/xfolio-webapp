@@ -9,4 +9,5 @@ const store = init({
   plugins: [immer],
 })
 
+window.store = store
 export default store
