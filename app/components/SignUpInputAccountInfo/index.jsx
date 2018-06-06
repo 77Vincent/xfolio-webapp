@@ -56,15 +56,6 @@ class SignUpInputAccountInfo extends Component {
     }
   }
 
-  handleInputFocus = (fieldName) => {
-    // this.props.form.setFields({
-    //   [fieldName]: {
-    //     value: this.props.form.getFieldValue(fieldName),
-    //     errors: undefined,
-    //   },
-    // })
-  }
-
   handleSubmit = (e) => {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
@@ -76,7 +67,7 @@ class SignUpInputAccountInfo extends Component {
 
   render() {
     const wrapStyle = _.assign({}, this.props.style)
-    const { getFieldDecorator, getFieldValue, getFieldError } = this.props.form
+    const { getFieldDecorator, getFieldValue } = this.props.form
 
     return (
       <div className="sign-up-input-account-info" style={wrapStyle}>
@@ -116,11 +107,7 @@ class SignUpInputAccountInfo extends Component {
                 ],
                 validateFirst: true,
               })((
-                <Input
-                  onClick={() => {
-                    this.handleInputFocus('mobilephone')
-                  }}
-                />
+                <Input />
               ))
             }
           </Form.Item>
@@ -153,11 +140,7 @@ class SignUpInputAccountInfo extends Component {
                     ],
                     validateFirst: true,
                   })((
-                    <Input
-                      onClick={() => {
-                        this.handleInputFocus('captcha')
-                      }}
-                    />
+                    <Input />
                   ))
                 }
               </Form.Item>
@@ -196,11 +179,7 @@ class SignUpInputAccountInfo extends Component {
                 ],
                 validateFirst: true,
               })((
-                <Input
-                  onClick={() => {
-                    this.handleInputFocus('password')
-                  }}
-                />
+                <Input />
               ))
             }
           </Form.Item>

@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import queryString from 'query-string'
 
 import { USER_ROLE } from '../../Consts'
+import { Request } from '../../utils'
 import './index.less'
 
 class SignIn extends Component {
@@ -33,30 +34,36 @@ class SignIn extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    this.props.form.validateFields((err, values) => {
+    const { validateFields, setFields, getFieldValue } = this.props.form
+    validateFields((err, values) => {
       if (!err) {
-        if (values.mobile === '13000000000') {
+        Request.signIn({
+          id: values.mobile,
+          password: values.password,
+        }).then(() => {
           this.props.updateAccountInfo({
             mobileNumber: values.mobile,
             userRole: USER_ROLE.TEACHER,
           })
-        } else {
-          this.props.updateAccountInfo({
-            mobileNumber: values.mobile,
-            userRole: USER_ROLE.STUDENT,
+          this.props.updateUserSignInStatus(true)
+          // 重定向到登录前页面
+          const urlSearch = queryString.parse(this.props.location.search.substring(1))
+          this.props.history.push(urlSearch.to || '/dashboard/profile')
+        }).catch(() => {
+          setFields({
+            password: {
+              value: getFieldValue('password'),
+              errors: [new Error('密码错误')],
+            },
           })
-        }
-        this.props.updateUserSignInStatus(true)
-        const urlSearch = queryString.parse(this.props.location.search.substring(1))
-        // 重定向到登录前页面
-        this.props.history.push(urlSearch.to || '/dashboard/profile')
+        })
       }
     })
   }
 
   render() {
     const wrapStyle = _.assign({}, this.props.style)
-    const { getFieldDecorator } = this.props.form
+    const { getFieldDecorator, getFieldValue } = this.props.form
 
     return (
       <div className="sign-in-wrap" style={wrapStyle}>
@@ -74,14 +81,26 @@ class SignIn extends Component {
             wrapperCol={{
               span: 19,
             }}
+            hasFeedback
+            validateFirst
           >
             {
-              getFieldDecorator('mobile', {
-                initialValue: '13000000000',
+              getFieldDecorator('mobilephone', {
                 rules: [
                   { required: true, message: '请输入手机号' },
                   { pattern: /^1\d{10}$/, message: '请输入11位手机号' },
+                  {
+                    validator: (rule, value, callback) => {
+                      const mobilephone = _.trim(getFieldValue('mobilephone'))
+                      Request.getUserInfo(mobilephone).then(() => {
+                        callback()
+                      }).catch(() => {
+                        callback('该手机号未注册')
+                      })
+                    },
+                  },
                 ],
+                validateFirst: true,
               })((
                 <Input />
               ))
@@ -96,14 +115,16 @@ class SignIn extends Component {
             wrapperCol={{
               span: 19,
             }}
+            hasFeedback
+            validateFirst
           >
             {
               getFieldDecorator('password', {
-                initialValue: '123456',
                 rules: [
                   { required: true, message: '请输入密码' },
-                  { pattern: /.{6,20}/, message: '密码长度必须为6-20个字符' },
+                  { pattern: /.{6,}/, message: '密码长度至少为6个字符' },
                 ],
+                validateFirst: true,
               })((
                 <Input type="current-password" />
               ))
