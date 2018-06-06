@@ -126,7 +126,7 @@ class SignIn extends Component {
                 ],
                 validateFirst: true,
               })((
-                <Input />
+                <Input type="password" />
               ))
             }
           </Form.Item>
