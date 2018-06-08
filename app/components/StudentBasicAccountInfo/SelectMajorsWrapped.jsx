@@ -57,11 +57,13 @@ class SelectMajorsWrapped extends Component {
     })
   }
 
-  handleOptionChange = (...args) => {
+  handleOptionChange = (value, options) => {
+    Log.info('handleOptionChange ', value, options)
     this.setState({
+      value,
       majorOptions: [],
-      value: [],
     })
+    this.props.onChange(_.map(value, major => major.key)) // 字符转回数字
   }
 
   render() {
