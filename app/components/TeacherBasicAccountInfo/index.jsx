@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
+import { connect } from 'react-redux'
 
 import { UpdateAccountInfoItem } from '../../components'
 import './index.less'
+import { Request } from '../../utils'
 
-export default class TeacherBasicAccountInfo extends Component {
+class TeacherBasicAccountInfo extends Component {
   static propTypes = {
     style: PropTypes.object,
   };
@@ -22,6 +24,14 @@ export default class TeacherBasicAccountInfo extends Component {
 
   }
 
+  updateUserIfo = (field, value) => {
+    Request.updateUserInfo({
+      [field]: value,
+    }).then(() => {
+      Log.info('updateUserInfo success ', field, value)
+    })
+  }
+
   render() {
     const wrapStyle = _.assign({}, this.props.style)
 
@@ -35,6 +45,10 @@ export default class TeacherBasicAccountInfo extends Component {
           <div className="update-account-info-item">
             <UpdateAccountInfoItem
               placeholder="请输入新姓名"
+              onSubmit={(value) => {
+                Log.info('submit value ', value)
+                this.updateUserIfo('name', value)
+              }}
             />
           </div>
         </div>
@@ -128,7 +142,8 @@ export default class TeacherBasicAccountInfo extends Component {
           </div>
         </div>
       </div>
-
     )
   }
 }
+
+export default connect()(TeacherBasicAccountInfo)

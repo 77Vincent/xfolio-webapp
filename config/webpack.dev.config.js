@@ -13,7 +13,7 @@ const webpackConfigDev = {
       IS_DEVELOPMENT: true,
     })
   ],
-  devtool: 'source-map',
+  // devtool: 'source-map',
   devServer: {
     contentBase: path.resolve('./app'),
     historyApiFallback: false,

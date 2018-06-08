@@ -6,9 +6,9 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import queryString from 'query-string'
 
-import { USER_ROLE, LOCAL_STORAGE_TOKEN } from '../../Consts'
-import { Request } from '../../utils'
-import apiTokenHolder from '../../store/apiTokenHolder'
+import { LOCAL_STORAGE_TOKEN, LOCAL_STORAGE_USER_ID } from '../../Consts'
+import { Request, transformUserInfo } from '../../utils'
+import constDataHolder from '../../store/constDataHolder'
 import './index.less'
 
 class SignIn extends Component {
@@ -42,19 +42,19 @@ class SignIn extends Component {
           id: values.mobilephone,
           password: values.password,
         }).then((res) => {
-          this.props.updateAccountInfo({
-            mobileNumber: values.mobile,
-            userRole: USER_ROLE.TEACHER,
-          })
+          const accountData = JSON.parse(res.body.data)
+          this.props.updateAccountInfo(transformUserInfo(accountData))
           this.props.updateUserSignInStatus(true)
           // 存储 token
           const apiToken = res.body.token
           localStorage.setItem(LOCAL_STORAGE_TOKEN, apiToken)
-          apiTokenHolder.token = apiToken
+          localStorage.setItem(LOCAL_STORAGE_USER_ID, accountData.id)
+          constDataHolder.apiToken = apiToken
           // 重定向到登录前页面
           const urlSearch = queryString.parse(this.props.location.search.substring(1))
           this.props.history.push(urlSearch.to || '/dashboard/profile')
-        }).catch(() => {
+        }).catch((error) => {
+          Log.log('sign in error ', error)
           setFields({
             password: {
               value: getFieldValue('password'),

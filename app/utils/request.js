@@ -1,23 +1,30 @@
 import request from 'superagent'
 
-import apiTokenHolder from '../store/apiTokenHolder'
+import constDataHolder from '../store/constDataHolder'
+
+const agent = request.agent().accept('json')
 
 const Request = {
   // users
   signUp: (values = {}) => {
-    return request.put('/api/users').send(values)
+    return agent.put('/api/users').send(values)
   },
   getUserInfo: (id) => {
-    return request.get(`/api/users/${id}`)
+    return agent.get(`/api/users/${id}`)
+  },
+  updateUserInfo: (id, values = {}) => {
+    return agent.post(`/api/users/${id}`).send(values).set('authorization', `Bearer ${constDataHolder.apiToken}`)
   },
 
   // sessions
   signIn: (values = { id: null, password: null }) => {
-    return request.post('/api/sessions').send(values)
+    return agent.post('/api/sessions').send(values)
   },
   signOut: () => {
-    return request.delete('/api/sessions')
+    return agent.delete('/api/sessions')
   },
 }
 
+window.agent = agent
 export default Request
+export { agent }

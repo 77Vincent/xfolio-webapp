@@ -43,7 +43,7 @@ const webpackConfigBase = {
         loader: ExtractTextPlugin.extract({
           fallback: 'style',
           use: [
-            {loader: 'css', options: {sourceMap: true}},
+            {loader: 'css', options: {sourceMap: false}},
           ],
         }),
       },
@@ -54,13 +54,13 @@ const webpackConfigBase = {
           use: [
             {
               loader: 'css',
-              options: {sourceMap: true},
+              options: {sourceMap: false},
             },
             {
               loader: 'less',
               options: {
                 javascriptEnabled: true,
-                sourceMap: true,
+                sourceMap: false,
                 modifyVars: themeVariables,
               },
             },

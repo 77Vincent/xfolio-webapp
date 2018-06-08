@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { SignUpInputAccountInfo } from '../../components'
 import { Request } from '../../utils'
 import { USER_ROLE } from '../../Consts'
-import apiTokenHolder from '../../store/apiTokenHolder'
+import constDataHolder from '../../store/constDataHolder'
 import './index.less'
 
 class SignUpAsStudent extends Component {
@@ -45,7 +45,7 @@ class SignUpAsStudent extends Component {
   handleSignUpSuccess = (responseBody) => {
     const accountInfo = JSON.parse(responseBody.data)
     window.accountInfo = accountInfo
-    apiTokenHolder.token = responseBody.token
+    constDataHolder.apiToken = responseBody.token
     this.props.updateAccountInfo({
       mobilephone: accountInfo.mobilephone,
       roleId: USER_ROLE.STUDENT,
