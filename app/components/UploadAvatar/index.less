@@ -7,8 +7,26 @@
     color: #000;
   }
 
-  .btn-choose-file {
-    width: 155px;
-    height: 70px;
+  .upload-avatar {
+    position: relative;
+
+    .ant-upload-select-picture-card {
+      margin: 0;
+
+      .ant-upload {
+        padding: 6px;
+
+        .avatar {
+          width: 100%;
+        }
+        .upload-icon {
+          font-size: 20px;
+          position: absolute;
+          top: 41px;
+          left: 41px;
+          z-index: 2;
+        }
+      }
+    }
   }
 }

@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
+import { connect } from 'react-redux'
 
 import { StudentBasicAccountInfo, UploadAvatar } from '../index'
 import './index.less'
 
-export default class StudentProfiles extends Component {
+class StudentProfiles extends Component {
   static propTypes = {
     style: PropTypes.object,
+    avatar_url: PropTypes.string.isRequired,
   };
 
   static defaultProps = {
@@ -27,9 +29,21 @@ export default class StudentProfiles extends Component {
 
     return (
       <div className="student-profiles-wrap" style={wrapStyle}>
-        <UploadAvatar />
+        <UploadAvatar
+          originImageUrl={this.props.avatar_url}
+        />
         <StudentBasicAccountInfo />
       </div>
     )
   }
 }
+
+const mapStateToProps = state => ({
+  avatar_url: state.AccountInfo.avatar_url,
+})
+
+const mapDispatchToProps = dispatch => ({
+
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(StudentProfiles)

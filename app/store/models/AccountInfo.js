@@ -15,6 +15,7 @@ const AccountInfo = {
     degree_id: null,
     cost: null,
     followingIds: [], // 已关注用户的 id
+    avatar_url: null,
   },
   reducers: {
     updateAccountInfo(state, payload) {

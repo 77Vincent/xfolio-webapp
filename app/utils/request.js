@@ -26,7 +26,10 @@ const Request = {
     return agent.get('/api/followers_followings').query(options)
   },
   removeFollowing(followingId) {
-    return agent.delete(`/api/followers_followings/${followingId}`).set('authorization', `Bearer ${constDataHolder.apiToken}`)
+    return (
+      agent.delete(`/api/followers_followings/${followingId}`)
+        .set('authorization', `Bearer ${constDataHolder.apiToken}`)
+    )
   },
   addFollowing(followingId) {
     return agent.put('/api/followers_followings').send({
@@ -40,6 +43,11 @@ const Request = {
   },
   signOut: () => {
     return agent.delete('/api/sessions')
+  },
+
+  // avatar
+  uploadAvatar(options = {}) {
+    return agent.put('/api/avatars').send(options).set('authorization', `Bearer ${constDataHolder.apiToken}`)
   },
 }
 
