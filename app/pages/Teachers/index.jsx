@@ -2,30 +2,86 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { Anchor, Divider, Select, Radio, Pagination } from 'antd'
-import uuidv4 from 'uuid/v4'
+import { connect } from 'react-redux'
 
 import { TeacherInfoSnapshot } from '../../components'
+import { Request } from '../../utils'
+import { COURSE_PLACE_OPTIONS, GENDER_OPTIONS, PRICE_ORDER_OPTIONS } from '../../Consts'
 import './index.less'
 
-export default class Teachers extends Component {
+class Teachers extends Component {
   static propTypes = {
     style: PropTypes.object,
+    accountInfo: PropTypes.object.isRequired,
   };
 
   static defaultProps = {
     style: {},
   };
 
-  componentDidMount() {
+  constructor(props) {
+    super(props)
+  }
 
+  state = {
+    filterOptions: {
+      majors: this.props.accountInfo.majors,
+      country: this.props.accountInfo.country,
+      place: this.props.accountInfo.place,
+      gender: 1,
+      city: null,
+      price: 1,
+    },
+    teacherList: [],
+    currentPage: 1,
+    pageSize: 7,
+  }
+
+  componentDidMount() {
+    this.requestTeacherList()
   }
 
   componentWillUnmount() {
+  }
 
+  requestTeacherList = () => {
+    log('requestTeacherList ', this.state.filterOptions)
+    const options = _.assign({}, this.state.filterOptions, {
+      majors: this.state.filterOptions.majors.join(','),
+    })
+    Request.getTeachers(options).then((res) => {
+      log('getTeachers res ', res.text)
+      const teacherList = res.text !== null ? JSON.parse(res.text) : []
+      if (_.isEmpty(teacherList) === false) {
+        this.setState({
+          teacherList,
+        })
+      }
+    }).catch((e) => {
+      log('getTeachers e ', e)
+    })
+  }
+
+  handleUpdateFilterOptions = (key, value) => {
+    log('handleUpdateFilterOptions ', key, value)
+    this.state.filterOptions.key = value
+    this.setState({
+      filterOptions: this.state.filterOptions,
+    })
+  }
+
+  handlePaginationChange = (page) => {
+    log('handlePaginationChange ', page)
+    this.setState({
+      currentPage: page,
+    })
   }
 
   render() {
     const wrapStyle = _.assign({}, this.props.style)
+    const { teacherList, currentPage, pageSize } = this.state
+    const teacherListDataStart = (currentPage - 1) * pageSize
+    const teacherListData = teacherList.slice(teacherListDataStart, teacherListDataStart + pageSize)
 
     return (
       <div className="teachers-wrap" style={wrapStyle}>
@@ -58,22 +114,36 @@ export default class Teachers extends Component {
               <h4 className="title">授课方式</h4>
               <Divider />
               <Select
-                value={3}
+                defaultValue={this.state.filterOptions.place}
+                onChange={(value) => {
+                  this.handleUpdateFilterOptions('place', value)
+                }}
               >
-                <Select.Option value={1}>线上</Select.Option>
-                <Select.Option value={2}>线下</Select.Option>
-                <Select.Option value={3}>不限</Select.Option>
+                {
+                  _.map(_.values(COURSE_PLACE_OPTIONS), (placeInfo, i) => {
+                    return (
+                      <Select.Option value={placeInfo.value} key={i}>{placeInfo.name}</Select.Option>
+                    )
+                  })
+                }
               </Select>
             </div>
             <div className="filter-item-wrap">
               <h4 className="title">性别</h4>
               <Divider />
               <Select
-                value={3}
+                defaultValue={this.state.filterOptions.gender}
+                onChange={(value) => {
+                  this.handleUpdateFilterOptions('gender', value)
+                }}
               >
-                <Select.Option value={1}>男</Select.Option>
-                <Select.Option value={2}>女</Select.Option>
-                <Select.Option value={3}>不限</Select.Option>
+                {
+                  _.map(_.values(GENDER_OPTIONS), (genderInfo, i) => {
+                    return (
+                      <Select.Option value={genderInfo.value} key={i}>{genderInfo.name}</Select.Option>
+                    )
+                  })
+                }
               </Select>
             </div>
             <div className="filter-item-wrap">
@@ -90,10 +160,13 @@ export default class Teachers extends Component {
               <h4 className="title">价格</h4>
               <Divider />
               <Radio.Group
-                defaultValue={1}
+                defaultValue={PRICE_ORDER_OPTIONS.LOW_TO_HIGH}
+                onChange={(e) => {
+                  this.handleUpdateFilterOptions('price', e.target.value)
+                }}
               >
-                <Radio value={1}>由低到高</Radio>
-                <Radio value={2}>由高到低</Radio>
+                <Radio value={PRICE_ORDER_OPTIONS.LOW_TO_HIGH}>由低到高</Radio>
+                <Radio value={PRICE_ORDER_OPTIONS.HIGH_TO_LOW}>由高到低</Radio>
               </Radio.Group>
             </div>
           </div>
@@ -101,14 +174,39 @@ export default class Teachers extends Component {
         <div className="teacher-list-wrap">
           <div className="content-wrap">
             {
-              _.times(10, () => (
-                <TeacherInfoSnapshot key={uuidv4()} />
-              ))
+              teacherList.length > 0 && (
+                _.map(teacherListData, (teacherInfo, index) => (
+                  <TeacherInfoSnapshot key={index} />
+                ))
+              )
+            }
+            {
+              teacherList.length === 0 && (
+                <p>没有符合条件的老师~</p>
+              )
             }
           </div>
-          <Pagination defaultCurrent={6} total={500} />
+          {
+            this.state.teacherList.length > pageSize && (
+              <Pagination
+                defaultCurrent={1}
+                pageSize={pageSize}
+                total={this.state.teacherList.length}
+                onChange={this.handlePaginationChange}
+              />
+            )
+          }
         </div>
       </div>
     )
   }
 }
+
+const mapStateToProps = state => ({
+  accountInfo: state.AccountInfo,
+})
+
+const mapDispatchToProps = dispatch => ({
+})
+
+export default connect(mapStateToProps)(Teachers)

@@ -24,19 +24,19 @@ class SelectMajorsWrapped extends Component {
 
   componentDidMount() {
     this.majorsInfo = _.map(constDataHolder.majors, major => ({
-      value: `${major.id}`, // 数字转成字符
-      name: major.label,
+      value: major.id, // 数字转成字符
+      name: major.cn,
     }))
   }
 
   componentDidCatch(err, info) {
-    Log.info('err ', err, info)
+    log('err ', err, info)
   }
 
   majorsInfo = []
 
   handleSelectOption = (value) => {
-    Log.info('handleSelectOption ', value)
+    log('handleSelectOption ', value)
     this.state.value.push(value)
     this.setState({
       value: this.state.value,
@@ -58,7 +58,7 @@ class SelectMajorsWrapped extends Component {
   }
 
   handleOptionChange = (value, options) => {
-    Log.info('handleOptionChange ', value, options)
+    log('handleOptionChange ', value, options)
     this.setState({
       value,
       majorOptions: [],
@@ -67,7 +67,7 @@ class SelectMajorsWrapped extends Component {
   }
 
   render() {
-    Log.log('this state majorOptions ', this.state.majorOptions)
+    log('this state majorOptions ', this.state.majorOptions)
 
     return (
       <Select

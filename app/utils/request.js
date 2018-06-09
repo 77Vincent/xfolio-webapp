@@ -16,6 +16,11 @@ const Request = {
     return agent.post(`/api/users/${id}`).send(values).set('authorization', `Bearer ${constDataHolder.apiToken}`)
   },
 
+  // teachers
+  getTeachers: (options = {}) => {
+    return agent.get('/api/users?role_id=1').query(options)
+  },
+
   // sessions
   signIn: (values = { id: null, password: null }) => {
     return agent.post('/api/sessions').send(values)

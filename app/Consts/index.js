@@ -47,3 +47,8 @@ export const GENDER_OPTIONS_NORMALIZED = {
   0: GENDER_OPTIONS[0],
   1: GENDER_OPTIONS[1],
 }
+
+export const PRICE_ORDER_OPTIONS = {
+  LOW_TO_HIGH: 1,
+  HIGH_TO_LOW: 2,
+}

@@ -29,6 +29,7 @@ async function preRender() {
     // 修改登录状态
     constDataHolder.apiToken = localStorageToken
     store.dispatch.AppStatus.updateUserSignInStatus(true)
+    store.dispatch.AppStatus.updateTeacherFilterInitStatus(true)
   }
   if (userId !== null) {
     // 初始化用户信息

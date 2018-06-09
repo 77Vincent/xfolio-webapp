@@ -132,7 +132,6 @@ class SignUpInputAccountInfo extends Component {
                       { pattern: /^.{4}$/, message: '验证码为4位' },
                       {
                         validator: (rule, value, callback) => {
-                          Log.info('captcha validator', rule, value)
                           const captcha = getFieldValue('captcha')
                           callback()
                         },

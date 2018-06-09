@@ -13,6 +13,7 @@ const AccountInfo = {
     country: null,
     majors: [],
     degree_id: null,
+    cost: null,
   },
   reducers: {
     updateAccountInfo(state, payload) {

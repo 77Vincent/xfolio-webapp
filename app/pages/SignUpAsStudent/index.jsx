@@ -38,7 +38,7 @@ class SignUpAsStudent extends Component {
     }).timeout(5000).then((res) => {
       this.handleSignUpSuccess(res.body)
     }).catch((err) => {
-      Log.info('signUp error ', err)
+      log('signUp error ', err)
     })
   }
 

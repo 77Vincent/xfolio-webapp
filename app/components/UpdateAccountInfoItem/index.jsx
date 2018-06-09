@@ -49,7 +49,7 @@ export default class UpdateAccountInfoItem extends Component {
       break
     case 'select':
     case 'custom':
-      Log.info('select change ', e)
+      log('select change ', e)
       newValue = e
       break
     }
@@ -66,7 +66,7 @@ export default class UpdateAccountInfoItem extends Component {
 
   render() {
     const wrapStyle = _.assign({}, this.props.style)
-    Log.info('this.props ', this.props, this.state)
+    log('this.props ', this.props, this.state)
 
     const extraProps = {}
     if (this.props.inputType === 'select') {

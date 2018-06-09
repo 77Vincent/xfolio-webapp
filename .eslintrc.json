@@ -20,7 +20,7 @@
     "import"
   ],
   "globals": {
-    "Log": true
+    "log": true
   },
   "rules": {
     "indent": ["error", 2],

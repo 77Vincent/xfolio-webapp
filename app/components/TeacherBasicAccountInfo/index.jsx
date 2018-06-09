@@ -28,7 +28,7 @@ class TeacherBasicAccountInfo extends Component {
     Request.updateUserInfo({
       [field]: value,
     }).then(() => {
-      Log.info('updateUserInfo success ', field, value)
+      log('updateUserInfo success ', field, value)
     })
   }
 
@@ -46,7 +46,7 @@ class TeacherBasicAccountInfo extends Component {
             <UpdateAccountInfoItem
               placeholder="请输入新姓名"
               onSubmit={(value) => {
-                Log.info('submit value ', value)
+                log('submit value ', value)
                 this.updateUserIfo('name', value)
               }}
             />

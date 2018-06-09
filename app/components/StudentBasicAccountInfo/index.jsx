@@ -29,7 +29,7 @@ class StudentBasicAccountInfo extends Component {
       [field]: value,
     }).then(() => {
       // 更新本地数据
-      Log.info('updateUserInfo ', field, value)
+      log('updateUserInfo ', field, value)
       this.props.updateAccountInfo({
         [field]: value,
       })
@@ -43,7 +43,7 @@ class StudentBasicAccountInfo extends Component {
     let majorNames = ''
     if (_.isEmpty(accountInfo.majors) === false) {
       majorNames = _.reduce(accountInfo.majors, (r, v) => {
-        r.push(constDataHolder.majorsNormalized[v].label)
+        r.push(constDataHolder.majorsNormalized[v].cn)
         return r
       }, []).join(',')
     }
@@ -131,7 +131,7 @@ class StudentBasicAccountInfo extends Component {
                     _.reduce(accountInfo.majors, (r, v) => {
                       r.push({
                         key: `${v}`,
-                        label: constDataHolder.majorsNormalized[`${v}`].label,
+                        label: constDataHolder.majorsNormalized[`${v}`].cn,
                       })
                       return r
                     }, [])

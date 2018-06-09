@@ -62,7 +62,7 @@ class SignIn extends Component {
           const urlSearch = queryString.parse(this.props.location.search.substring(1))
           this.props.history.push(urlSearch.to || '/dashboard/profile')
         }).catch((error) => {
-          Log.log('sign in error ', error)
+          log('sign in error ', error)
           this.setState({
             submitting: true,
           })
