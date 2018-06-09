@@ -14,7 +14,7 @@ import _ from 'lodash'
 
 import store from './store'
 import App from './base/App'
-import { LOCAL_STORAGE_TOKEN, LOCAL_STORAGE_USER_ID } from './Consts'
+import { LOCAL_STORAGE_TOKEN, LOCAL_STORAGE_USER_ID, CONST_DATA_URLS } from './Consts'
 import constDataHolder from './store/constDataHolder'
 import { Request, transformUserInfo } from './utils'
 import { agent } from './utils/request'
@@ -37,19 +37,24 @@ async function preRender() {
   }
 
   // 初始化常量数据
-  constDataHolder.majors = await agent.get('https://www.xfolio.cn/api/majors/').then(res => res.text)
+  constDataHolder.majors = await agent.get(CONST_DATA_URLS.MAJORS).then(res => res.text)
   constDataHolder.majors = JSON.parse(constDataHolder.majors)
   constDataHolder.majorsNormalized = _.reduce(constDataHolder.majors, (r, v) => {
     r[v.id] = v
     return r
   }, {})
-  constDataHolder.countries = await agent.get('https://www.xfolio.cn/locale/countries.json').then(res => res.body)
+
+  constDataHolder.degrees = await agent.get(CONST_DATA_URLS.DEGREES).then(res => res.text)
+  constDataHolder.degrees = JSON.parse(constDataHolder.degrees)
+
+  constDataHolder.countries = await agent.get(CONST_DATA_URLS.COUNTRIES).then(res => res.body)
   constDataHolder.countriesNormalized = _.reduce(constDataHolder.countries, (r, v) => {
     r[v.code] = v
     return r
   }, {})
-  constDataHolder.provinces = await agent.get('https://www.xfolio.cn/locale/CN/provinces.json').then(res => res.body)
-  constDataHolder.cities = await agent.get('https://www.xfolio.cn/locale/CN/cities.json').then(res => res.body)
+
+  constDataHolder.provinces = await agent.get(CONST_DATA_URLS.PROVINCES).then(res => res.body)
+  constDataHolder.cities = await agent.get(CONST_DATA_URLS.CITIES).then(res => res.body)
 }
 
 preRender().then(() => {

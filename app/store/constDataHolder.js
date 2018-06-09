@@ -7,21 +7,6 @@ const constDataHolder = {
     this.apiTokenValue = value
   },
 
-  countriesValue: [],
-  get countries() {
-    return this.countriesValue
-  },
-  set countries(value) {
-    this.countriesValue = value
-  },
-  countriesValueNormalized: [],
-  get countriesNormalized() {
-    return this.countriesValueNormalized
-  },
-  set countriesNormalized(value) {
-    this.countriesValueNormalized = value
-  },
-
   majorsValue: [],
   get majors() {
     return this.majorsValue
@@ -35,6 +20,29 @@ const constDataHolder = {
   },
   set majorsNormalized(value) {
     this.majorsValueNormalized = value
+  },
+
+  degreesValue: [],
+  get degrees() {
+    return this.degreesValue
+  },
+  set degrees(value) {
+    this.degreesValue = value
+  },
+
+  countriesValue: [],
+  get countries() {
+    return this.countriesValue
+  },
+  set countries(value) {
+    this.countriesValue = value
+  },
+  countriesValueNormalized: [],
+  get countriesNormalized() {
+    return this.countriesValueNormalized
+  },
+  set countriesNormalized(value) {
+    this.countriesValueNormalized = value
   },
 
   provincesValue: [],

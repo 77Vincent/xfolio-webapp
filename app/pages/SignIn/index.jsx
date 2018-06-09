@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { Form, Input, Button } from 'antd'
+import { Form, Input, Button, Icon } from 'antd'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import queryString from 'query-string'
@@ -25,6 +25,10 @@ class SignIn extends Component {
     style: {},
   }
 
+  state = {
+    submitting: false,
+  }
+
   componentDidMount() {
 
   }
@@ -38,11 +42,15 @@ class SignIn extends Component {
     const { validateFields, setFields, getFieldValue } = this.props.form
     validateFields((err, values) => {
       if (!err) {
+        this.setState({
+          submitting: true,
+        })
         Request.signIn({
           id: values.mobilephone,
           password: values.password,
         }).then((res) => {
           const accountData = JSON.parse(res.body.data)
+          window.accountInfo = accountData
           this.props.updateAccountInfo(transformUserInfo(accountData))
           this.props.updateUserSignInStatus(true)
           // 存储 token
@@ -55,6 +63,9 @@ class SignIn extends Component {
           this.props.history.push(urlSearch.to || '/dashboard/profile')
         }).catch((error) => {
           Log.log('sign in error ', error)
+          this.setState({
+            submitting: true,
+          })
           setFields({
             password: {
               value: getFieldValue('password'),
@@ -143,6 +154,7 @@ class SignIn extends Component {
             className="button-signin"
             type="primary"
             htmlType="submit"
+            loading={this.state.submitting}
           >
             登录
           </Button>

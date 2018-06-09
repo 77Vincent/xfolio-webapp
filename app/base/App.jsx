@@ -67,7 +67,7 @@ class App extends Component {
                 exact
                 path="/dashboard/profile"
                 render={() => (
-                  this.props.accountInfo.roleId === USER_ROLE.TEACHER ? (
+                  this.props.accountInfo.role_id === USER_ROLE.TEACHER ? (
                     <TeacherControlPanel
                       content={TeachersProfiles}
                     />
@@ -82,7 +82,7 @@ class App extends Component {
                 exact
                 path="/dashboard/notification"
                 render={() => (
-                  this.props.accountInfo.roleId === USER_ROLE.TEACHER ? (
+                  this.props.accountInfo.role_id === USER_ROLE.TEACHER ? (
                     <TeacherControlPanel
                       content={Notification}
                     />
@@ -97,7 +97,7 @@ class App extends Component {
                 exact
                 path="/dashboard/plan"
                 render={() => (
-                  this.props.accountInfo.roleId === USER_ROLE.TEACHER ? (
+                  this.props.accountInfo.role_id === USER_ROLE.TEACHER ? (
                     <TeacherControlPanel
                       content={TeacherCoursePlan}
                     />

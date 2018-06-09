@@ -2,16 +2,17 @@ import { updateState } from '../../utils'
 
 const AccountInfo = {
   state: {
-    id: 8,
-    name: 'xx',
-    gender: 1,
-    mobilephone: '18511870271',
-    email: 'xxx@xx.com',
-    roleId: 3,
+    id: null,
+    name: null,
+    gender: null,
+    mobilephone: null,
+    email: null,
+    role_id: 2,
     place: 'both',
     school: null,
     country: null,
     majors: [],
+    degree_id: null,
   },
   reducers: {
     updateAccountInfo(state, payload) {

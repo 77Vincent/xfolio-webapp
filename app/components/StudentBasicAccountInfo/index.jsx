@@ -157,29 +157,36 @@ class StudentBasicAccountInfo extends Component {
               placeholder="请选择"
               value={accountInfo.place}
               options={_.values(COURSE_PLACE_OPTIONS)}
+              onSubmit={(value) => {
+                this.updateUserIfo('place', value)
+              }}
             />
           </div>
         </div>
         <div className="account-info-item">
           <div className="current-info">
             <p className="item-title">申请学历</p>
-            <p className="item-value">未设置</p>
+            <p className="item-value">
+              {accountInfo.degree_id !== null ? constDataHolder.degrees[accountInfo.degree_id].cn : '未设置'}
+            </p>
           </div>
           <div className="update-account-info-item">
             <UpdateAccountInfoItem
               inputType="select"
               placeholder="请选择"
-              value={0}
-              options={[
-                {
-                  value: 0,
-                  name: '硕士',
-                },
-                {
-                  value: 1,
-                  name: '博士',
-                },
-              ]}
+              value={accountInfo.degree_id}
+              options={(
+                _.reduce(constDataHolder.degrees, (r, v, i) => {
+                  r[i] = {
+                    value: i,
+                    name: v.cn,
+                  }
+                  return r
+                }, [])
+              )}
+              onSubmit={(value) => {
+                this.updateUserIfo('degree_id', value)
+              }}
             />
           </div>
         </div>

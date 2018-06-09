@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 
 import { SignUpInputAccountInfo } from '../../components'
 import { Request } from '../../utils'
-import { USER_ROLE } from '../../Consts'
+import { LOCAL_STORAGE_TOKEN, LOCAL_STORAGE_USER_ID, USER_ROLE } from '../../Consts'
 import constDataHolder from '../../store/constDataHolder'
 import './index.less'
 
@@ -46,9 +46,11 @@ class SignUpAsStudent extends Component {
     const accountInfo = JSON.parse(responseBody.data)
     window.accountInfo = accountInfo
     constDataHolder.apiToken = responseBody.token
+    localStorage.setItem(LOCAL_STORAGE_TOKEN, constDataHolder.apiToken)
+    localStorage.setItem(LOCAL_STORAGE_USER_ID, accountInfo.id)
     this.props.updateAccountInfo({
       mobilephone: accountInfo.mobilephone,
-      roleId: USER_ROLE.STUDENT,
+      role_id: USER_ROLE.STUDENT,
     })
     this.props.updateUserSignInStatus(true)
     this.props.history.push('/dashboard/profile')
