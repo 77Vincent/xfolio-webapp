@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 
 import constDataHolder from '../../store/constDataHolder'
 
-class SelectMajorsWrapped extends Component {
+class SelectMajors extends Component {
   static propTypes = {
     onChange: PropTypes.func,
     value: PropTypes.array,
@@ -90,4 +90,4 @@ class SelectMajorsWrapped extends Component {
   }
 }
 
-export default SelectMajorsWrapped
+export default SelectMajors

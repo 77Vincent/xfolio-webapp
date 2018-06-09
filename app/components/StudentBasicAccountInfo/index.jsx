@@ -9,8 +9,8 @@ import { COURSE_PLACE_OPTIONS, GENDER_OPTIONS, GENDER_OPTIONS_NORMALIZED } from 
 import { Request } from '../../utils'
 import constDataHolder from '../../store/constDataHolder'
 
-import SelectCountryWrapped from './SelectCountryWrapped'
-import SelectMajorsWrapped from './SelectMajorsWrapped'
+import SelectCountry from '../SelectCountry'
+import SelectMajors from '../SelectMajors'
 
 class StudentBasicAccountInfo extends Component {
   static propTypes = {
@@ -126,7 +126,7 @@ class StudentBasicAccountInfo extends Component {
             <UpdateAccountInfoItem
               inputType="custom"
               inputElem={(
-                <SelectMajorsWrapped
+                <SelectMajors
                   value={(
                     _.reduce(accountInfo.majors, (r, v) => {
                       r.push({
@@ -216,7 +216,7 @@ class StudentBasicAccountInfo extends Component {
           <div className="update-account-info-item">
             <UpdateAccountInfoItem
               inputType="custom"
-              inputElem={<SelectCountryWrapped />}
+              inputElem={<SelectCountry />}
               onSubmit={(value) => {
                 this.updateUserIfo('country', value)
               }}

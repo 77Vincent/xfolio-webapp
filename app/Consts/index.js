@@ -1,6 +1,7 @@
 
 export const CONST_DATA_URLS = {
   MAJORS: 'https://www.xfolio.cn/api/majors/',
+  SCHOOLS: 'https://www.xfolio.cn/api/schools/',
   DEGREES: 'https://www.xfolio.cn/resources/degrees.json',
   COUNTRIES: 'https://www.xfolio.cn/resources/locale/countries.json',
   PROVINCES: 'https://www.xfolio.cn/resources/locale/CN/provinces.json',

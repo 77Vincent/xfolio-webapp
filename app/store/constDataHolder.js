@@ -22,6 +22,14 @@ const constDataHolder = {
     this.majorsValueNormalized = value
   },
 
+  schoolsValue: [],
+  get schools() {
+    return this.schoolsValue
+  },
+  set schools(value) {
+    this.schoolsValue = value
+  },
+
   degreesValue: [],
   get degrees() {
     return this.degreesValue
