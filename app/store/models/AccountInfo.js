@@ -9,7 +9,7 @@ const AccountInfo = {
     email: null,
     role_id: 2,
     place: 'both',
-    school: null,
+    school_id: null,
     country: null,
     majors: [],
     degree_id: null,

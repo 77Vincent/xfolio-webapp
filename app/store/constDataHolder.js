@@ -14,12 +14,12 @@ const constDataHolder = {
   set majors(value) {
     this.majorsValue = value
   },
-  majorsValueNormalized: [],
+  majorsNormalizedValue: [],
   get majorsNormalized() {
-    return this.majorsValueNormalized
+    return this.majorsNormalizedValue
   },
   set majorsNormalized(value) {
-    this.majorsValueNormalized = value
+    this.majorsNormalizedValue = value
   },
 
   schoolsValue: [],
@@ -28,6 +28,13 @@ const constDataHolder = {
   },
   set schools(value) {
     this.schoolsValue = value
+  },
+  schoolsNormalizedValue: [],
+  get schoolsNormalized() {
+    return this.schoolsNormalizedValue
+  },
+  set schoolsNormalized(value) {
+    this.schoolsNormalizedValue = value
   },
 
   degreesValue: [],
@@ -45,12 +52,12 @@ const constDataHolder = {
   set countries(value) {
     this.countriesValue = value
   },
-  countriesValueNormalized: [],
+  countriesNormalizedValue: [],
   get countriesNormalized() {
-    return this.countriesValueNormalized
+    return this.countriesNormalizedValue
   },
   set countriesNormalized(value) {
-    this.countriesValueNormalized = value
+    this.countriesNormalizedValue = value
   },
 
   provincesValue: [],

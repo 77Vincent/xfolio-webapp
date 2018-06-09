@@ -11,6 +11,7 @@ import constDataHolder from '../../store/constDataHolder'
 
 import SelectCountry from '../SelectCountry'
 import SelectMajors from '../SelectMajors'
+import SelectSchool from '../SelectSchool'
 
 class StudentBasicAccountInfo extends Component {
   static propTypes = {
@@ -193,15 +194,16 @@ class StudentBasicAccountInfo extends Component {
         <div className="account-info-item">
           <div className="current-info">
             <p className="item-title">目标院校</p>
-            <p className="item-value">{accountInfo.school || '未设置'}</p>
+            <p className="item-value">
+              {accountInfo.school_id ? constDataHolder.schoolsNormalized[accountInfo.school_id].cn : '未设置'}
+            </p>
           </div>
           <div className="update-account-info-item">
             <UpdateAccountInfoItem
-              inputType="input"
-              placeholder="请输入学校"
-              value=""
+              inputType="custom"
+              inputElem={<SelectSchool />}
               onSubmit={(value) => {
-                this.updateUserIfo('school', value)
+                this.updateUserIfo('school_id', value)
               }}
             />
           </div>

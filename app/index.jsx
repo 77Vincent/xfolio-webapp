@@ -47,6 +47,10 @@ async function preRender() {
 
   constDataHolder.schools = await agent.get(CONST_DATA_URLS.SCHOOLS).then(res => res.text)
   constDataHolder.schools = JSON.parse(constDataHolder.schools)
+  constDataHolder.schoolsNormalized = _.reduce(constDataHolder.schools, (r, v) => {
+    r[v.id] = v
+    return r
+  }, {})
 
   constDataHolder.degrees = await agent.get(CONST_DATA_URLS.DEGREES).then(res => res.text)
   constDataHolder.degrees = JSON.parse(constDataHolder.degrees)
