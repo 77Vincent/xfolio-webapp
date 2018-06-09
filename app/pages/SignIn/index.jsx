@@ -64,7 +64,7 @@ class SignIn extends Component {
         }).catch((error) => {
           log('sign in error ', error)
           this.setState({
-            submitting: true,
+            submitting: false,
           })
           setFields({
             password: {
