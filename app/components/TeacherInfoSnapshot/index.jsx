@@ -5,6 +5,7 @@ import _ from 'lodash'
 import { Tag, Icon, Button } from 'antd'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import constDataHolder from '../../store/constDataHolder'
 
 import { Request } from '../../utils'
 import './index.less'
@@ -55,7 +56,7 @@ class TeacherInfoSnapshot extends Component {
 
     return (
       <div className="teacher-info-snapshot-wrap" style={wrapStyle}>
-        <img src={teacherInfo.avatar_url} alt="" className="teacher-avatar" />
+        <img src={teacherInfo.avatar_url} alt="导师头像" className="teacher-avatar" />
         <div className="teacher-info-detail">
           <p className="teacher-name">{teacherInfo.name}</p>
           <div className="module-wrap">
@@ -67,7 +68,7 @@ class TeacherInfoSnapshot extends Component {
               )
             }
             <div className="education-detail">
-              <p className="item">毕业于：{teacherInfo.school}</p>
+              <p className="item">毕业于：{constDataHolder.schoolsNormalized[teacherInfo.school_id].cn}</p>
               <p className="item">指导学生数：0</p>
               <p className="item">现有学生：0</p>
               <p className="item">学生录取院校：AA；UCL</p>
