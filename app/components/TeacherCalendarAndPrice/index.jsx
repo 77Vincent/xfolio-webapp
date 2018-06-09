@@ -41,12 +41,7 @@ export default class TeacherCalendarAndPrice extends Component {
           <h5 className="price-title">费用设置</h5>
           <div className="price-detail-wrap">
             <PriceDetail
-              type="线上授课费用"
               price={500}
-            />
-            <PriceDetail
-              type="线下授课费用"
-              price={600}
             />
           </div>
           <p className="share-tip">

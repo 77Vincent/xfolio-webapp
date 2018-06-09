@@ -6,6 +6,7 @@ export const CONST_DATA_URLS = {
   COUNTRIES: 'https://www.xfolio.cn/resources/locale/countries.json',
   PROVINCES: 'https://www.xfolio.cn/resources/locale/CN/provinces.json',
   CITIES: 'https://www.xfolio.cn/resources/locale/CN/cities.json',
+  FOLLOWER_FOLLOWING: 'https://www.xfolio.cn/api/followers_followings/',
 }
 
 export const USER_ROLE = {

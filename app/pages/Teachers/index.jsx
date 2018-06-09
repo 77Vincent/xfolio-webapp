@@ -13,15 +13,12 @@ class Teachers extends Component {
   static propTypes = {
     style: PropTypes.object,
     accountInfo: PropTypes.object.isRequired,
+    getFollowingIds: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
     style: {},
   };
-
-  constructor(props) {
-    super(props)
-  }
 
   state = {
     filterOptions: {
@@ -39,6 +36,7 @@ class Teachers extends Component {
 
   componentDidMount() {
     this.requestTeacherList()
+    this.props.getFollowingIds(this.props.accountInfo.id)
   }
 
   componentWillUnmount() {
@@ -49,7 +47,7 @@ class Teachers extends Component {
     const options = _.assign({}, this.state.filterOptions, {
       majors: this.state.filterOptions.majors.join(','),
     })
-    Request.getTeachers(options).then((res) => {
+    Request.getTeachers({}).then((res) => {
       log('getTeachers res ', res.text)
       const teacherList = res.text !== null ? JSON.parse(res.text) : []
       if (_.isEmpty(teacherList) === false) {
@@ -176,7 +174,11 @@ class Teachers extends Component {
             {
               teacherList.length > 0 && (
                 _.map(teacherListData, (teacherInfo, index) => (
-                  <TeacherInfoSnapshot key={index} />
+                  <TeacherInfoSnapshot
+                    teacherInfo={teacherInfo}
+                    isFollowing={_.includes(this.props.accountInfo.followingIds, teacherInfo.id)}
+                    key={index}
+                  />
                 ))
               )
             }
@@ -207,6 +209,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  getFollowingIds: dispatch.AccountInfo.getFollowingIds,
 })
 
-export default connect(mapStateToProps)(Teachers)
+export default connect(mapStateToProps, mapDispatchToProps)(Teachers)

@@ -4,19 +4,25 @@ import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { Tag, Icon, Button } from 'antd'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
+import { Request } from '../../utils'
 import './index.less'
-import { getImage } from '../../utils'
 
-export default class TeacherInfoSnapshot extends Component {
+class TeacherInfoSnapshot extends Component {
   static propTypes = {
     style: PropTypes.object,
+    teacherInfo: PropTypes.object.isRequired,
+    isFollowing: PropTypes.bool,
     showAppointBtn: PropTypes.bool,
     showFavBtn: PropTypes.bool,
+    removeFollowingId: PropTypes.func.isRequired,
+    addFollowingId: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
     style: {},
+    isFollowing: false,
     showAppointBtn: true,
     showFavBtn: true,
   };
@@ -29,36 +35,53 @@ export default class TeacherInfoSnapshot extends Component {
 
   }
 
+  handleUpdateFollowStatus = () => {
+    const userId = this.props.teacherInfo.id
+    if (this.props.isFollowing) {
+      Request.removeFollowing(userId).then(() => {
+        this.props.removeFollowingId(userId)
+      })
+    } else {
+      Request.addFollowing(userId).then(() => {
+        this.props.addFollowingId(userId)
+      })
+    }
+  }
+
   render() {
     const wrapStyle = _.assign({}, this.props.style)
+    const { teacherInfo } = this.props
 
     return (
       <div className="teacher-info-snapshot-wrap" style={wrapStyle}>
-        <img src={getImage('default-teacher-avatar-470-21-.png')} alt="" className="teacher-avatar" />
+        <img src={teacherInfo.avatar_url} alt="" className="teacher-avatar" />
         <div className="teacher-info-detail">
-          <p className="teacher-name">马天驰</p>
-          <div className="teacher-tags">
-            <Tag>名校毕业</Tag>
-            <Tag>风趣</Tag>
-            <Tag>教学经验</Tag>
-            <Tag>工作经验</Tag>
-          </div>
-          <div className="education-detail">
-            <p className="item">毕业于：Architectual AssociationAssociationAssociationAssociation</p>
-            <p className="item">指导学生数：100</p>
-            <p className="item">现有学生：10</p>
-            <p className="item">学生录取院校：AA；UCL</p>
-            <p className="item">本周可约课时：0</p>
+          <p className="teacher-name">{teacherInfo.name}</p>
+          <div className="module-wrap">
+            {
+              teacherInfo.tags.length > 0 && (
+                <div className="teacher-tags">
+                  { _.map(teacherInfo.tags, (tag, i) => <Tag key={i}>{tag}</Tag>) }
+                </div>
+              )
+            }
+            <div className="education-detail">
+              <p className="item">毕业于：{teacherInfo.school}</p>
+              <p className="item">指导学生数：0</p>
+              <p className="item">现有学生：0</p>
+              <p className="item">学生录取院校：AA；UCL</p>
+              <p className="item">本周可约课时：{teacherInfo.available}</p>
+            </div>
           </div>
           <div className="operas-wrap">
             {
               this.props.showFavBtn === true && (
-                <a href="javascript:;" className="btn-favorite">
+                <a href="javascript:;" className="btn-favorite" onClick={this.handleUpdateFollowStatus}>
                   {
-                    true ? (
-                      <Icon type="star-o" />
-                    ) : (
+                    this.props.isFollowing ? (
                       <Icon type="star" />
+                    ) : (
+                      <Icon type="star-o" />
                     )
                   }
                 </a>
@@ -72,7 +95,7 @@ export default class TeacherInfoSnapshot extends Component {
                     disabled: false,
                   })}
                 >
-                  <Link to="/submit-order">预约</Link>
+                  <Link to={`/submit-order?userId=${teacherInfo.id}`}>预约</Link>
                 </Button>
               )
             }
@@ -82,3 +105,14 @@ export default class TeacherInfoSnapshot extends Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+
+})
+
+const mapDispatchToProps = dispatch => ({
+  removeFollowingId: dispatch.AccountInfo.removeFollowingId,
+  addFollowingId: dispatch.AccountInfo.addFollowingId,
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(TeacherInfoSnapshot)

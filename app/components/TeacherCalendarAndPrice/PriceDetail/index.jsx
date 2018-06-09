@@ -8,7 +8,6 @@ import './index.less'
 export default class PriceDetail extends Component {
   static propTypes = {
     style: PropTypes.object,
-    type: PropTypes.string,
     price: PropTypes.number,
   };
 
@@ -55,11 +54,6 @@ export default class PriceDetail extends Component {
 
     return (
       <div className="price-detail" style={wrapStyle}>
-        {
-          this.props.type && (
-            <span className="price-type">{this.props.type}</span>
-          )
-        }
         <span className="current-price">¥{this.state.price}/h</span>
         {
           this.state.editMode === false && (
