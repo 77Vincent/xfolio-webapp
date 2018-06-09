@@ -66,7 +66,6 @@ export default class UpdateAccountInfoItem extends Component {
 
   render() {
     const wrapStyle = _.assign({}, this.props.style)
-    log('this.props ', this.props, this.state)
 
     const extraProps = {}
     if (this.props.inputType === 'select') {

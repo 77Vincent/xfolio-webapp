@@ -56,7 +56,7 @@ class SelectSchool extends Component {
     return (
       <Select
         mode="combobox"
-        placeholder="请输入国家名称"
+        placeholder="请输入学校名称"
         defaultActiveFirstOption={false}
         showArrow={false}
         filterOption={false}

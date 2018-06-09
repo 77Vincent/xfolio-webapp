@@ -51,6 +51,7 @@ class TeacherInfoSnapshot extends Component {
   render() {
     const wrapStyle = _.assign({}, this.props.style)
     const { teacherInfo } = this.props
+    const { available } = teacherInfo
 
     return (
       <div className="teacher-info-snapshot-wrap" style={wrapStyle}>
@@ -70,7 +71,7 @@ class TeacherInfoSnapshot extends Component {
               <p className="item">指导学生数：0</p>
               <p className="item">现有学生：0</p>
               <p className="item">学生录取院校：AA；UCL</p>
-              <p className="item">本周可约课时：{teacherInfo.available}</p>
+              <p className="item">本周可约课时：{available}</p>
             </div>
           </div>
           <div className="operas-wrap">
@@ -92,10 +93,15 @@ class TeacherInfoSnapshot extends Component {
                 <Button
                   className={cx({
                     'btn-order': true,
-                    disabled: false,
+                    disabled: available === 0,
                   })}
+                  disabled={available === 0}
                 >
-                  <Link to={`/submit-order?userId=${teacherInfo.id}`}>预约</Link>
+                  {
+                    available > 0 ? (
+                      <Link to={`/submit-order?userId=${teacherInfo.id}`}>预约</Link>
+                    ) : '已约满'
+                  }
                 </Button>
               )
             }
