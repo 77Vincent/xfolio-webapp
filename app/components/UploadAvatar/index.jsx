@@ -10,12 +10,13 @@ import './index.less'
 export default class UploadAvatar extends Component {
   static propTypes = {
     style: PropTypes.object,
-    originImageUrl: PropTypes.string,
+    avatar_id: PropTypes.number,
+    userId: PropTypes.number.isRequired,
   };
 
   static defaultProps = {
     style: {},
-    originImageUrl: '',
+    avatar_id: null,
   };
 
   state = {
@@ -56,8 +57,8 @@ export default class UploadAvatar extends Component {
       uploading: true,
     })
     try {
-      this.uploadResult = await Request.uploadAvatar({
-        content: this.uploadImageBase64,
+      this.uploadResult = await Request.updateAvatar(this.props.avatar_id, {
+        content: this.uploadImageBase64.split(',')[1],
         mime: this.uploadImageInfo.type,
       }).then(res => JSON.parse(res.text))
     } catch (e) {
@@ -80,7 +81,9 @@ export default class UploadAvatar extends Component {
   }
 
   handleModalClickCancel = () => {
-
+    this.setState({
+      showModal: false,
+    })
   }
 
   render() {
@@ -102,8 +105,8 @@ export default class UploadAvatar extends Component {
             )
           }
           {
-            this.state.cropped === false && this.props.originImageUrl !== '' && (
-              <img src={this.props.originImageUrl} alt="avatar" className="avatar" />
+            this.state.cropped === false && this.props.avatar_id !== null && (
+              <img src={`/api/avatar/${this.props.avatar_id}`} alt="avatar" className="avatar" />
             )
           }
           <Icon type={this.state.uploading === true ? 'loading' : 'plus'} className="upload-icon" />

@@ -56,7 +56,7 @@ class TeacherInfoSnapshot extends Component {
 
     return (
       <div className="teacher-info-snapshot-wrap" style={wrapStyle}>
-        <img src={teacherInfo.avatar_url} alt="导师头像" className="teacher-avatar" />
+        <img src={`/api/avatars/${teacherInfo.avatar_id}`} alt="导师头像" className="teacher-avatar" />
         <div className="teacher-info-detail">
           <p className="teacher-name">{teacherInfo.name}</p>
           <div className="module-wrap">

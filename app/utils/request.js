@@ -46,8 +46,11 @@ const Request = {
   },
 
   // avatar
-  uploadAvatar(options = {}) {
-    return agent.put('/api/avatars').send(options).set('authorization', `Bearer ${constDataHolder.apiToken}`)
+  uploadAvatar(data = { content: null, mime: null }) {
+    return agent.put('/api/avatars').send(data).set('authorization', `Bearer ${constDataHolder.apiToken}`)
+  },
+  updateAvatar(avatarId, data = { content: null, mime: null }) {
+    return agent.post(`/api/avatars/${avatarId}`).send(data).set('authorization', `Bearer ${constDataHolder.apiToken}`)
   },
 }
 

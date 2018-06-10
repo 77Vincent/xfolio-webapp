@@ -38,7 +38,7 @@ const webpackConfigDev = {
     },  
     proxy: {
       '/api/*': {
-        target: 'http://39.104.108.82:3001',
+        target: 'http://xfolio.cn',
         changeOrigin: true
       }
     }

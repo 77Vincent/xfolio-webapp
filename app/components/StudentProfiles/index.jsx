@@ -9,7 +9,8 @@ import './index.less'
 class StudentProfiles extends Component {
   static propTypes = {
     style: PropTypes.object,
-    avatar_url: PropTypes.string.isRequired,
+    avatar_id: PropTypes.number.isRequired,
+    userId: PropTypes.number.isRequired,
   };
 
   static defaultProps = {
@@ -30,7 +31,8 @@ class StudentProfiles extends Component {
     return (
       <div className="student-profiles-wrap" style={wrapStyle}>
         <UploadAvatar
-          originImageUrl={this.props.avatar_url}
+          avatar_id={this.props.avatar_id}
+          userId={this.props.userId}
         />
         <StudentBasicAccountInfo />
       </div>
@@ -39,7 +41,8 @@ class StudentProfiles extends Component {
 }
 
 const mapStateToProps = state => ({
-  avatar_url: state.AccountInfo.avatar_url,
+  avatar_id: state.AccountInfo.avatar_id,
+  userId: state.AccountInfo.id,
 })
 
 const mapDispatchToProps = dispatch => ({
