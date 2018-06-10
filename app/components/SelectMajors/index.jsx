@@ -67,8 +67,6 @@ class SelectMajors extends Component {
   }
 
   render() {
-    log('this state majorOptions ', this.state.majorOptions)
-
     return (
       <Select
         mode="multiple"

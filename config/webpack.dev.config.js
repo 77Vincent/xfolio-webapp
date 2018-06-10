@@ -37,8 +37,8 @@ const webpackConfigDev = {
       publicPath: false
     },  
     proxy: {
-      '/api/*': {
-        target: 'http://xfolio.cn',
+      '/api': {
+        target: 'https://xfolio.cn',
         changeOrigin: true
       }
     }

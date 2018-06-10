@@ -63,6 +63,10 @@ async function preRender() {
 
   constDataHolder.provinces = await agent.get(CONST_DATA_URLS.PROVINCES).then(res => res.body)
   constDataHolder.cities = await agent.get(CONST_DATA_URLS.CITIES).then(res => res.body)
+  constDataHolder.citiesNormalized = _.reduce(constDataHolder.cities, (r, v) => {
+    r[v.code] = v
+    return r
+  }, {})
 }
 
 preRender().then(() => {

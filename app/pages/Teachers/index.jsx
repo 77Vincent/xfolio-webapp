@@ -4,7 +4,8 @@ import _ from 'lodash'
 import { Anchor, Divider, Select, Radio, Pagination } from 'antd'
 import { connect } from 'react-redux'
 
-import { TeacherInfoSnapshot } from '../../components'
+import { TeacherInfoSnapshot, SelectCountry, SelectMajors, SelectCity } from '../../components'
+import constDataHolder from '../../store/constDataHolder'
 import { Request } from '../../utils'
 import { COURSE_PLACE_OPTIONS, GENDER_OPTIONS, PRICE_ORDER_OPTIONS } from '../../Consts'
 import './index.less'
@@ -48,8 +49,8 @@ class Teachers extends Component {
       majors: this.state.filterOptions.majors.join(','),
     })
     Request.getTeachers({}).then((res) => {
-      log('getTeachers res ', res.text)
       const teacherList = res.text !== null ? JSON.parse(res.text) : []
+      log('teacherList ', teacherList)
       if (_.isEmpty(teacherList) === false) {
         this.setState({
           teacherList,
@@ -91,22 +92,32 @@ class Teachers extends Component {
             <div className="filter-item-wrap">
               <h4 className="title">专业</h4>
               <Divider />
-              <Select
-                value={1}
-              >
-                <Select.Option value={1}>建筑</Select.Option>
-                <Select.Option value={2}>服装</Select.Option>
-              </Select>
+              <SelectMajors
+                value={(
+                  _.reduce(this.state.filterOptions.majors, (r, v) => {
+                    r.push({
+                      key: `${v}`,
+                      label: constDataHolder.majorsNormalized[`${v}`].cn,
+                    })
+                    return r
+                  }, [])
+                )}
+                onChange={(value) => {
+                  this.state.filterOptions.majors = value
+                  this.setState({
+                    filterOptions: this.state.filterOptions,
+                  })
+                }}
+              />
             </div>
             <div className="filter-item-wrap">
               <h4 className="title">申请国家</h4>
               <Divider />
-              <Select
-                value={1}
-              >
-                <Select.Option value={1}>中国</Select.Option>
-                <Select.Option value={2}>美国</Select.Option>
-              </Select>
+              <SelectCountry
+                onChange={(value) => {
+                  log('SelectCountry onChange ', value)
+                }}
+              />
             </div>
             <div className="filter-item-wrap">
               <h4 className="title">授课方式</h4>
@@ -147,12 +158,14 @@ class Teachers extends Component {
             <div className="filter-item-wrap">
               <h4 className="title">城市</h4>
               <Divider />
-              <Select
-                value={1}
-              >
-                <Select.Option value={1}>北京</Select.Option>
-                <Select.Option value={2}>上海</Select.Option>
-              </Select>
+              <SelectCity
+                onChange={(value) => {
+                  this.state.filterOptions.city = value
+                  this.setState({
+                    filterOptions: this.state.filterOptions,
+                  })
+                }}
+              />
             </div>
             <div className="filter-item-wrap">
               <h4 className="title">价格</h4>

@@ -52,7 +52,7 @@ export default class UploadAvatar extends Component {
   }
 
   uploadImage = async () => {
-    log('call uploadImage')
+    log('call uploadImage ', this.props.avatar_id)
     this.setState({
       uploading: true,
     })
@@ -61,7 +61,7 @@ export default class UploadAvatar extends Component {
       mime: this.uploadImageInfo.type,
     }
     try {
-      if (this.props.avatar_id !== -1) {
+      if (this.props.avatar_id === -1) {
         await Request.uploadAvatar(this.props.avatar_id, avatarData)
           .then(res => JSON.parse(res.text))
       } else {
@@ -112,7 +112,7 @@ export default class UploadAvatar extends Component {
           }
           {
             this.state.cropped === false && this.props.avatar_id !== null && (
-              <img src={`/api/avatar/${this.props.avatar_id}`} alt="avatar" className="avatar" />
+              <img src={`/api/avatars/${this.props.avatar_id}`} alt="avatar" className="avatar" />
             )
           }
           <Icon type={this.state.uploading === true ? 'loading' : 'plus'} className="upload-icon" />

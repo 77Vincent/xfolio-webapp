@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 
 import constDataHolder from '../../store/constDataHolder'
 
-class SelectCountry extends Component {
+class SelectCity extends Component {
   static propTypes = {
     onChange: PropTypes.func,
   };
@@ -16,25 +16,26 @@ class SelectCountry extends Component {
   };
 
   state = {
-    countryOptions: [],
+    cityOptions: [],
     value: '',
   }
 
   componentDidMount() {
-    this.countryInfoCN = (
-      _.map(constDataHolder.countries, countryInfo => ({
-        value: countryInfo.code,
-        name: countryInfo.cn,
+    this.citiesInfo = (
+      _.map(constDataHolder.cities, cityInfo => ({
+        value: cityInfo.code,
+        name: cityInfo.name,
       }))
     )
   }
 
-  countryInfoCN = []
+  citiesInfo = []
 
   handleSelectOption = (value) => {
-    const countryName = constDataHolder.countriesNormalized[value].cn
+    log('handleSelectOption ', value)
+    const cityName = constDataHolder.citiesNormalized[value].name
     this.setState({
-      value: countryName,
+      value: cityName,
     })
     // 上报修改
     this.props.onChange(value)
@@ -42,13 +43,13 @@ class SelectCountry extends Component {
 
   handleInputChange = (input) => {
     const inputValue = _.trim(input)
-    let countryOptions = []
+    let cityOptions = []
     if (inputValue !== '') {
-      countryOptions = _.filter(this.countryInfoCN, info => info.name.indexOf(input) !== -1)
+      cityOptions = _.filter(this.citiesInfo, info => info.name.indexOf(input) !== -1)
     }
     this.setState({
       value: input,
-      countryOptions,
+      cityOptions,
     })
   }
 
@@ -56,7 +57,7 @@ class SelectCountry extends Component {
     return (
       <Select
         mode="combobox"
-        placeholder="请输入国家名称"
+        placeholder="请输入城市名称"
         defaultActiveFirstOption={false}
         showArrow={false}
         filterOption={false}
@@ -65,7 +66,7 @@ class SelectCountry extends Component {
         onSelect={this.handleSelectOption}
       >
         {
-          _.map(this.state.countryOptions, optionInfo => (
+          _.map(this.state.cityOptions, optionInfo => (
             <Select.Option value={optionInfo.value} key={uuidv1()}>{optionInfo.name}</Select.Option>
           ))
         }
@@ -74,4 +75,4 @@ class SelectCountry extends Component {
   }
 }
 
-export default SelectCountry
+export default SelectCity

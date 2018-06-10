@@ -75,6 +75,13 @@ const constDataHolder = {
   set cities(value) {
     this.citiesValue = value
   },
+  citiesNormalizedValue: [],
+  get citiesNormalized() {
+    return this.citiesNormalizedValue
+  },
+  set citiesNormalized(value) {
+    this.citiesNormalizedValue = value
+  },
 }
 
 window.constDataHolder = constDataHolder
