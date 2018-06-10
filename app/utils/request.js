@@ -52,6 +52,11 @@ const Request = {
   updateAvatar(avatarId, data = { content: null, mime: null }) {
     return agent.post(`/api/avatars/${avatarId}`).send(data).set('authorization', `Bearer ${constDataHolder.apiToken}`)
   },
+
+  // order
+  createOrder(data) {
+    return agent.post('/api/orders').send(data)
+  },
 }
 
 window.agent = agent

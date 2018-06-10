@@ -56,18 +56,24 @@ export default class UploadAvatar extends Component {
     this.setState({
       uploading: true,
     })
+    const avatarData = {
+      content: this.uploadImageBase64.split(',')[1],
+      mime: this.uploadImageInfo.type,
+    }
     try {
-      this.uploadResult = await Request.updateAvatar(this.props.avatar_id, {
-        content: this.uploadImageBase64.split(',')[1],
-        mime: this.uploadImageInfo.type,
-      }).then(res => JSON.parse(res.text))
+      if (this.props.avatar_id !== -1) {
+        await Request.uploadAvatar(this.props.avatar_id, avatarData)
+          .then(res => JSON.parse(res.text))
+      } else {
+        await Request.updateAvatar(this.props.avatar_id, avatarData)
+          .then(res => JSON.parse(res.text))
+      }
     } catch (e) {
       log('upload image filed ', e)
     }
     this.setState({
       uploading: false,
     })
-    log('uploadResult ', this.uploadResult)
   }
 
   handleModalClickOk = () => {

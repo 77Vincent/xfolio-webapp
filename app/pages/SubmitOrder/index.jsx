@@ -11,7 +11,6 @@ import { Request } from '../../utils'
 import './index.less'
 
 const courseHours = ['1h', '5h', '10h', '20h']
-const coursePrice = 500
 
 export default class SubmitOrder extends Component {
   static propTypes = {
@@ -27,7 +26,7 @@ export default class SubmitOrder extends Component {
     teacherInfoInited: false,
     teacherInfo: {},
     courseHoursIndex: 1,
-    courseNumber: 1,
+    courseCount: 1,
   }
 
   componentDidMount() {
@@ -52,14 +51,37 @@ export default class SubmitOrder extends Component {
     })
   }
 
-  updateCourseNumber = (n) => {
+  updateCourseCount = (n) => {
     this.setState({
-      courseNumber: n,
+      courseCount: n,
+    })
+  }
+
+  calcCourseLength = () => {
+    return parseInt(courseHours[this.state.courseHoursIndex], 10) * this.state.courseCount
+  }
+
+  calcTotalPrice = () => {
+    return this.calcCourseLength() * this.state.teacherInfo.cost
+  }
+
+  handleClickSubmitOrder = () => {
+    Request.createOrder({
+      payment_method: 1,
+      total_price: this.calcTotalPrice(),
+      unit_price: this.state.teacherInfo.cost,
+      length: this.calcCourseLength(),
+      recipient_id: this.state.teacherInfo.id,
+    }).then((res) => {
+      log('createOrder res ', res)
+    }).catch((e) => {
+      log('createOrder err ', e)
     })
   }
 
   render() {
     const wrapStyle = _.assign({}, this.props.style)
+    const { courseCount, courseHoursIndex } = this.state
 
     return (
       <div className="submit-order-wrap" style={wrapStyle}>
@@ -87,7 +109,7 @@ export default class SubmitOrder extends Component {
                   _.map(courseHours, (hours, index) => (
                     <Button
                       className={cx({
-                        current: this.state.courseHoursIndex === index,
+                        current: courseHoursIndex === index,
                       })}
                       onClick={() => {
                         this.updateCourseHoursIndex(index)
@@ -105,19 +127,19 @@ export default class SubmitOrder extends Component {
               <div className="course-number-opera">
                 <Button
                   className={cx({
-                    disabled: this.state.courseNumber === 1,
+                    disabled: courseCount === 1,
                   })}
-                  disabled={this.state.courseNumber === 1}
+                  disabled={courseCount === 1}
                   onClick={() => {
-                    this.updateCourseNumber(this.state.courseNumber - 1)
+                    this.updateCourseCount(courseCount - 1)
                   }}
                 >
                   <Icon type="minus" />
                 </Button>
-                <span className="number">{this.state.courseNumber}</span>
+                <span className="number">{courseCount}</span>
                 <Button
                   onClick={() => {
-                    this.updateCourseNumber(this.state.courseNumber + 1)
+                    this.updateCourseCount(courseCount + 1)
                   }}
                 >
                   <Icon type="plus" />
@@ -129,10 +151,10 @@ export default class SubmitOrder extends Component {
               <span
                 className="price-number"
               >
-              ￥{parseInt(courseHours[this.state.courseHoursIndex], 10) * this.state.courseNumber * coursePrice}
+              ￥{this.calcTotalPrice()}
               </span>
             </p>
-            <Button className="btn-submit-order">确认支付</Button>
+            <Button className="btn-submit-order" onClick={this.handleClickSubmitOrder}>确认支付</Button>
           </div>
         </Card>
       </div>
