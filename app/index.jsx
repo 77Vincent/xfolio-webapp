@@ -11,30 +11,42 @@ import { LocaleProvider } from 'antd'
 import zhCN from 'antd/lib/locale-provider/zh_CN'
 import 'moment/locale/zh-cn'
 import _ from 'lodash'
+import to from 'await-to'
+import base64 from 'base-64'
 
 import store from './store'
 import App from './base/App'
 import { LOCAL_STORAGE_TOKEN, LOCAL_STORAGE_USER_ID, CONST_DATA_URLS } from './Consts'
 import constDataHolder from './store/constDataHolder'
-import { Request, transformUserInfo } from './utils'
+import { Request, transformUserInfo, cleanUpBeforeSignOut, dressUpAfterSignIn } from './utils'
 import { agent } from './utils/request'
-
 
 async function preRender() {
   const localStorageToken = localStorage.getItem(LOCAL_STORAGE_TOKEN)
   const userId = localStorage.getItem(LOCAL_STORAGE_USER_ID)
-  if (localStorageToken !== null) {
-    // TODO 做 token 有效性校验
-
-    // 修改登录状态
-    constDataHolder.apiToken = localStorageToken
-    store.dispatch.AppStatus.updateUserSignInStatus(true)
-    store.dispatch.AppStatus.updateTeacherFilterInitStatus(true)
-  }
-  if (userId !== null) {
-    // 初始化用户信息
-    const accountInfo = await Request.getUserInfo(userId).then(res => res.text)
-    store.dispatch.AccountInfo.updateAccountInfo(transformUserInfo(JSON.parse(accountInfo)))
+  if (localStorageToken !== null && userId !== null) {
+    const tokenPayloadBase64 = localStorageToken.split('.')[1]
+    log('tokenPayloadBase64 ', tokenPayloadBase64)
+    const tokenPayloadContent = JSON.parse(base64.decode(tokenPayloadBase64))
+    // 判断 token 是否过期
+    if (tokenPayloadContent.exp < Date.now()) {
+      cleanUpBeforeSignOut()
+    } else {
+      // 获取用户信息
+      const [err, accountInfo] = await to(Request.getUserInfo(userId).then(res => res.text))
+      if (err !== null) {
+        // 根据 id 获取不到用户信息，则清空数据
+        cleanUpBeforeSignOut()
+      } else {
+        // 修改登录状态
+        constDataHolder.apiToken = localStorageToken
+        dressUpAfterSignIn(accountInfo.id, constDataHolder.apiToken)
+        store.dispatch.AccountInfo.updateAccountInfo(transformUserInfo(JSON.parse(accountInfo)))
+      }
+    }
+  } else {
+    // 本地不存在 token 和 userId 的，判为未登录
+    cleanUpBeforeSignOut()
   }
 
   // 初始化常量数据

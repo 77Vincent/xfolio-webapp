@@ -27,14 +27,14 @@ import {
   TeacherControlPanel,
   SubmitOrder,
 } from '../pages'
-import { LOCAL_STORAGE_TOKEN, LOCAL_STORAGE_USER_ID, USER_ROLE } from '../Consts'
+import { USER_ROLE } from '../Consts'
 
 import './App.less'
+import { cleanUpBeforeSignOut } from '../utils'
 
 class App extends Component {
   static propTypes = {
     accountInfo: PropTypes.object.isRequired,
-    updateUserSignInStatus: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -123,9 +123,7 @@ class App extends Component {
                 exact
                 path="/signout"
                 component={() => {
-                  localStorage.removeItem(LOCAL_STORAGE_TOKEN)
-                  localStorage.removeItem(LOCAL_STORAGE_USER_ID)
-                  this.props.updateUserSignInStatus(false)
+                  cleanUpBeforeSignOut()
                   return (
                     <Redirect to="/" push={false} />
                   )
@@ -154,7 +152,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  updateUserSignInStatus: dispatch.AppStatus.updateUserSignInStatus,
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))

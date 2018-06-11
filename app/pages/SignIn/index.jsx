@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { Form, Input, Button, Icon } from 'antd'
+import { Form, Input, Button } from 'antd'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import queryString from 'query-string'
 
-import { LOCAL_STORAGE_TOKEN, LOCAL_STORAGE_USER_ID } from '../../Consts'
-import { Request, transformUserInfo } from '../../utils'
+import { Request, transformUserInfo, dressUpAfterSignIn } from '../../utils'
 import constDataHolder from '../../store/constDataHolder'
 import './index.less'
 
@@ -16,7 +15,6 @@ class SignIn extends Component {
     style: PropTypes.object,
     form: PropTypes.object.isRequired,
     updateAccountInfo: PropTypes.func.isRequired,
-    updateUserSignInStatus: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
   }
@@ -52,12 +50,11 @@ class SignIn extends Component {
           const accountData = JSON.parse(res.body.data)
           window.accountInfo = accountData
           this.props.updateAccountInfo(transformUserInfo(accountData))
-          this.props.updateUserSignInStatus(true)
+
           // 存储 token
-          const apiToken = res.body.token
-          localStorage.setItem(LOCAL_STORAGE_TOKEN, apiToken)
-          localStorage.setItem(LOCAL_STORAGE_USER_ID, accountData.id)
-          constDataHolder.apiToken = apiToken
+          constDataHolder.apiToken = res.body.token
+          // 初始化数据
+          dressUpAfterSignIn(accountData.id, constDataHolder.apiToken)
           // 重定向到登录前页面
           const urlSearch = queryString.parse(this.props.location.search.substring(1))
           this.props.history.push(urlSearch.to || '/dashboard/profile')
@@ -172,7 +169,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   updateAccountInfo: dispatch.AccountInfo.updateAccountInfo,
-  updateUserSignInStatus: dispatch.AppStatus.updateUserSignInStatus,
 })
 
 export default connect(null, mapDispatchToProps)(SignInWrapped)

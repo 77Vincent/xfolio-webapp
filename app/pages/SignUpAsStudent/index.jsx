@@ -5,8 +5,8 @@ import { Button } from 'antd'
 import { connect } from 'react-redux'
 
 import { SignUpInputAccountInfo } from '../../components'
-import { Request, transformUserInfo } from '../../utils'
-import { LOCAL_STORAGE_TOKEN, LOCAL_STORAGE_USER_ID, USER_ROLE } from '../../Consts'
+import { Request, transformUserInfo, dressUpAfterSignIn } from '../../utils'
+import { USER_ROLE } from '../../Consts'
 import constDataHolder from '../../store/constDataHolder'
 import './index.less'
 
@@ -14,7 +14,6 @@ class SignUpAsStudent extends Component {
   static propTypes = {
     style: PropTypes.object,
     updateAccountInfo: PropTypes.func.isRequired,
-    updateUserSignInStatus: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
   };
 
@@ -46,10 +45,9 @@ class SignUpAsStudent extends Component {
     const accountInfo = JSON.parse(responseBody.data)
     window.accountInfo = accountInfo
     constDataHolder.apiToken = responseBody.token
-    localStorage.setItem(LOCAL_STORAGE_TOKEN, constDataHolder.apiToken)
-    localStorage.setItem(LOCAL_STORAGE_USER_ID, accountInfo.id)
+    // 初始化数据
+    dressUpAfterSignIn(accountInfo.id, constDataHolder.apiToken)
     this.props.updateAccountInfo(transformUserInfo(accountInfo))
-    this.props.updateUserSignInStatus(true)
     this.props.history.push('/dashboard/profile')
   }
 
@@ -81,7 +79,6 @@ class SignUpAsStudent extends Component {
 
 const mapDispatchToProps = dispatch => ({
   updateAccountInfo: dispatch.AccountInfo.updateAccountInfo,
-  updateUserSignInStatus: dispatch.AppStatus.updateUserSignInStatus,
 })
 
 export default connect(null, mapDispatchToProps)(SignUpAsStudent)
