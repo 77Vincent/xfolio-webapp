@@ -37,23 +37,61 @@ class HomePage extends Component {
             effect="fade"
             dots={false}
             autoplay
-            speed={100}
+            speed={300}
           >
             <div className="slide-wrap">
-              <img src={getImage('user-story-temp-image-464-300.png')} alt="slide background" />
+              <div
+                className="slide-bg-image"
+                style={{
+                  backgroundImage: `url("${getImage('desktop-3168223.jpg')}")`,
+                }}
+              />
               <p className="slide-intro">一个直接找到设计导师的网站1</p>
             </div>
             <div className="slide-wrap">
-              <img src="" alt="slide background" />
+              <div
+                className="slide-bg-image"
+                style={{
+                  backgroundImage: `url("${getImage('minimalism-3111110.jpg')}")`,
+                }}
+              />
               <p className="slide-intro">一个直接找到设计导师的网站2</p>
             </div>
             <div className="slide-wrap">
-              <img src="" alt="slide background" />
+              <div
+                className="slide-bg-image"
+                style={{
+                  backgroundImage: `url("${getImage('modern-3224786.jpg')}")`,
+                }}
+              />
               <p className="slide-intro">一个直接找到设计导师的网站3</p>
             </div>
             <div className="slide-wrap">
-              <img src="" alt="slide background" />
+              <div
+                className="slide-bg-image"
+                style={{
+                  backgroundImage: `url("${getImage('painter-1246619.jpg')}")`,
+                }}
+              />
               <p className="slide-intro">一个直接找到设计导师的网站4</p>
+            </div>
+            <div className="slide-wrap">
+              <div
+                className="slide-bg-image"
+                style={{
+                  backgroundImage: `url("${getImage('tiles-shapes-2617112.jpg')}")`,
+                }}
+              />
+              <p className="slide-intro">一个直接找到设计导师的网站5</p>
+            </div>
+            <div className="slide-wrap">
+              <div
+                className="slide-bg-image"
+                style={{
+                  backgroundImage: `url("${getImage('winter-3292563.jpg')}")`,
+                }}
+              />
+              <p className="slide-intro">一个直接找到设计导师的网站6</p>
             </div>
           </Carousel>
           <Button
