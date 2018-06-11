@@ -5,7 +5,7 @@ import { Button } from 'antd'
 import { connect } from 'react-redux'
 
 import { SignUpInputAccountInfo } from '../../components'
-import { Request } from '../../utils'
+import { Request, transformUserInfo } from '../../utils'
 import { LOCAL_STORAGE_TOKEN, LOCAL_STORAGE_USER_ID, USER_ROLE } from '../../Consts'
 import constDataHolder from '../../store/constDataHolder'
 import './index.less'
@@ -48,10 +48,7 @@ class SignUpAsStudent extends Component {
     constDataHolder.apiToken = responseBody.token
     localStorage.setItem(LOCAL_STORAGE_TOKEN, constDataHolder.apiToken)
     localStorage.setItem(LOCAL_STORAGE_USER_ID, accountInfo.id)
-    this.props.updateAccountInfo({
-      mobilephone: accountInfo.mobilephone,
-      role_id: USER_ROLE.STUDENT,
-    })
+    this.props.updateAccountInfo(transformUserInfo(accountInfo))
     this.props.updateUserSignInStatus(true)
     this.props.history.push('/dashboard/profile')
   }
