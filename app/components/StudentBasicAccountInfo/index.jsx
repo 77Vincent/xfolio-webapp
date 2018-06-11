@@ -26,7 +26,7 @@ class StudentBasicAccountInfo extends Component {
 
   updateUserIfo = (field, value) => {
     // 发请求更新
-    Request.updateUserInfo(this.props.accountInfo.id, {
+    return Request.updateUserInfo(this.props.accountInfo.id, {
       [field]: value,
     }).then(() => {
       // 更新本地数据
@@ -62,7 +62,7 @@ class StudentBasicAccountInfo extends Component {
               placeholder="请输入姓名"
               value=""
               onSubmit={(value) => {
-                this.updateUserIfo('name', value)
+                return this.updateUserIfo('name', value)
               }}
             />
           </div>
@@ -81,7 +81,7 @@ class StudentBasicAccountInfo extends Component {
               value={accountInfo.gender}
               options={GENDER_OPTIONS}
               onSubmit={(value) => {
-                this.updateUserIfo('gender', value)
+                return this.updateUserIfo('gender', value)
               }}
             />
           </div>
@@ -97,7 +97,7 @@ class StudentBasicAccountInfo extends Component {
               placeholder="请输入电话号码"
               value=""
               onSubmit={(value) => {
-                this.updateUserIfo('mobilephone', value)
+                return this.updateUserIfo('mobilephone', value)
               }}
             />
           </div>
@@ -113,7 +113,7 @@ class StudentBasicAccountInfo extends Component {
               placeholder="请输入邮箱"
               value=""
               onSubmit={(value) => {
-                this.updateUserIfo('email', value)
+                return this.updateUserIfo('email', value)
               }}
             />
           </div>
@@ -140,7 +140,7 @@ class StudentBasicAccountInfo extends Component {
                 />
               )}
               onSubmit={(value) => {
-                this.updateUserIfo('majors', value)
+                return this.updateUserIfo('majors', value)
               }}
             />
           </div>
@@ -159,7 +159,7 @@ class StudentBasicAccountInfo extends Component {
               value={accountInfo.place}
               options={_.values(COURSE_PLACE_OPTIONS)}
               onSubmit={(value) => {
-                this.updateUserIfo('place', value)
+                return this.updateUserIfo('place', value)
               }}
             />
           </div>
@@ -186,7 +186,7 @@ class StudentBasicAccountInfo extends Component {
                 }, [])
               )}
               onSubmit={(value) => {
-                this.updateUserIfo('degree_id', value)
+                return this.updateUserIfo('degree_id', value)
               }}
             />
           </div>
@@ -203,7 +203,7 @@ class StudentBasicAccountInfo extends Component {
               inputType="custom"
               inputElem={<SelectSchool />}
               onSubmit={(value) => {
-                this.updateUserIfo('school_id', value)
+                return this.updateUserIfo('school_id', value)
               }}
             />
           </div>
@@ -220,7 +220,7 @@ class StudentBasicAccountInfo extends Component {
               inputType="custom"
               inputElem={<SelectCountry />}
               onSubmit={(value) => {
-                this.updateUserIfo('country', value)
+                return this.updateUserIfo('country', value)
               }}
             />
           </div>

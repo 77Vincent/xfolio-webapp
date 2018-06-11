@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { Input, Button, Select, Tooltip, Icon } from 'antd'
+import { Input, Button, Select, Tooltip, Icon, message } from 'antd'
 
 import './index.less'
 
@@ -34,6 +34,24 @@ export default class UpdateAccountInfoItem extends Component {
     value: this.props.value,
     options: this.props.options,
     loading: false,
+  }
+
+  componentDidMount() {
+    document.body.addEventListener('click', this.handleClickBody)
+  }
+
+  componentWillUnmount() {
+    document.body.removeEventListener('click', this.handleClickBody)
+  }
+
+  updateInfoWrapElem
+
+  handleClickBody = (e) => {
+    if (!this.updateInfoWrapElem.contains(e.target)) {
+      // this.setState({
+      //   showInput: false,
+      // })
+    }
   }
 
   toggleShowInput = () => {
@@ -76,7 +94,7 @@ export default class UpdateAccountInfoItem extends Component {
     }
 
     return (
-      <div className="update-account-info-item" style={wrapStyle}>
+      <div className="update-account-info-item" style={wrapStyle} ref={(r) => { this.updateInfoWrapElem = r }}>
         {
           this.state.showInput === false ? (
             <div className="operas-wrap">
@@ -132,14 +150,21 @@ export default class UpdateAccountInfoItem extends Component {
                     this.setState({
                       loading: true,
                     })
-                    this.props.onSubmit(this.state.value)
-                    if (this.props.inputType === 'input') {
+                    this.props.onSubmit(this.state.value).then(() => {
+                      message.success('修改成功！')
                       this.setState({
-                        value: '',
+                        loading: false,
                       })
-                    }
+                      this.toggleShowInput()
+                      if (this.props.inputType === 'input') {
+                        this.setState({
+                          value: '',
+                        })
+                      }
+                    }).catch(() => {
+                      message.error('修改失败！')
+                    })
                   }
-                  this.toggleShowInput()
                 }}
               >
                 提交
