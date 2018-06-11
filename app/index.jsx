@@ -29,7 +29,7 @@ async function preRender() {
     log('tokenPayloadBase64 ', tokenPayloadBase64)
     const tokenPayloadContent = JSON.parse(base64.decode(tokenPayloadBase64))
     // 判断 token 是否过期
-    if (tokenPayloadContent.exp < Date.now()) {
+    if (tokenPayloadContent.exp < Date.now() / 1000) {
       cleanUpBeforeSignOut()
     } else {
       // 获取用户信息
