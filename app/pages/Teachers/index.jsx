@@ -96,8 +96,8 @@ class Teachers extends Component {
                 value={(
                   _.reduce(this.state.filterOptions.majors, (r, v) => {
                     r.push({
-                      key: `${v}`,
-                      label: constDataHolder.majorsNormalized[`${v}`].cn,
+                      key: `${v.id}`,
+                      label: v.cn,
                     })
                     return r
                   }, [])

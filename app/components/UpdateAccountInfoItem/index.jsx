@@ -33,6 +33,7 @@ export default class UpdateAccountInfoItem extends Component {
     showInput: false,
     value: this.props.value,
     options: this.props.options,
+    loading: false,
   }
 
   toggleShowInput = () => {
@@ -125,8 +126,12 @@ export default class UpdateAccountInfoItem extends Component {
               }
               <Button
                 className="btn-submit"
+                loading={this.state.loading}
                 onClick={() => {
                   if (this.state.value !== this.props.value) {
+                    this.setState({
+                      loading: true,
+                    })
                     this.props.onSubmit(this.state.value)
                     if (this.props.inputType === 'input') {
                       this.setState({

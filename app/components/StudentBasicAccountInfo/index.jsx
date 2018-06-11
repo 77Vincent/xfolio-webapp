@@ -44,7 +44,7 @@ class StudentBasicAccountInfo extends Component {
     let majorNames = ''
     if (_.isEmpty(accountInfo.majors) === false) {
       majorNames = _.reduce(accountInfo.majors, (r, v) => {
-        r.push(constDataHolder.majorsNormalized[v].cn)
+        r.push(v.cn)
         return r
       }, []).join(',')
     }
@@ -131,8 +131,8 @@ class StudentBasicAccountInfo extends Component {
                   value={(
                     _.reduce(accountInfo.majors, (r, v) => {
                       r.push({
-                        key: `${v}`,
-                        label: constDataHolder.majorsNormalized[`${v}`].cn,
+                        key: `${v.id}`,
+                        label: v.cn,
                       })
                       return r
                     }, [])

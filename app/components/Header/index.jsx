@@ -5,6 +5,7 @@ import { Link, NavLink, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Icon } from 'antd'
 
+import { getImage } from '../../utils'
 import './index.less'
 
 class Header extends Component {
@@ -34,7 +35,7 @@ class Header extends Component {
         <div className="header-content-wrap">
           <div className="position-wrap">
             <Link to="/" >
-              <span className="icon-logo">xfolio logo</span>
+              <img src={getImage('logo-0611.png')} alt="" className="icon-logo" />
             </Link>
             <div className="button-wrap">
               <NavLink

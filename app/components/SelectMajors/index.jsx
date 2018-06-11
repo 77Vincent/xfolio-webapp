@@ -37,13 +37,13 @@ class SelectMajors extends Component {
 
   handleSelectOption = (value) => {
     log('handleSelectOption ', value)
-    this.state.value.push(value)
-    this.setState({
-      value: this.state.value,
-      majorOptions: [],
-    })
-    // 上报修改
-    this.props.onChange(_.map(this.state.value, major => major.key)) // 字符转回数字
+    // this.state.value.push(value)
+    // this.setState({
+    //   value: this.state.value,
+    //   majorOptions: [],
+    // })
+    // // 上报修改
+    // this.props.onChange(_.map(this.state.value, major => major.key))
   }
 
   handleInputChange = (input) => {
@@ -52,6 +52,7 @@ class SelectMajors extends Component {
     if (inputValue !== '') {
       majorOptions = _.filter(this.majorsInfo, info => info.name.indexOf(input) !== -1)
     }
+    log('majorOptions ', majorOptions, this.state.value)
     this.setState({
       majorOptions,
     })
@@ -60,10 +61,10 @@ class SelectMajors extends Component {
   handleOptionChange = (value, options) => {
     log('handleOptionChange ', value, options)
     this.setState({
-      value,
+      value: _.uniqWith(value, (a, b) => `${a.key}` === `${b.key}`),
       majorOptions: [],
     })
-    this.props.onChange(_.map(value, major => major.key)) // 字符转回数字
+    this.props.onChange(_.map(value, major => Number(major.key))) // 字符转回数字
   }
 
   render() {
