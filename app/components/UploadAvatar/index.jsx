@@ -61,8 +61,8 @@ export default class UploadAvatar extends Component {
       mime: this.uploadImageInfo.type,
     }
     try {
-      if (this.props.avatar_id === -1) {
-        await Request.uploadAvatar(this.props.avatar_id, avatarData)
+      if (this.props.avatar_id === null) {
+        await Request.uploadAvatar(avatarData)
           .then(res => JSON.parse(res.text))
       } else {
         await Request.updateAvatar(this.props.avatar_id, avatarData)

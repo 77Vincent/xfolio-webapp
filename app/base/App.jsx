@@ -27,13 +27,14 @@ import {
   TeacherControlPanel,
   SubmitOrder,
 } from '../pages'
-import { USER_ROLE } from '../Consts'
+import { LOCAL_STORAGE_TOKEN, LOCAL_STORAGE_USER_ID, USER_ROLE } from '../Consts'
 
 import './App.less'
 
 class App extends Component {
   static propTypes = {
     accountInfo: PropTypes.object.isRequired,
+    updateUserSignInStatus: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -118,6 +119,18 @@ class App extends Component {
                 )}
               />
               <Route exact path="/signin" component={SignIn} />
+              <Route
+                exact
+                path="/signout"
+                component={() => {
+                  localStorage.removeItem(LOCAL_STORAGE_TOKEN)
+                  localStorage.removeItem(LOCAL_STORAGE_USER_ID)
+                  this.props.updateUserSignInStatus(false)
+                  return (
+                    <Redirect to="/" push={false} />
+                  )
+                }}
+              />
               <Redirect to="/" push={false} />
             </Switch>
           </div>
@@ -141,9 +154,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-
+  updateUserSignInStatus: dispatch.AppStatus.updateUserSignInStatus,
 })
 
-export default withRouter(connect(mapStateToProps)(App))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))
 
 // export default App

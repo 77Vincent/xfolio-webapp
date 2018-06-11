@@ -9,14 +9,12 @@ import './index.less'
 class StudentProfiles extends Component {
   static propTypes = {
     style: PropTypes.object,
-    avatar_id: PropTypes.number,
-    userId: PropTypes.number,
+    avatar_id: PropTypes.number.isRequired,
+    userId: PropTypes.number.isRequired,
   };
 
   static defaultProps = {
     style: {},
-    avatar_id: -1,
-    userId: -1,
   };
 
   componentDidMount() {
