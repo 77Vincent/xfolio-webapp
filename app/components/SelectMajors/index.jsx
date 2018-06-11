@@ -24,7 +24,7 @@ class SelectMajors extends Component {
 
   componentDidMount() {
     this.majorsInfo = _.map(constDataHolder.majors, major => ({
-      value: major.id, // 数字转成字符
+      value: `${major.id}`, // 数字转成字符
       name: major.cn,
     }))
   }
