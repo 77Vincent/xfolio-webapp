@@ -38,13 +38,13 @@ class HomePage extends Component {
             dots={false}
             autoplay
             speed={300}
-            lazyLoad
+            lazyLoad={false}
           >
             <div className="slide-wrap">
               <div
                 className="slide-bg-image"
                 style={{
-                  backgroundImage: `url("${getImage('desktop-3168223-compressed.jpg')}")`,
+                  backgroundImage: `url("${getImage('minimalism-3111110.jpg')}")`,
                 }}
               />
               <p className="slide-intro">一个直接找到设计导师的网站1</p>
@@ -53,7 +53,7 @@ class HomePage extends Component {
               <div
                 className="slide-bg-image"
                 style={{
-                  backgroundImage: `url("${getImage('minimalism-3111110-compressed.jpg')}")`,
+                  backgroundImage: `url("${getImage('modern-3224786.jpg')}")`,
                 }}
               />
               <p className="slide-intro">一个直接找到设计导师的网站2</p>
@@ -62,7 +62,7 @@ class HomePage extends Component {
               <div
                 className="slide-bg-image"
                 style={{
-                  backgroundImage: `url("${getImage('modern-3224786-compressed.jpg')}")`,
+                  backgroundImage: `url("${getImage('painter-1246619.jpg')}")`,
                 }}
               />
               <p className="slide-intro">一个直接找到设计导师的网站3</p>
@@ -71,7 +71,7 @@ class HomePage extends Component {
               <div
                 className="slide-bg-image"
                 style={{
-                  backgroundImage: `url("${getImage('painter-1246619-compressed.jpg')}")`,
+                  backgroundImage: `url("${getImage('desktop-3168223.jpg')}")`,
                 }}
               />
               <p className="slide-intro">一个直接找到设计导师的网站4</p>
@@ -80,7 +80,7 @@ class HomePage extends Component {
               <div
                 className="slide-bg-image"
                 style={{
-                  backgroundImage: `url("${getImage('tiles-shapes-2617112-compressed.jpg')}")`,
+                  backgroundImage: `url("${getImage('tiles-shapes-2617112.jpg')}")`,
                 }}
               />
               <p className="slide-intro">一个直接找到设计导师的网站5</p>
@@ -89,7 +89,7 @@ class HomePage extends Component {
               <div
                 className="slide-bg-image"
                 style={{
-                  backgroundImage: `url("${getImage('winter-3292563-compressed.jpg')}")`,
+                  backgroundImage: `url("${getImage('winter-3292563.jpg')}")`,
                 }}
               />
               <p className="slide-intro">一个直接找到设计导师的网站6</p>
