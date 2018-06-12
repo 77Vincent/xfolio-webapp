@@ -51,45 +51,45 @@ async function preRender() {
 
   // 初始化常量数据
   await Promise.all([
-    new Promise(async (resolve) => {
-      constDataHolder.majors = await agent.get(CONST_DATA_URLS.MAJORS).then(res => res.text)
-      constDataHolder.majors = JSON.parse(constDataHolder.majors)
+    agent.get(CONST_DATA_URLS.MAJORS).then((res) => {
+      log('MAJORS res ', res)
+      constDataHolder.majors = JSON.parse(res.text)
       constDataHolder.majorsNormalized = _.reduce(constDataHolder.majors, (r, v) => {
         r[v.id] = v
         return r
       }, {})
-      resolve()
     }),
-    new Promise(async (resolve) => {
-      constDataHolder.schools = await agent.get(CONST_DATA_URLS.SCHOOLS).then(res => res.text)
-      constDataHolder.schools = JSON.parse(constDataHolder.schools)
+    agent.get(CONST_DATA_URLS.SCHOOLS).then((res) => {
+      log('SCHOOLS res ', res)
+      constDataHolder.schools = JSON.parse(res.text)
       constDataHolder.schoolsNormalized = _.reduce(constDataHolder.schools, (r, v) => {
         r[v.id] = v
         return r
       }, {})
-      resolve()
     }),
-    new Promise(async (resolve) => {
-      constDataHolder.provinces = await agent.get(CONST_DATA_URLS.PROVINCES).then(res => res.body)
-      constDataHolder.cities = await agent.get(CONST_DATA_URLS.CITIES).then(res => res.body)
+    agent.get(CONST_DATA_URLS.PROVINCES).then((res) => {
+      log('PROVINCES res ', res)
+      constDataHolder.provinces = res.body
+    }),
+    agent.get(CONST_DATA_URLS.CITIES).then((res) => {
+      log('CITIES res ', res)
+      constDataHolder.cities = res.body
       constDataHolder.citiesNormalized = _.reduce(constDataHolder.cities, (r, v) => {
         r[v.code] = v
         return r
       }, {})
-      resolve()
     }),
-    new Promise(async (resolve) => {
-      constDataHolder.degrees = await agent.get(CONST_DATA_URLS.DEGREES).then(res => res.text)
-      constDataHolder.degrees = JSON.parse(constDataHolder.degrees)
-      resolve()
+    agent.get(CONST_DATA_URLS.DEGREES).then((res) => {
+      log('DEGREES res ', res)
+      constDataHolder.degrees = res.body
     }),
-    new Promise(async (resolve) => {
-      constDataHolder.countries = await agent.get(CONST_DATA_URLS.COUNTRIES).then(res => res.body)
+    agent.get(CONST_DATA_URLS.COUNTRIES).then((res) => {
+      log('COUNTRIES res ', res)
+      constDataHolder.countries = res.body
       constDataHolder.countriesNormalized = _.reduce(constDataHolder.countries, (r, v) => {
         r[v.code] = v
         return r
       }, {})
-      resolve()
     }),
   ])
 }
