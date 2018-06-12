@@ -171,6 +171,7 @@ class TeachersProfiles extends Component {
             teacherInfo={this.props.accountInfo}
             showAppointBtn={false}
             showFavBtn={false}
+            editMode
           />
           <TeacherBasicAccountInfo />
         </div>

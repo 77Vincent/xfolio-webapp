@@ -1,13 +1,14 @@
-import cx from 'classnames'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { Tag, Icon, Button } from 'antd'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import constDataHolder from '../../store/constDataHolder'
+import cx from 'classnames'
 
+import constDataHolder from '../../store/constDataHolder'
 import { Request } from '../../utils'
+import UploadAvatarBase from '../UploadAvatarBase'
 import './index.less'
 
 class TeacherInfoSnapshot extends Component {
@@ -17,6 +18,7 @@ class TeacherInfoSnapshot extends Component {
     isFollowing: PropTypes.bool,
     showAppointBtn: PropTypes.bool,
     showFavBtn: PropTypes.bool,
+    editMode: PropTypes.bool,
     removeFollowingId: PropTypes.func.isRequired,
     addFollowingId: PropTypes.func.isRequired,
   };
@@ -26,6 +28,7 @@ class TeacherInfoSnapshot extends Component {
     isFollowing: false,
     showAppointBtn: true,
     showFavBtn: true,
+    editMode: false,
   };
 
   componentDidMount() {
@@ -51,12 +54,37 @@ class TeacherInfoSnapshot extends Component {
 
   render() {
     const wrapStyle = _.assign({}, this.props.style)
-    const { teacherInfo } = this.props
+    const { teacherInfo, editMode } = this.props
     const { available } = teacherInfo
+    log('editMode ', editMode)
 
     return (
       <div className="teacher-info-snapshot-wrap" style={wrapStyle}>
-        <img src={`/api/avatars/${teacherInfo.avatar_id}`} alt="导师头像" className="teacher-avatar" />
+        <div
+          className={cx({
+            'avatar-wrap': true,
+            'edit-mode': editMode === true,
+            'has-avatar': teacherInfo.avatar_id !== null,
+          })}
+        >
+          {
+            editMode === false && teacherInfo.avatar_id !== null && (
+              <img src={`/api/avatars/${teacherInfo.avatar_id}`} alt="导师头像" className="teacher-avatar" />
+            )
+          }
+          {
+            editMode === true && (
+              <div className="edit-avatar-wrap">
+                <UploadAvatarBase
+                  avatar_id={teacherInfo.avatar_id}
+                  userId={teacherInfo.id}
+                  tipContent="修改头像"
+                  cropRatio={47 / 21}
+                />
+              </div>
+            )
+          }
+        </div>
         <div className="teacher-info-detail">
           <p className="teacher-name">{teacherInfo.name}</p>
           <div className="module-wrap">

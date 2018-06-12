@@ -1,0 +1,55 @@
+@import "../../theme";
+
+.upload-avatar-base {
+
+  .upload-avatar {
+    position: relative;
+
+    .ant-upload-select-picture-card {
+      margin: 0;
+      border-color: transparent;
+
+      &:hover {
+        border-color: #e4007f;
+
+        .ant-upload {
+          .tip-wrap {
+            display: flex;
+          }
+        }
+      }
+
+      .ant-upload {
+        padding: 0;
+
+        .avatar {
+          width: 100%;
+          border-radius: 4px;
+        }
+
+        .tip-wrap {
+          display: none;
+          font-size: 20px;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          z-index: 2;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          .upload-icon {
+            color: #e4007f;
+          }
+          .tip {
+            font-size: 14px;
+            color: #e4007f;
+            text-align: center;
+            margin: 5px 0 0 0;
+          }
+        }
+      }
+    }
+  }
+}
