@@ -1,3 +1,5 @@
+import to from 'await-to'
+
 import { updateState, Request } from '../../utils'
 
 const AccountInfo = {
@@ -16,6 +18,8 @@ const AccountInfo = {
     cost: null,
     followingIds: [], // 已关注用户的 id
     avatar_id: null,
+    tags: [],
+    available: 0,
   },
   reducers: {
     updateAccountInfo(state, payload) {
@@ -39,19 +43,18 @@ const AccountInfo = {
   effects: {
     async getFollowingIds(userId) {
       log('getFollowingIds ', userId)
-      try {
-        const data = await Request.getFollowerFollowings({
-          follower_id: userId,
-        }).then(res => JSON.parse(res.text))
-        log('getFollowingIds res ', data)
+      const [err, text] = await to(Request.getFollowerFollowings({
+        follower_id: userId,
+      }).then(res => res.text))
+      if (!err) {
+        const data = JSON.parse(text)
+        log('getFollowingIds res ', err, data)
         this.updateAccountInfo({
           followingIds: _.reduce(data, (r, v) => {
             r.push(v.following_id)
             return r
           }, []),
         })
-      } catch (e) {
-        log('getFollowingIds e ', e)
       }
     },
   },

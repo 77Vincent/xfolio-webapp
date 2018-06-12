@@ -2,7 +2,12 @@ import request from 'superagent'
 
 import constDataHolder from '../store/constDataHolder'
 
-const agent = request.agent().accept('json')
+function autoSetAuthHeader(req) {
+  req.set('authorization', `Bearer ${constDataHolder.apiToken}`)
+}
+
+const agent = request.agent().use(autoSetAuthHeader).accept('json')
+
 
 const Request = {
   // users
@@ -13,7 +18,7 @@ const Request = {
     return agent.get(`/api/users/${id}`)
   },
   updateUserInfo: (id, values = {}) => {
-    return agent.post(`/api/users/${id}`).send(values).set('authorization', `Bearer ${constDataHolder.apiToken}`)
+    return agent.post(`/api/users/${id}`).send(values)
   },
 
   // teachers
@@ -47,15 +52,23 @@ const Request = {
 
   // avatar
   uploadAvatar(data = { content: null, mime: null }) {
-    return agent.put('/api/avatars').send(data).set('authorization', `Bearer ${constDataHolder.apiToken}`)
+    return agent.put('/api/avatars').send(data)
   },
   updateAvatar(avatarId, data = { content: null, mime: null }) {
-    return agent.post(`/api/avatars/${avatarId}`).send(data).set('authorization', `Bearer ${constDataHolder.apiToken}`)
+    return agent.post(`/api/avatars/${avatarId}`).send(data)
   },
 
   // order
   createOrder(data) {
     return agent.post('/api/orders').send(data)
+  },
+
+  // tag
+  createTag(userId, content) {
+    return agent.put('/api/tags').send({ userId, content })
+  },
+  removeTag(tagId) {
+    return agent.delete(`/api/tags/${tagId}`)
   },
 }
 

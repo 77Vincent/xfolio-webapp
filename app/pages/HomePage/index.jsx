@@ -71,7 +71,7 @@ class HomePage extends Component {
               <div
                 className="slide-bg-image"
                 style={{
-                  backgroundImage: `url("${getImage('desktop-3168223.jpg')}")`,
+                  backgroundImage: `url("${getImage('slider-180612.jpg')}")`,
                 }}
               />
               <p className="slide-intro">一个直接找到设计导师的网站4</p>

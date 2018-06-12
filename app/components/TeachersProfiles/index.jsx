@@ -3,15 +3,35 @@ import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { Button, Icon, Tag } from 'antd'
 import uuidv4 from 'uuid/v4'
+import { connect } from 'react-redux'
 
 import { TeacherBasicAccountInfo, TeacherInfoSnapshot } from '../index'
+import { Request } from '../../utils'
 import './index.less'
 
-const commonTags = ['名师', '大牛', '设计师', '建筑师']
+const commonTags = [
+  {
+    id: 3,
+    content: '专业',
+  },
+  {
+    id: 4,
+    content: '口才好',
+  },
+  {
+    id: 5,
+    content: '和蔼可亲',
+  },
+  {
+    id: 6,
+    content: '闷骚',
+  },
+]
 
-export default class StudentProfiles extends Component {
+class TeachersProfiles extends Component {
   static propTypes = {
     style: PropTypes.object,
+    accountInfo: PropTypes.object.isRequired,
   };
 
   static defaultProps = {
@@ -20,7 +40,20 @@ export default class StudentProfiles extends Component {
 
   state = {
     showTagInput: false,
-    tagList: ['名校毕业', '风趣', '教学经验', '工作经验'],
+    tagList: [
+      {
+        id: 13,
+        content: '经历丰富',
+      },
+      {
+        id: 14,
+        content: '123',
+      },
+      {
+        id: 15,
+        content: '123123',
+      },
+    ],
   }
 
   componentDidMount() {
@@ -41,16 +74,34 @@ export default class StudentProfiles extends Component {
     }
   }
 
-  handleClickAddTag = (newTag) => {
-    this.state.tagList.push(newTag)
-    this.setState({
-      tagList: this.state.tagList,
+  handleClickAddTag = (tagContent) => {
+    Request.createTag(this.props.accountInfo.id, tagContent).then((res) => {
+      const tagInfo = JSON.parse(res.text)
+      this.state.tagList.push({
+        id: tagInfo.id,
+        content: tagInfo.content,
+      })
+      this.setState({
+        tagList: this.state.tagList,
+      })
     })
   }
 
   toggleTagInput = () => {
     this.setState({
       showTagInput: !this.state.showTagInput,
+    })
+  }
+
+  handleDeleteTag = (tagId) => {
+    Request.removeTag(tagId).then(() => {
+      const index = _.findIndex(this.state.tagList, ['id', tagId])
+      if (index !== -1) {
+        this.state.tagList.splice(index, 1)
+        this.setState({
+          tagList: this.state.tagList,
+        })
+      }
     })
   }
 
@@ -67,8 +118,16 @@ export default class StudentProfiles extends Component {
                 <Icon type="plus" />
               </Button>
               {
-                _.map(this.state.tagList, (tagInfo, i) => (
-                  <Tag closable key={i}>{tagInfo}</Tag>
+                _.map(this.state.tagList, tagInfo => (
+                  <Tag
+                    closable
+                    key={tagInfo.id}
+                    afterClose={() => {
+                      this.handleDeleteTag(tagInfo.id)
+                    }}
+                  >
+                    {tagInfo.content}
+                  </Tag>
                 ))
               }
             </div>
@@ -88,11 +147,15 @@ export default class StudentProfiles extends Component {
                         _.map(commonTags, tagInfo => (
                           <Tag
                             onClick={() => {
-                              this.handleClickAddTag(tagInfo)
+                              this.handleClickAddTag(tagInfo.content)
+                              _.remove(commonTags, (tag) => {
+                                return tag.id === tagInfo.id
+                              })
+                              this.forceUpdate() // TODO 临时测试使用
                             }}
-                            key={uuidv4()}
+                            key={tagInfo.id}
                           >
-                            {tagInfo}
+                            {tagInfo.content}
                           </Tag>
                         ))
                       }
@@ -105,6 +168,7 @@ export default class StudentProfiles extends Component {
         </div>
         <div className="teacher-profile-detail">
           <TeacherInfoSnapshot
+            teacherInfo={this.props.accountInfo}
             showAppointBtn={false}
             showFavBtn={false}
           />
@@ -114,3 +178,13 @@ export default class StudentProfiles extends Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  accountInfo: state.AccountInfo,
+})
+
+const mapDispatchToProps = dispatch => ({
+
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(TeachersProfiles)
