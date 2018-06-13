@@ -4,6 +4,7 @@ import { Select } from 'antd'
 import uuidv1 from 'uuid/v1'
 import PropTypes from 'prop-types'
 
+import { Request } from '../../utils' 
 import constDataHolder from '../../store/constDataHolder'
 
 class SelectSchool extends Component {
@@ -40,16 +41,19 @@ class SelectSchool extends Component {
     this.props.onChange(Number(value))
   }
 
-  handleInputChange = (input) => {
-    const inputValue = _.trim(input)
+  limitedRequest = _.throttle(_.debounce(async (input) => {
     let schoolOptions = []
-    if (inputValue !== '') {
-      schoolOptions = _.filter(this.schoolsInfo, info => info.name.indexOf(input) !== -1)
-    }
-    this.setState({
-      value: input,
-      schoolOptions,
-    })
+    const schoolsResponse = await Request.getSchools('', input)
+    schoolOptions =  _.map(JSON.parse(schoolsResponse.text), schoolInfo => ({
+      value: `${schoolInfo.id}`,
+      name: schoolInfo.cn,
+    }))
+    this.setState({ schoolOptions })
+  }, 100), 100)
+
+  handleInputChange = async (input) => {
+    this.limitedRequest(_.trim(input))
+    this.setState({ value: input })
   }
 
   render() {

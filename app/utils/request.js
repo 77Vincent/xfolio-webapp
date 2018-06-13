@@ -77,6 +77,11 @@ const Request = {
   removeTag(tagId) {
     return agent.delete(`/api/tags/${tagId}`)
   },
+
+  // School
+  getSchools(country_code = '', search = '') {
+    return agent.get(`/api/schools?country_code=${country_code}&search=${search}`)
+  }
 }
 
 window.agent = agent
