@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
-import { Select } from 'antd'
+import { Select, Spin } from 'antd'
 import uuidv1 from 'uuid/v1'
 import PropTypes from 'prop-types'
 
@@ -19,6 +19,7 @@ class SelectSchool extends Component {
   state = {
     schoolOptions: [],
     value: '',
+    fetching: false,
   }
 
   componentDidMount() {
@@ -48,10 +49,14 @@ class SelectSchool extends Component {
       value: `${schoolInfo.id}`,
       name: schoolInfo.cn,
     }))
-    this.setState({ schoolOptions })
+    this.setState({
+      schoolOptions,
+      fetching: false,
+    })
   }, 100), 100)
 
   handleInputChange = async (input) => {
+    this.setState({ fetching: true })
     this.limitedRequest(_.trim(input))
     this.setState({ value: input })
   }
@@ -62,6 +67,7 @@ class SelectSchool extends Component {
         mode="combobox"
         placeholder="请输入学校名称"
         defaultActiveFirstOption={false}
+        notFoundContent={this.state.fetching ? <Spin size="small" /> : null}
         showArrow={false}
         filterOption={false}
         value={this.state.value}
