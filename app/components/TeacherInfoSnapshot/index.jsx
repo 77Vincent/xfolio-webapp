@@ -91,7 +91,7 @@ class TeacherInfoSnapshot extends Component {
             {
               teacherInfo.tags.length > 0 && (
                 <div className="teacher-tags">
-                  { _.map(teacherInfo.tags, (tag, i) => <Tag key={i}>{tag}</Tag>) }
+                  { _.map(teacherInfo.tags, tag => <Tag key={tag.id}>{tag.content}</Tag>) }
                 </div>
               )
             }

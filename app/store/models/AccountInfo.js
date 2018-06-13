@@ -57,6 +57,12 @@ const AccountInfo = {
         })
       }
     },
+    async updateUserMajors(majors) {
+      log('updateUserMajors ', majors)
+      return await Request.createMajors(majors).then(() => {
+        log('createMajors success')
+      })
+    },
   },
 }
 

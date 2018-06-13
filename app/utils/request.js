@@ -34,15 +34,12 @@ const Request = {
     return agent.get('/api/followers_followings').query(options)
   },
   removeFollowing(followingId) {
-    return (
-      agent.delete(`/api/followers_followings/${followingId}`)
-        .set('authorization', `Bearer ${constDataHolder.apiToken}`)
-    )
+    return agent.delete(`/api/followers_followings/${followingId}`)
   },
   addFollowing(followingId) {
     return agent.put('/api/followers_followings').send({
       following_id: followingId,
-    }).set('authorization', `Bearer ${constDataHolder.apiToken}`)
+    })
   },
 
   // sessions
@@ -66,9 +63,16 @@ const Request = {
     return agent.post('/api/orders').send(data)
   },
 
+  // major
+  createMajors(majors) {
+    return agent.put('/api/users_majors').send({
+      major_id: majors,
+    })
+  },
+
   // tag
-  createTag(userId, content) {
-    return agent.put('/api/tags').send({ userId, content })
+  createTag(content) {
+    return agent.put('/api/tags').send({ content })
   },
   removeTag(tagId) {
     return agent.delete(`/api/tags/${tagId}`)

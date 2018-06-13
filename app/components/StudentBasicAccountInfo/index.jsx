@@ -18,6 +18,7 @@ class StudentBasicAccountInfo extends Component {
     style: PropTypes.object,
     accountInfo: PropTypes.object.isRequired,
     updateAccountInfo: PropTypes.func.isRequired,
+    updateUserMajors: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -30,7 +31,7 @@ class StudentBasicAccountInfo extends Component {
       [field]: value,
     }).then(() => {
       // 更新本地数据
-      log('updateUserInfo ', field, value)
+      log('student updateUserInfo ', field, value)
       this.props.updateAccountInfo({
         [field]: value,
       })
@@ -140,7 +141,7 @@ class StudentBasicAccountInfo extends Component {
                 />
               )}
               onSubmit={(value) => {
-                return this.updateUserIfo('majors', value)
+                return this.props.updateUserMajors(value)
               }}
             />
           </div>
@@ -236,6 +237,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   updateAccountInfo: dispatch.AccountInfo.updateAccountInfo,
+  updateUserMajors: dispatch.AccountInfo.updateUserMajors,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(StudentBasicAccountInfo)

@@ -37,7 +37,7 @@ class HomePage extends Component {
             effect="fade"
             dots={false}
             autoplay
-            speed={300}
+            speed={1000}
             lazyLoad={false}
           >
             <div className="slide-wrap">

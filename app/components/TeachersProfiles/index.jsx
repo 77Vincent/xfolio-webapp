@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { Button, Icon, Tag } from 'antd'
-import uuidv4 from 'uuid/v4'
 import { connect } from 'react-redux'
 
 import { TeacherBasicAccountInfo, TeacherInfoSnapshot } from '../index'
@@ -40,20 +39,7 @@ class TeachersProfiles extends Component {
 
   state = {
     showTagInput: false,
-    tagList: [
-      {
-        id: 13,
-        content: '经历丰富',
-      },
-      {
-        id: 14,
-        content: '123',
-      },
-      {
-        id: 15,
-        content: '123123',
-      },
-    ],
+    tagList: this.props.accountInfo.tags,
   }
 
   componentDidMount() {

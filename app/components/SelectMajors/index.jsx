@@ -17,34 +17,20 @@ class SelectMajors extends Component {
     value: [],
   };
 
-  state = {
-    majorOptions: [],
-    value: this.props.value,
-  }
-
-  componentDidMount() {
+  constructor(props) {
+    super(props)
     this.majorsInfo = _.map(constDataHolder.majors, major => ({
       value: `${major.id}`, // 数字转成字符
       name: major.cn,
     }))
   }
 
-  componentDidCatch(err, info) {
-    log('err ', err, info)
+  state = {
+    majorOptions: [],
+    value: this.props.value,
   }
 
   majorsInfo = []
-
-  handleSelectOption = (value) => {
-    log('handleSelectOption ', value)
-    // this.state.value.push(value)
-    // this.setState({
-    //   value: this.state.value,
-    //   majorOptions: [],
-    // })
-    // // 上报修改
-    // this.props.onChange(_.map(this.state.value, major => major.key))
-  }
 
   handleInputChange = (input) => {
     const inputValue = _.trim(input)
@@ -52,14 +38,12 @@ class SelectMajors extends Component {
     if (inputValue !== '') {
       majorOptions = _.filter(this.majorsInfo, info => info.name.indexOf(input) !== -1)
     }
-    log('majorOptions ', majorOptions, this.state.value)
     this.setState({
       majorOptions,
     })
   }
 
-  handleOptionChange = (value, options) => {
-    log('handleOptionChange ', value, options)
+  handleOptionChange = (value) => {
     this.setState({
       value: _.uniqWith(value, (a, b) => `${a.key}` === `${b.key}`),
       majorOptions: [],
@@ -68,6 +52,8 @@ class SelectMajors extends Component {
   }
 
   render() {
+    const majorOptionsData = _.isEmpty(this.state.majorOptions) ? this.majorsInfo : this.state.majorOptions
+
     return (
       <Select
         mode="multiple"
@@ -76,11 +62,10 @@ class SelectMajors extends Component {
         value={this.state.value}
         filterOption={false}
         onSearch={this.handleInputChange}
-        onSelect={this.handleSelectOption}
         onChange={this.handleOptionChange}
       >
         {
-          _.map(this.state.majorOptions, major => (
+          _.map(majorOptionsData, major => (
             <Select.Option value={major.value} key={uuidv1()}>{major.name}</Select.Option>
           ))
         }

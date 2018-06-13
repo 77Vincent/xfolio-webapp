@@ -5,49 +5,65 @@ import { connect } from 'react-redux'
 
 import { UpdateAccountInfoItem } from '../../components'
 import './index.less'
+import { COURSE_PLACE_OPTIONS, GENDER_OPTIONS, GENDER_OPTIONS_NORMALIZED } from '../../Consts'
+import constDataHolder from '../../store/constDataHolder'
 import { Request } from '../../utils'
+
+import SelectCountry from '../SelectCountry'
+import SelectSchool from '../SelectSchool'
+import SelectMajors from '../SelectMajors'
 
 class TeacherBasicAccountInfo extends Component {
   static propTypes = {
     style: PropTypes.object,
+    accountInfo: PropTypes.object.isRequired,
+    updateAccountInfo: PropTypes.func.isRequired,
+    updateUserMajors: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
     style: {},
   };
 
-  componentDidMount() {
-
-  }
-
-  componentWillUnmount() {
-
-  }
-
   updateUserIfo = (field, value) => {
-    Request.updateUserInfo({
+    // 发请求更新
+    return Request.updateUserInfo(this.props.accountInfo.id, {
       [field]: value,
     }).then(() => {
-      log('updateUserInfo success ', field, value)
+      // 更新本地数据
+      log('teacher updateUserInfo ', field, value)
+      this.props.updateAccountInfo({
+        [field]: value,
+      })
     })
   }
 
   render() {
     const wrapStyle = _.assign({}, this.props.style)
+    const { accountInfo } = this.props
+
+    let majorNames = ''
+    if (_.isEmpty(accountInfo.majors) === false) {
+      majorNames = _.reduce(accountInfo.majors, (r, v) => {
+        r.push(v.cn)
+        return r
+      }, []).join(',')
+    }
 
     return (
       <div className="teacher-basic-account-info" style={wrapStyle}>
         <div className="account-info-item">
           <div className="current-info">
             <p className="item-title">姓名</p>
-            <p className="item-value">张三</p>
+            <p className="item-value">{accountInfo.name || '未设置'}</p>
           </div>
           <div className="update-account-info-item">
             <UpdateAccountInfoItem
-              placeholder="请输入新姓名"
+              inputType="input"
+              placeholder="请输入姓名"
+              value=""
               onSubmit={(value) => {
-                log('submit value ', value)
-                this.updateUserIfo('name', value)
+                return this.updateUserIfo('name', value)
               }}
             />
           </div>
@@ -55,79 +71,159 @@ class TeacherBasicAccountInfo extends Component {
         <div className="account-info-item">
           <div className="current-info">
             <p className="item-title">性别</p>
-            <p className="item-value">男</p>
+            <p className="item-value">
+              {accountInfo.gender !== null ? GENDER_OPTIONS_NORMALIZED[accountInfo.gender].name : '未设置'}
+            </p>
           </div>
           <div className="update-account-info-item">
-            <UpdateAccountInfoItem />
+            <UpdateAccountInfoItem
+              inputType="select"
+              placeholder="请选择"
+              value={accountInfo.gender}
+              options={GENDER_OPTIONS}
+              onSubmit={(value) => {
+                return this.updateUserIfo('gender', value)
+              }}
+            />
           </div>
         </div>
         <div className="account-info-item">
           <div className="current-info">
             <p className="item-title">电话</p>
-            <p className="item-value">18000000000</p>
+            <p className="item-value">{accountInfo.mobilephone || '未设置'}</p>
           </div>
           <div className="update-account-info-item">
-            <UpdateAccountInfoItem />
+            <UpdateAccountInfoItem
+              inputType="input"
+              placeholder="请输入电话号码"
+              value=""
+              onSubmit={(value) => {
+                return this.updateUserIfo('mobilephone', value)
+              }}
+            />
           </div>
         </div>
         <div className="account-info-item">
           <div className="current-info">
             <p className="item-title">邮箱</p>
-            <p className="item-value">xxx@xxx.com</p>
+            <p className="item-value">{accountInfo.email || '未设置'}</p>
           </div>
           <div className="update-account-info-item">
-            <UpdateAccountInfoItem />
+            <UpdateAccountInfoItem
+              inputType="input"
+              placeholder="请输入邮箱"
+              value=""
+              onSubmit={(value) => {
+                return this.updateUserIfo('email', value)
+              }}
+            />
           </div>
         </div>
         <div className="account-info-item">
           <div className="current-info">
             <p className="item-title">授课专业</p>
-            <p className="item-value">服装；纺织面料</p>
+            <p className="item-value">{majorNames || '未设置'}</p>
           </div>
           <div className="update-account-info-item">
-            <UpdateAccountInfoItem />
+            <UpdateAccountInfoItem
+              inputType="custom"
+              inputElem={(
+                <SelectMajors
+                  value={(
+                    _.reduce(accountInfo.majors, (r, v) => {
+                      r.push({
+                        key: `${v.id}`,
+                        label: v.cn,
+                      })
+                      return r
+                    }, [])
+                  )}
+                />
+              )}
+              onSubmit={(value) => {
+                return this.props.updateUserMajors(value)
+              }}
+            />
           </div>
         </div>
         <div className="account-info-item">
           <div className="current-info">
             <p className="item-title">授课形式</p>
-            <p className="item-value">不限</p>
+            <p className="item-value">
+              {COURSE_PLACE_OPTIONS[accountInfo.place] ? COURSE_PLACE_OPTIONS[accountInfo.place].name : '未设置'}
+            </p>
           </div>
           <div className="update-account-info-item">
             <UpdateAccountInfoItem
               inputType="select"
-              options={['不限', '线上', '线下']}
+              placeholder="请选择"
+              value={accountInfo.place}
+              options={_.values(COURSE_PLACE_OPTIONS)}
+              onSubmit={(value) => {
+                return this.updateUserIfo('place', value)
+              }}
             />
           </div>
         </div>
         <div className="account-info-item">
           <div className="current-info">
             <p className="item-title">学历</p>
-            <p className="item-value">硕士</p>
+            {accountInfo.degree_id !== null ? constDataHolder.degrees[accountInfo.degree_id].cn : '未设置'}
           </div>
           <div className="update-account-info-item">
             <UpdateAccountInfoItem
               inputType="select"
-              options={['硕士', '博士']}
+              placeholder="请选择"
+              value={accountInfo.degree_id}
+              options={(
+                _.reduce(constDataHolder.degrees, (r, v, i) => {
+                  r[i] = {
+                    value: i,
+                    name: v.cn,
+                  }
+                  return r
+                }, [])
+              )}
+              onSubmit={(value) => {
+                return this.updateUserIfo('degree_id', value)
+              }}
             />
           </div>
         </div>
         <div className="account-info-item">
           <div className="current-info">
             <p className="item-title">毕业院校</p>
-            <p className="item-value">xxx University</p>
+            <p className="item-value">
+              {accountInfo.school_id ? constDataHolder.schoolsNormalized[accountInfo.school_id].cn : '未设置'}
+            </p>
           </div>
           <div className="update-account-info-item">
-            <UpdateAccountInfoItem />
+            <UpdateAccountInfoItem
+              inputType="custom"
+              inputElem={<SelectSchool />}
+              onSubmit={(value) => {
+                return this.updateUserIfo('school_id', value)
+              }}
+            />
           </div>
         </div>
         <div className="account-info-item">
           <div className="current-info">
             <p className="item-title">毕业国家</p>
-            <p className="item-value">美国</p>
+            <p className="item-value">
+              {accountInfo.country ? constDataHolder.countriesNormalized[accountInfo.country].cn : '未设置'}
+            </p>
           </div>
           <div className="update-account-info-item">
-            <UpdateAccountInfoItem />
+            <div className="update-account-info-item">
+              <UpdateAccountInfoItem
+                inputType="custom"
+                inputElem={<SelectCountry />}
+                onSubmit={(value) => {
+                  return this.updateUserIfo('country', value)
+                }}
+              />
+            </div>
           </div>
         </div>
         <div className="account-info-item">
@@ -137,7 +233,11 @@ class TeacherBasicAccountInfo extends Component {
           </div>
           <div className="update-account-info-item">
             <UpdateAccountInfoItem
-              tip="知名院校可用英文缩写，不同学校请用；隔开，尚未有学生录取院校留空点击提交"
+              inputType="custom"
+              inputElem={<SelectSchool />}
+              onSubmit={(value) => {
+                return this.updateUserIfo('school_id', value)
+              }}
             />
           </div>
         </div>
@@ -146,4 +246,13 @@ class TeacherBasicAccountInfo extends Component {
   }
 }
 
-export default connect()(TeacherBasicAccountInfo)
+const mapStateToProps = state => ({
+  accountInfo: state.AccountInfo,
+})
+
+const mapDispatchToProps = dispatch => ({
+  updateAccountInfo: dispatch.AccountInfo.updateAccountInfo,
+  updateUserMajors: dispatch.AccountInfo.updateUserMajors,
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(TeacherBasicAccountInfo)
