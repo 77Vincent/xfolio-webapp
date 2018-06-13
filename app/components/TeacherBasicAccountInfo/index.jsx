@@ -7,7 +7,6 @@ import { UpdateAccountInfoItem } from '../../components'
 import './index.less'
 import { COURSE_PLACE_OPTIONS, GENDER_OPTIONS, GENDER_OPTIONS_NORMALIZED } from '../../Consts'
 import constDataHolder from '../../store/constDataHolder'
-import { Request } from '../../utils'
 
 import SelectCountry from '../SelectCountry'
 import SelectSchool from '../SelectSchool'
@@ -17,7 +16,7 @@ class TeacherBasicAccountInfo extends Component {
   static propTypes = {
     style: PropTypes.object,
     accountInfo: PropTypes.object.isRequired,
-    updateAccountInfo: PropTypes.func.isRequired,
+    updateUserIfo: PropTypes.func.isRequired,
     updateUserMajors: PropTypes.func.isRequired,
   };
 
@@ -25,22 +24,10 @@ class TeacherBasicAccountInfo extends Component {
     style: {},
   };
 
-  updateUserIfo = (field, value) => {
-    // 发请求更新
-    return Request.updateUserInfo(this.props.accountInfo.id, {
-      [field]: value,
-    }).then(() => {
-      // 更新本地数据
-      log('teacher updateUserInfo ', field, value)
-      this.props.updateAccountInfo({
-        [field]: value,
-      })
-    })
-  }
-
   render() {
     const wrapStyle = _.assign({}, this.props.style)
     const { accountInfo } = this.props
+    const { id: userId } = accountInfo
 
     let majorNames = ''
     if (_.isEmpty(accountInfo.majors) === false) {
@@ -63,7 +50,7 @@ class TeacherBasicAccountInfo extends Component {
               placeholder="请输入姓名"
               value=""
               onSubmit={(value) => {
-                return this.updateUserIfo('name', value)
+                return this.props.updateUserIfo({ userId, field: 'name', value })
               }}
             />
           </div>
@@ -82,7 +69,7 @@ class TeacherBasicAccountInfo extends Component {
               value={accountInfo.gender}
               options={GENDER_OPTIONS}
               onSubmit={(value) => {
-                return this.updateUserIfo('gender', value)
+                return this.props.updateUserIfo({ userId, field: 'gender', value })
               }}
             />
           </div>
@@ -98,7 +85,7 @@ class TeacherBasicAccountInfo extends Component {
               placeholder="请输入电话号码"
               value=""
               onSubmit={(value) => {
-                return this.updateUserIfo('mobilephone', value)
+                return this.props.updateUserIfo({ userId, field: 'mobilephone', value })
               }}
             />
           </div>
@@ -114,7 +101,7 @@ class TeacherBasicAccountInfo extends Component {
               placeholder="请输入邮箱"
               value=""
               onSubmit={(value) => {
-                return this.updateUserIfo('email', value)
+                return this.props.updateUserIfo({ userId, field: 'email', value })
               }}
             />
           </div>
@@ -160,7 +147,7 @@ class TeacherBasicAccountInfo extends Component {
               value={accountInfo.place}
               options={_.values(COURSE_PLACE_OPTIONS)}
               onSubmit={(value) => {
-                return this.updateUserIfo('place', value)
+                return this.props.updateUserIfo({ userId, field: 'place', value })
               }}
             />
           </div>
@@ -185,7 +172,7 @@ class TeacherBasicAccountInfo extends Component {
                 }, [])
               )}
               onSubmit={(value) => {
-                return this.updateUserIfo('degree_id', value)
+                return this.props.updateUserIfo({ userId, field: 'degree_id', value })
               }}
             />
           </div>
@@ -202,7 +189,7 @@ class TeacherBasicAccountInfo extends Component {
               inputType="custom"
               inputElem={<SelectSchool />}
               onSubmit={(value) => {
-                return this.updateUserIfo('school_id', value)
+                return this.props.updateUserIfo({ userId, field: 'school_id', value })
               }}
             />
           </div>
@@ -220,7 +207,7 @@ class TeacherBasicAccountInfo extends Component {
                 inputType="custom"
                 inputElem={<SelectCountry />}
                 onSubmit={(value) => {
-                  return this.updateUserIfo('country', value)
+                  return this.props.updateUserIfo({ userId, field: 'country', value })
                 }}
               />
             </div>
@@ -235,9 +222,7 @@ class TeacherBasicAccountInfo extends Component {
             <UpdateAccountInfoItem
               inputType="custom"
               inputElem={<SelectSchool />}
-              onSubmit={(value) => {
-                return this.updateUserIfo('school_id', value)
-              }}
+              onSubmit={(value) => {}}
             />
           </div>
         </div>
@@ -251,7 +236,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  updateAccountInfo: dispatch.AccountInfo.updateAccountInfo,
+  updateUserIfo: dispatch.AccountInfo.updateUserIfo,
   updateUserMajors: dispatch.AccountInfo.updateUserMajors,
 })
 

@@ -42,13 +42,11 @@ const AccountInfo = {
   },
   effects: {
     async getFollowingIds(userId) {
-      log('getFollowingIds ', userId)
       const [err, text] = await to(Request.getFollowerFollowings({
         follower_id: userId,
       }).then(res => res.text))
       if (!err) {
         const data = JSON.parse(text)
-        log('getFollowingIds res ', err, data)
         this.updateAccountInfo({
           followingIds: _.reduce(data, (r, v) => {
             r.push(v.following_id)
@@ -57,10 +55,22 @@ const AccountInfo = {
         })
       }
     },
+    updateUserIfo(data = { userId: null, field: null, value: null }) {
+      const { userId, field, value } = data
+      const requestData = {
+        [field]: value,
+      }
+      // 发请求更新
+      return Request.updateUserInfo(userId, requestData).then(() => {
+        // 更新本地数据
+        this.updateAccountInfo(requestData)
+      })
+    },
     async updateUserMajors(majors) {
-      log('updateUserMajors ', majors)
-      return await Request.createMajors(majors).then(() => {
-        log('createMajors success')
+      return await Request.createMajors(majors).then((res) => {
+        this.updateAccountInfo({
+          majors: JSON.parse(res.text),
+        })
       })
     },
   },

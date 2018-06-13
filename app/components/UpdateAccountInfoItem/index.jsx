@@ -47,10 +47,13 @@ export default class UpdateAccountInfoItem extends Component {
   updateInfoWrapElem
 
   handleClickBody = (e) => {
-    if (!this.updateInfoWrapElem.contains(e.target)) {
-      // this.setState({
-      //   showInput: false,
-      // })
+    if (!this.updateInfoWrapElem.contains(e.target)
+        && e.target.closest('.ant-select-dropdown') === null
+        && e.target !== this.submitBtn) {
+      // ant-select-dropdown 为 ant design select 组件下拉框最外层的 className
+      this.setState({
+        showInput: false,
+      })
     }
   }
 
@@ -81,6 +84,25 @@ export default class UpdateAccountInfoItem extends Component {
     this.setState({
       value,
     })
+  }
+
+  handleClickSubmit = async () => {
+    if (this.state.value !== this.props.value) {
+      this.setState({ loading: true })
+      try {
+        await this.props.onSubmit(this.state.value)
+        message.success('修改成功！')
+        if (this.props.inputType === 'input') {
+          this.setState({ value: '' })
+        }
+      } catch (err) {
+        message.error('修改失败！')
+      }
+      this.toggleShowInput()
+      this.setState({ loading: false })
+    } else {
+      this.toggleShowInput()
+    }
   }
 
   render() {
@@ -116,7 +138,7 @@ export default class UpdateAccountInfoItem extends Component {
                   <Input
                     placeholder={this.props.placeholder}
                     onChange={this.handleInputChange}
-                    {...extraProps}
+                    value={this.state.value}
                   />
                 )
               }
@@ -145,22 +167,7 @@ export default class UpdateAccountInfoItem extends Component {
               <Button
                 className="btn-submit"
                 loading={this.state.loading}
-                onClick={async () => {
-                  if (this.state.value !== this.props.value) {
-                    this.setState({ loading: true })
-                    try {
-                      await this.props.onSubmit(this.state.value)
-                      message.success('修改成功！')
-                      if (this.props.inputType === 'input') {
-                        this.setState({ value: '' })
-                      }
-                    } catch (err) {
-                      message.error('修改失败！')
-                    }
-                    this.toggleShowInput()
-                    this.setState({ loading: false })
-                  }
-                }}
+                onClick={this.handleClickSubmit}
               >
                 提交
               </Button>
