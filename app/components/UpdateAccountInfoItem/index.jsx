@@ -120,7 +120,13 @@ export default class UpdateAccountInfoItem extends Component {
         {
           this.state.showInput === false ? (
             <div className="operas-wrap">
-              <a href="javascript:;" className="btn-start-update" onClick={this.toggleShowInput}>修改</a>
+              <a
+                href="javascript:;"
+                className="btn-start-update"
+                onClick={this.toggleShowInput}
+              >
+                <Icon type="form" style={{ fontSize: '16px' }} />
+              </a>
               {
                 this.props.tip !== '' && (
                   <Tooltip placement="rightBottom" title={this.props.tip}>
