@@ -1,12 +1,14 @@
 
 export const CONST_DATA_URLS = {
-  MAJORS: 'https://www.xfolio.cn/api/majors/',
-  SCHOOLS: 'https://www.xfolio.cn/api/schools/',
-  DEGREES: 'https://www.xfolio.cn/resources/degrees.json',
-  COUNTRIES: 'https://www.xfolio.cn/resources/locale/countries.json',
-  PROVINCES: 'https://www.xfolio.cn/resources/locale/CN/provinces.json',
-  CITIES: 'https://www.xfolio.cn/resources/locale/CN/cities.json',
-  FOLLOWER_FOLLOWING: 'https://www.xfolio.cn/api/followers_followings/',
+  // REST API
+  MAJORS: '/api/majors/',
+  SCHOOLS: '/api/schools/',
+  FOLLOWER_FOLLOWING: '/api/followers_followings/',
+  // Static resources
+  DEGREES: '/resources/degrees.json',
+  COUNTRIES: '/resources/locale/countries.json',
+  PROVINCES: '/resources/locale/CN/provinces.json',
+  CITIES: '/resources/locale/CN/cities.json',
 }
 
 export const USER_ROLE = {
@@ -35,16 +37,14 @@ export const COURSE_PLACE_OPTIONS = {
   },
 }
 
-export const GENDER_OPTIONS = [
-  {
-    value: 0,
-    name: '女',
-  },
-  {
-    value: 1,
-    name: '男',
-  },
-]
+export const GENDER_OPTIONS = [{
+  value: 0,
+  name: '女',
+}, {
+  value: 1,
+  name: '男',
+}]
+
 export const GENDER_OPTIONS_NORMALIZED = {
   0: GENDER_OPTIONS[0],
   1: GENDER_OPTIONS[1],

@@ -1,9 +1,16 @@
 # Client Documentation
 
 ## Development 
+#### Use remote server
 ```js
 npm i
 npm start
+```
+
+#### Use local server
+```js
+npm i
+npm start-local
 ```
 
 ## Production 
