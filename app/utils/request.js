@@ -18,7 +18,10 @@ const Request = {
     return agent.get(`/api/users/${id}`)
   },
   updateUserInfo: (id, values = {}) => {
-    return agent.post(`/api/users/${id}`).send(values)
+    return (
+      agent.post(`/api/users/${id}`).send(values)
+        .set('authorization', `Bearer ${constDataHolder.apiToken}`)
+    )
   },
 
   // teachers

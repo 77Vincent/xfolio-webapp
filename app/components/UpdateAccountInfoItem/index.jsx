@@ -145,25 +145,20 @@ export default class UpdateAccountInfoItem extends Component {
               <Button
                 className="btn-submit"
                 loading={this.state.loading}
-                onClick={() => {
+                onClick={async () => {
                   if (this.state.value !== this.props.value) {
-                    this.setState({
-                      loading: true,
-                    })
-                    this.props.onSubmit(this.state.value).then(() => {
+                    this.setState({ loading: true })
+                    try {
+                      await this.props.onSubmit(this.state.value)
                       message.success('修改成功！')
-                      this.setState({
-                        loading: false,
-                      })
-                      this.toggleShowInput()
                       if (this.props.inputType === 'input') {
-                        this.setState({
-                          value: '',
-                        })
+                        this.setState({ value: '' })
                       }
-                    }).catch(() => {
+                    } catch (err) {
                       message.error('修改失败！')
-                    })
+                    }
+                    this.toggleShowInput()
+                    this.setState({ loading: false })
                   }
                 }}
               >
