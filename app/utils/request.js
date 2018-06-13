@@ -77,8 +77,8 @@ const Request = {
 
   // School
   getSchools(country_code = '', search = '') {
-    return agent.get(`/api/schools?country_code=${country_code}&search=${search}`)
-  }
+    return agent.get('/api/schools').query({ country_code, search })
+  },
 }
 
 window.agent = agent

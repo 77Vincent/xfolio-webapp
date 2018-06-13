@@ -171,4 +171,4 @@ const mapDispatchToProps = dispatch => ({
   updateAccountInfo: dispatch.AccountInfo.updateAccountInfo,
 })
 
-export default connect(null, mapDispatchToProps)(SignInWrapped)
+export default connect(mapStateToProps, mapDispatchToProps)(SignInWrapped)

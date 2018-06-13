@@ -133,6 +133,7 @@ class SignUpInputAccountInfo extends Component {
                       {
                         validator: (rule, value, callback) => {
                           const captcha = getFieldValue('captcha')
+                          log('captcha ', captcha)
                           callback()
                         },
                       },

@@ -222,7 +222,9 @@ class TeacherBasicAccountInfo extends Component {
             <UpdateAccountInfoItem
               inputType="custom"
               inputElem={<SelectSchool />}
-              onSubmit={(value) => {}}
+              onSubmit={(value) => {
+                log('value ', value)
+              }}
             />
           </div>
         </div>

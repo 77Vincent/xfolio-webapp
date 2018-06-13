@@ -5,7 +5,6 @@ import { Anchor, Divider, Select, Radio, Pagination } from 'antd'
 import { connect } from 'react-redux'
 
 import { TeacherInfoSnapshot, SelectCountry, SelectMajors, SelectCity } from '../../components'
-import constDataHolder from '../../store/constDataHolder'
 import { Request } from '../../utils'
 import { COURSE_PLACE_OPTIONS, GENDER_OPTIONS, PRICE_ORDER_OPTIONS } from '../../Consts'
 import './index.less'
@@ -48,6 +47,7 @@ class Teachers extends Component {
     const options = _.assign({}, this.state.filterOptions, {
       majors: this.state.filterOptions.majors.join(','),
     })
+    log('options ', options)
     Request.getTeachers({}).then((res) => {
       const teacherList = res.text !== null ? JSON.parse(res.text) : []
       log('teacherList ', teacherList)

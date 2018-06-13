@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { Input, Button } from 'antd'
+import { Button } from 'antd'
 
 import './index.less'
 

@@ -17,7 +17,7 @@ const Counter = {
     },
   },
   effects: {
-    async incrementAsync(payload, rootState) {
+    async incrementAsync(payload) {
       await new Promise(resolve => setTimeout(resolve, 1000))
       this.increment(payload)
     },

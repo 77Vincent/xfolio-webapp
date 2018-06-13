@@ -4,7 +4,7 @@ import { Select, Spin } from 'antd'
 import uuidv1 from 'uuid/v1'
 import PropTypes from 'prop-types'
 
-import { Request } from '../../utils' 
+import { Request } from '../../utils'
 import constDataHolder from '../../store/constDataHolder'
 
 class SelectSchool extends Component {
@@ -45,7 +45,7 @@ class SelectSchool extends Component {
   limitedRequest = _.throttle(_.debounce(async (input) => {
     let schoolOptions = []
     const schoolsResponse = await Request.getSchools('', input)
-    schoolOptions =  _.map(JSON.parse(schoolsResponse.text), schoolInfo => ({
+    schoolOptions = _.map(JSON.parse(schoolsResponse.text), schoolInfo => ({
       value: `${schoolInfo.id}`,
       name: schoolInfo.cn,
     }))
