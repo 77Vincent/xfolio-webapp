@@ -83,47 +83,36 @@ class SignIn extends Component {
           hideRequiredMark
           onSubmit={this.handleSubmit}
         >
-          <Form.Item
-            colon={false}
-            wrapperCol={{ span: 24 }}
-            hasFeedback
-            validateFirst
-          >
+          <Form.Item colon={false} wrapperCol={{ span: 24 }}>
             {
               getFieldDecorator('mobilephone', {
                 rules: [
-                  { required: true, message: '请输入手机号' },
-                  { pattern: /^1\d{10}$/, message: '请输入11位手机号' },
+                  { required: true, message: '请输入手机号码/电子邮箱' },
                   {
                     validator: (rule, value, callback) => {
                       const mobilephone = _.trim(getFieldValue('mobilephone'))
                       Request.getUserInfo(mobilephone).then(() => {
                         callback()
                       }).catch(() => {
-                        callback('该手机号未注册')
+                        callback('该账户未注册')
                       })
                     },
                   },
                 ],
-                validateFirst: true,
+                validateTrigger: 'onBlur',
               })((
-                <Input placeholder="手机号码" />
+                <Input placeholder="手机号码/电子邮箱" />
               ))
             }
           </Form.Item>
-          <Form.Item
-            colon={false}
-            wrapperCol={{ span: 24 }}
-            hasFeedback
-            validateFirst
-          >
+          <Form.Item colon={false} wrapperCol={{ span: 24 }}>
             {
               getFieldDecorator('password', {
                 rules: [
                   { required: true, message: '请输入密码' },
                   { pattern: /.{6,}/, message: '密码长度至少为6个字符' },
                 ],
-                validateFirst: true,
+                validateTrigger: 'onBlur',
               })((
                 <Input type="password" placeholder="账号密码" />
               ))
