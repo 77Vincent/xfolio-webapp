@@ -2,70 +2,137 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { Icon } from 'antd'
-import { USER_ROLE } from '../../Consts'
+import cx from 'classnames'
+import { connect } from 'react-redux'
 
-import { getImage } from '../../utils'
+import { USER_ROLE, COURSE_PLACE_OPTIONS, GENDER_OPTIONS_NORMALIZED } from '../../Consts'
+import { Request } from '../../utils'
 import { CourseListItem, EditNewCourseItem } from '../../components'
 import './index.less'
+import constDataHolder from '../../store/constDataHolder'
 
-export default class TeacherCoursePlan extends Component {
+class TeacherCoursePlan extends Component {
   static propTypes = {
     style: PropTypes.object,
+    accountInfo: PropTypes.object.isRequired,
   };
 
   static defaultProps = {
     style: {},
   };
 
+  constructor(props) {
+    super(props)
+    // 初始化学生列表
+    Request.getStudents(this.props.accountInfo.id).then((res) => {
+      this.setState({
+        studentList: JSON.parse(res.text),
+      })
+    })
+  }
+
+  state = {
+    studentList: [],
+    currentStudentIndex: 0,
+  }
 
   componentDidMount() {
-
   }
 
   componentWillUnmount() {
+  }
 
+  handleSelectStudent = (i) => {
+    this.setState({
+      currentStudentIndex: i,
+    })
   }
 
   render() {
     const wrapStyle = _.assign({}, this.props.style)
+    const { studentList, currentStudentIndex } = this.state
+    let currentStudentInfo = {}
+    if (studentList.length > 0) {
+      currentStudentInfo = studentList[currentStudentIndex]
+    }
+    log('currentStudentInfo ', currentStudentInfo)
 
     return (
       <div className="teacher-course-plan" style={wrapStyle}>
         <div className="my-student module-wrap">
           <h5 className="title">我的学生</h5>
           <div className="student-name-list list-wrap">
-            <a href="javascript:;" className="student-name" title="张赛男">张赛男</a>
-            <a href="javascript:;" className="student-name current" title="李思思">李思思</a>
-            <a href="javascript:;" className="student-name" title="王二毛">王二毛啦啦啦</a>
+            {
+              _.map(studentList, (studentInfo, index) => (
+                <a
+                  href="javascript:;"
+                  className={cx({
+                    'student-name': true,
+                    current: index === currentStudentIndex,
+                  })}
+                  title={studentInfo.name}
+                  key={index}
+                  onClick={() => {
+                    this.handleSelectStudent(index)
+                  }}
+                >
+                  {studentInfo.name}
+                </a>
+              ))
+            }
           </div>
         </div>
         <div className="student-info  module-wrap">
           <h5 className="title">学生信息</h5>
           <div className="student-info-detail">
-            <img src={getImage('default-student-avatar-300-400.png')} alt="" className="student-avatar" />
+            <img src={`/api/avatars/${currentStudentInfo.avatar_id}`} alt="" className="student-avatar" />
             <div className="student-info-item">
               <span className="info-title">性别</span>
-              <span className="info-value">男</span>
+              <span className="info-value">
+                {
+                  _.isNil(currentStudentInfo.gender) === false
+                    ? GENDER_OPTIONS_NORMALIZED[Number(currentStudentInfo.gender)].name
+                    : '未设置'
+                }
+              </span>
             </div>
             <div className="student-info-item">
               <span className="info-title">专业</span>
-              <span className="info-value">服装；纺织面料</span>
+              <span className="info-value">{currentStudentInfo.majors || '未设置'}</span>
             </div>
             <div className="student-info-item">
               <span className="info-title">授课形式</span>
-              <span className="info-value">不限</span>
+              <span className="info-value">
+                {
+                  currentStudentInfo.place
+                    ? COURSE_PLACE_OPTIONS[currentStudentInfo.place].name
+                    : '未设置'
+                }
+              </span>
             </div>
             <div className="student-info-item">
               <span className="info-title">申请学历</span>
-              <span className="info-value">硕士</span>
+              <span className="info-value">
+                {
+                  currentStudentInfo.degree_id
+                    ? constDataHolder.degrees[currentStudentInfo.degree_id].cn
+                    : '未设置'
+                }
+              </span>
             </div>
             <div className="student-info-item">
               <span className="info-title">目标院校</span>
-              <span className="info-value">LCF；CSM</span>
+              <span className="info-value">{currentStudentInfo.school || '未设置'}</span>
             </div>
             <div className="student-info-item">
               <span className="info-title">申请国家</span>
-              <span className="info-value">美国</span>
+              <span className="info-value">
+                {
+                  currentStudentInfo.country
+                    ? constDataHolder.countriesNormalized[currentStudentInfo.country].cn
+                    : '未设置'
+                }
+              </span>
             </div>
           </div>
         </div>
@@ -103,3 +170,13 @@ export default class TeacherCoursePlan extends Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  accountInfo: state.AccountInfo,
+})
+
+const mapDispatchToProps = dispatch => ({
+
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(TeacherCoursePlan)

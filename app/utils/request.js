@@ -26,6 +26,11 @@ const Request = {
     return agent.get('/api/users?role_id=1').query(options)
   },
 
+  // student
+  getStudents(teacherId) {
+    return agent.get(`/api/users/${teacherId}/students`)
+  },
+
   // follower following
   getFollowerFollowings(options = {}) {
     return agent.get('/api/followers_followings').query(options)
