@@ -29,14 +29,6 @@ class TeacherBasicAccountInfo extends Component {
     const { accountInfo } = this.props
     const { id: userId } = accountInfo
 
-    let majorNames = ''
-    if (_.isEmpty(accountInfo.majors) === false) {
-      majorNames = _.reduce(accountInfo.majors, (r, v) => {
-        r.push(v.cn)
-        return r
-      }, []).join(',')
-    }
-
     return (
       <div className="teacher-basic-account-info" style={wrapStyle}>
         <div className="account-info-item">
@@ -109,7 +101,13 @@ class TeacherBasicAccountInfo extends Component {
         <div className="account-info-item">
           <div className="current-info">
             <p className="item-title">授课专业</p>
-            <p className="item-value">{majorNames || '未设置'}</p>
+            {
+              accountInfo.majors.length ?
+                _.map(accountInfo.majors, (major, i) => {
+                  return <p className="item-value" key={i}>{major.cn}</p>
+                }) :
+                <p className="item-value">未设置</p>
+            }
           </div>
           <div className="update-account-info-item">
             <UpdateAccountInfoItem

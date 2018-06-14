@@ -12,13 +12,14 @@
 
 // Layout
 @layout-body-background: @background-color-base;
-@layout-max-width: 1200px; // Custom
-@layout-min-width: 1000px; // Custom
+@custom-layout-side-padding: 60px;
+@custom-layout-max-width: 1200px;
+@custom-layout-actual-width: @custom-layout-max-width - @custom-layout-side-padding * 2;
 
 // Header
 @layout-header-background: @color-gray-dark;
 @layout-header-height: 48px;
-@layout-header-padding: 0px 60px;
+@layout-header-padding: 0px @custom-layout-side-padding;
 
 // Header button
 @layout-header-button-hover-background: #707070;
