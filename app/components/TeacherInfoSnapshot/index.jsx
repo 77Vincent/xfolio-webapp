@@ -95,11 +95,7 @@ class TeacherInfoSnapshot extends Component {
               )
             }
             <div className="education-detail">
-              <p className="item">毕业于：{teacherInfo.school.cn}</p>
-              <p className="item">指导学生数：0</p>
-              <p className="item">现有学生：0</p>
-              <p className="item">学生录取院校：AA；UCL</p>
-              <p className="item">本周可约课时：{available}</p>
+              <p className="item">{teacherInfo.school.cn}</p>
             </div>
           </div>
           <div className="operas-wrap">
