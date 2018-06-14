@@ -38,16 +38,16 @@ class SignIn extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     const { validateFields, setFields, getFieldValue } = this.props.form
-    validateFields((err, values) => {
+
+    validateFields(async (err, values) => {
       if (!err) {
-        this.setState({
-          submitting: true,
-        })
-        Request.signIn({
-          id: values.mobilephone,
-          password: values.password,
-        }).then((res) => {
-          const accountData = JSON.parse(res.body.data)
+        this.setState({ submitting: true })
+        try {
+          const res = await Request.signIn({
+            id: values.mobilephone,
+            password: values.password,
+          })
+          const accountData = res.body.data
           window.accountInfo = accountData
           this.props.updateAccountInfo(transformUserInfo(accountData))
 
@@ -58,18 +58,16 @@ class SignIn extends Component {
           // 重定向到登录前页面
           const urlSearch = queryString.parse(this.props.location.search.substring(1))
           this.props.history.push(urlSearch.to || '/dashboard/profile')
-        }).catch((error) => {
+        } catch (error) {
           log('sign in error ', error)
-          this.setState({
-            submitting: false,
-          })
+          this.setState({ submitting: false })
           setFields({
             password: {
               value: getFieldValue('password'),
               errors: [new Error('密码错误')],
             },
           })
-        })
+        }
       }
     })
   }
