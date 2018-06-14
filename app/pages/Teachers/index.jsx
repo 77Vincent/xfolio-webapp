@@ -49,7 +49,7 @@ class Teachers extends Component {
     })
     log('options ', options)
     Request.getTeachers({}).then((res) => {
-      const teacherList = res.text !== null ? JSON.parse(res.text) : []
+      const teacherList = res.body !== null ? res.body : []
       log('teacherList ', teacherList)
       if (_.isEmpty(teacherList) === false) {
         this.setState({

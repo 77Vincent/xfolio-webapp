@@ -70,7 +70,7 @@ const AccountInfo = {
     async updateUserMajors(majors) {
       return await Request.createMajors(majors).then((res) => {
         this.updateAccountInfo({
-          majors: JSON.parse(res.text),
+          majors: res.body,
         })
       })
     },
