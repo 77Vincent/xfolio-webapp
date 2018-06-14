@@ -32,16 +32,15 @@ async function preRender() {
       cleanUpBeforeSignOut()
     } else {
       // 获取用户信息
-      const [err, accountInfo] = await to(Request.getUserInfo(userId).then(res => res.text))
-      const accountInfoJSON = JSON.parse(accountInfo)
+      const [err, accountInfo] = await to(Request.getUserInfo(userId).then(res => res.body))
       if (err !== null) {
         // 根据 id 获取不到用户信息，则清空数据
         cleanUpBeforeSignOut()
       } else {
         // 修改登录状态
         constDataHolder.apiToken = localStorageToken
-        dressUpAfterSignIn(accountInfoJSON.id, constDataHolder.apiToken)
-        store.dispatch.AccountInfo.updateAccountInfo(transformUserInfo(accountInfoJSON))
+        dressUpAfterSignIn(accountInfo.id, constDataHolder.apiToken)
+        store.dispatch.AccountInfo.updateAccountInfo(transformUserInfo(accountInfo))
       }
     }
   } else {
@@ -54,13 +53,6 @@ async function preRender() {
     agent.get(CONST_DATA_URLS.MAJORS).then((res) => {
       constDataHolder.majors = JSON.parse(res.text)
       constDataHolder.majorsNormalized = _.reduce(constDataHolder.majors, (r, v) => {
-        r[v.id] = v
-        return r
-      }, {})
-    }),
-    agent.get(CONST_DATA_URLS.SCHOOLS).then((res) => {
-      constDataHolder.schools = JSON.parse(res.text)
-      constDataHolder.schoolsNormalized = _.reduce(constDataHolder.schools, (r, v) => {
         r[v.id] = v
         return r
       }, {})

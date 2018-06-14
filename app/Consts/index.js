@@ -2,7 +2,6 @@
 export const CONST_DATA_URLS = {
   // REST API
   MAJORS: '/api/majors/',
-  SCHOOLS: '/api/schools/',
   FOLLOWER_FOLLOWING: '/api/followers_followings/',
   // Static resources
   DEGREES: '/resources/degrees.json',
