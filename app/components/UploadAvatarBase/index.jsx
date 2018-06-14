@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { Modal, Icon, Upload } from 'antd'
+import { Modal, Icon, Upload, message } from 'antd'
 import { Cropper } from 'react-image-cropper'
 
 import { Request } from '../../utils'
@@ -66,12 +66,15 @@ export default class UploadAvatarBase extends Component {
       if (this.props.avatar_id === null) {
         await Request.uploadAvatar(avatarData)
           .then(res => JSON.parse(res.text))
+        message.success('修改成功！')
       } else {
         await Request.updateAvatar(this.props.avatar_id, avatarData)
           .then(res => JSON.parse(res.text))
+        message.success('修改成功！')
       }
     } catch (e) {
       log('upload image filed ', e)
+      message.error('修改失败！')
     }
     this.setState({
       uploading: false,
