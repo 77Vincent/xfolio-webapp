@@ -84,14 +84,8 @@ class SignIn extends Component {
           onSubmit={this.handleSubmit}
         >
           <Form.Item
-            label="手机号码"
             colon={false}
-            labelCol={{
-              span: 5,
-            }}
-            wrapperCol={{
-              span: 19,
-            }}
+            wrapperCol={{ span: 24 }}
             hasFeedback
             validateFirst
           >
@@ -113,19 +107,13 @@ class SignIn extends Component {
                 ],
                 validateFirst: true,
               })((
-                <Input />
+                <Input placeholder="手机号码" />
               ))
             }
           </Form.Item>
           <Form.Item
-            label="账号密码"
             colon={false}
-            labelCol={{
-              span: 5,
-            }}
-            wrapperCol={{
-              span: 19,
-            }}
+            wrapperCol={{ span: 24 }}
             hasFeedback
             validateFirst
           >
@@ -137,7 +125,7 @@ class SignIn extends Component {
                 ],
                 validateFirst: true,
               })((
-                <Input type="password" />
+                <Input type="password" placeholder="账号密码" />
               ))
             }
           </Form.Item>
