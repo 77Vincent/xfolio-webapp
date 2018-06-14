@@ -181,7 +181,7 @@ class TeacherBasicAccountInfo extends Component {
           <div className="current-info">
             <p className="item-title">毕业院校</p>
             <p className="item-value">
-              {accountInfo.school ? accountInfo.school.cn : '未设置'}
+              {_.keys(accountInfo.school).length ? accountInfo.school.cn : '未设置'}
             </p>
           </div>
           <div className="update-account-info-item">
