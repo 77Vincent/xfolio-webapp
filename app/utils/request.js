@@ -84,6 +84,13 @@ const Request = {
   getSchools(id = '', country_code = '', search = '') {
     return agent.get('/api/schools').query({ id, country_code, search })
   },
+
+  // schedule
+  getSchedules(values = {
+    teacher_id: undefined, student_id: undefined, page: 1, search: undefined,
+  }) {
+    return agent.get('/api/schedules').query(values)
+  },
 }
 
 window.agent = agent

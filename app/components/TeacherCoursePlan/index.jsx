@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { Icon } from 'antd'
+import { Icon, Button } from 'antd'
 import cx from 'classnames'
 import { connect } from 'react-redux'
+import to from 'await-to'
 
 import { USER_ROLE, COURSE_PLACE_OPTIONS, GENDER_OPTIONS_NORMALIZED } from '../../Consts'
 import { Request } from '../../utils'
@@ -25,15 +26,20 @@ class TeacherCoursePlan extends Component {
     super(props)
     // 初始化学生列表
     Request.getStudents(this.props.accountInfo.id).then((res) => {
-      this.setState({
-        studentList: JSON.parse(res.text),
-      })
+      if (res.text !== null) {
+        this.setState({
+          studentList: JSON.parse(res.text),
+        })
+        this.getSchedules()
+      }
     })
   }
 
   state = {
     studentList: [],
     currentStudentIndex: 0,
+    scheduleInfo: {},
+    showScheduleEditor: false,
   }
 
   componentDidMount() {
@@ -42,9 +48,29 @@ class TeacherCoursePlan extends Component {
   componentWillUnmount() {
   }
 
+  getSchedules = async () => {
+    const studentInfo = this.state.studentList[this.state.currentStudentIndex]
+    const [err, schedules] = await to(Request.getSchedules({
+      teacher_id: this.props.accountInfo.id,
+      student_id: studentInfo.id,
+    }).then(res => res.text))
+    if (!err) {
+      const scheduleList = JSON.parse(schedules)
+      this.setState({
+        scheduleInfo: scheduleList[0], // TODO  先取第一个
+      })
+    }
+  }
+
   handleSelectStudent = (i) => {
     this.setState({
       currentStudentIndex: i,
+    })
+  }
+
+  handleClickAddSchedule = () => {
+    this.setState({
+      showScheduleEditor: true,
     })
   }
 
@@ -55,7 +81,6 @@ class TeacherCoursePlan extends Component {
     if (studentList.length > 0) {
       currentStudentInfo = studentList[currentStudentIndex]
     }
-    log('currentStudentInfo ', currentStudentInfo)
 
     return (
       <div className="teacher-course-plan" style={wrapStyle}>
@@ -85,7 +110,11 @@ class TeacherCoursePlan extends Component {
         <div className="student-info  module-wrap">
           <h5 className="title">学生信息</h5>
           <div className="student-info-detail">
-            <img src={`/api/avatars/${currentStudentInfo.avatar_id}`} alt="" className="student-avatar" />
+            <img
+              src={currentStudentInfo.avatar_id && `/api/avatars/${currentStudentInfo.avatar_id}`}
+              alt="avatar"
+              className="student-avatar"
+            />
             <div className="student-info-item">
               <span className="info-title">性别</span>
               <span className="info-value">
@@ -122,7 +151,9 @@ class TeacherCoursePlan extends Component {
             </div>
             <div className="student-info-item">
               <span className="info-title">目标院校</span>
-              <span className="info-value">{currentStudentInfo.school || '未设置'}</span>
+              <span className="info-value">
+                {currentStudentInfo.school ? currentStudentInfo.school.cn : '未设置'}
+              </span>
             </div>
             <div className="student-info-item">
               <span className="info-title">申请国家</span>
@@ -162,7 +193,7 @@ class TeacherCoursePlan extends Component {
             <div className="add-course-item">
               <Icon type="plus" />
               <span className="content">增加一节课</span>
-            </div>
+            </Button>
             <a href="" className="btn-lesson-plan-tip">遇到瓶颈了？看看其他人的教案吧</a>
           </div>
         </div>
