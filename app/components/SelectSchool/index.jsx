@@ -23,15 +23,7 @@ class SelectSchool extends Component {
   }
 
   componentDidMount() {
-    this.schoolsInfo = (
-      _.map(constDataHolder.schools, schoolInfo => ({
-        value: `${schoolInfo.id}`,
-        name: schoolInfo.cn,
-      }))
-    )
   }
-
-  schoolsInfo = []
 
   handleSelectOption = (value) => {
     const schoolName = constDataHolder.schoolsNormalized[value].cn
@@ -44,10 +36,10 @@ class SelectSchool extends Component {
 
   limitedRequest = _.throttle(_.debounce(async (input) => {
     let schoolOptions = []
-    const schoolsResponse = await Request.getSchools('', input)
-    schoolOptions = _.map(JSON.parse(schoolsResponse.text), schoolInfo => ({
-      value: `${schoolInfo.id}`,
-      name: schoolInfo.cn,
+    const res = await Request.getSchools('', input)
+    schoolOptions = _.map(res.body, school => ({
+      value: `${school.id}`,
+      name: school.cn,
     }))
     this.setState({
       schoolOptions,

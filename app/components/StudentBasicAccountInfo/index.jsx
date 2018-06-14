@@ -103,8 +103,8 @@ class StudentBasicAccountInfo extends Component {
             <p className="item-title">申请专业</p>
             {
               accountInfo.majors.length ?
-                _.map(accountInfo.majors, (major) => {
-                  return <p className="item-value">{major.cn}</p>
+                _.map(accountInfo.majors, (major, i) => {
+                  return <p className="item-value" key={i}>{major.cn}</p>
                 }) :
                 <p className="item-value">未设置</p>
             }
