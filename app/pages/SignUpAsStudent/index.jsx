@@ -15,11 +15,15 @@ class SignUpAsStudent extends Component {
     style: PropTypes.object,
     updateAccountInfo: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
-  };
+  }
 
   static defaultProps = {
     style: {},
-  };
+  }
+
+  state = {
+    loading: false,
+  }
 
   componentDidMount() {
 
@@ -30,11 +34,12 @@ class SignUpAsStudent extends Component {
   }
 
   handleSubmitSignUp = (data) => {
+    this.setState({ loading: true })
     Request.signUp({
       role_id: USER_ROLE.STUDENT,
       mobilephone: data.mobilephone,
       password: data.password,
-    }).timeout(5000).then((res) => {
+    }).timeout(10000).then((res) => {
       this.handleSignUpSuccess(res.body)
     }).catch((err) => {
       log('signUp error ', err)
@@ -42,7 +47,7 @@ class SignUpAsStudent extends Component {
   }
 
   handleSignUpSuccess = (responseBody) => {
-    const accountInfo = JSON.parse(responseBody.data)
+    const accountInfo = responseBody.data
     window.accountInfo = accountInfo
     constDataHolder.apiToken = responseBody.token
     // 初始化数据
@@ -59,11 +64,12 @@ class SignUpAsStudent extends Component {
         <h2 className="title">新用户注册</h2>
         <SignUpInputAccountInfo
           style={{
-            width: '290px',
+            width: '300px',
           }}
           submitButton={(
             <Button
               className="btn-submit-form"
+              loading={this.state.loading}
               type="primary"
               htmlType="submit"
             >
