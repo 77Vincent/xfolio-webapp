@@ -29,7 +29,6 @@ export default class UploadAvatar extends Component {
 
     return (
       <div className="upload-avatar-wrap" style={wrapStyle}>
-        <h5 className="title">上传头像</h5>
         <UploadAvatarBase
           avatar_id={this.props.avatar_id}
         />
