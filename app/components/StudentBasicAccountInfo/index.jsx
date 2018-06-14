@@ -18,11 +18,11 @@ class StudentBasicAccountInfo extends Component {
     accountInfo: PropTypes.object.isRequired,
     updateUserIfo: PropTypes.func.isRequired,
     updateUserMajors: PropTypes.func.isRequired,
-  };
+  }
 
   static defaultProps = {
     style: {},
-  };
+  }
 
   render() {
     const wrapStyle = _.assign({}, this.props.style)
@@ -51,7 +51,7 @@ class StudentBasicAccountInfo extends Component {
           <div className="current-info">
             <p className="item-title">性别</p>
             <p className="item-value">
-              {accountInfo.gender !== null ? GENDER_OPTIONS_NORMALIZED[accountInfo.gender].name : '未设置'}
+              {accountInfo.gender !== null ? GENDER_OPTIONS_NORMALIZED[Number(accountInfo.gender)].name : '未设置'}
             </p>
           </div>
           <div className="update-account-info-item">
@@ -181,7 +181,7 @@ class StudentBasicAccountInfo extends Component {
           <div className="current-info">
             <p className="item-title">目标院校</p>
             <p className="item-value">
-              {accountInfo.school_id ? constDataHolder.schoolsNormalized[accountInfo.school_id].cn : '未设置'}
+              {accountInfo.school ? accountInfo.school.cn : '未设置'}
             </p>
           </div>
           <div className="update-account-info-item">

@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import cx from 'classnames'
 
-import constDataHolder from '../../store/constDataHolder'
 import { Request } from '../../utils'
 import UploadAvatarBase from '../UploadAvatarBase'
 import './index.less'
@@ -96,7 +95,7 @@ class TeacherInfoSnapshot extends Component {
               )
             }
             <div className="education-detail">
-              <p className="item">毕业于：{constDataHolder.schoolsNormalized[teacherInfo.school_id]}</p>
+              <p className="item">毕业于：{teacherInfo.school.cn}</p>
               <p className="item">指导学生数：0</p>
               <p className="item">现有学生：0</p>
               <p className="item">学生录取院校：AA；UCL</p>

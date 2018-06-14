@@ -5,7 +5,6 @@ import uuidv1 from 'uuid/v1'
 import PropTypes from 'prop-types'
 
 import { Request } from '../../utils'
-import constDataHolder from '../../store/constDataHolder'
 
 class SelectSchool extends Component {
   static propTypes = {
@@ -26,17 +25,15 @@ class SelectSchool extends Component {
   }
 
   handleSelectOption = (value) => {
-    const schoolName = constDataHolder.schoolsNormalized[value].cn
-    this.setState({
-      value: schoolName,
-    })
+    const schoolName = _.filter(this.state.schoolOptions, option => option.value === value)[0].name
+    this.setState({ value: schoolName })
     // 上报修改
     this.props.onChange(Number(value))
   }
 
-  limitedRequest = _.throttle(_.debounce(async (input) => {
+  limitedRequest = _.throttle(_.debounce(async (search) => {
     let schoolOptions = []
-    const res = await Request.getSchools('', input)
+    const res = await Request.getSchools('', '', search)
     schoolOptions = _.map(res.body, school => ({
       value: `${school.id}`,
       name: school.cn,

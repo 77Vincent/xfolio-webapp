@@ -59,7 +59,7 @@ class TeacherBasicAccountInfo extends Component {
           <div className="current-info">
             <p className="item-title">性别</p>
             <p className="item-value">
-              {accountInfo.gender !== null ? GENDER_OPTIONS_NORMALIZED[accountInfo.gender].name : '未设置'}
+              {accountInfo.gender !== null ? GENDER_OPTIONS_NORMALIZED[Number(accountInfo.gender)].name : '未设置'}
             </p>
           </div>
           <div className="update-account-info-item">
@@ -181,7 +181,7 @@ class TeacherBasicAccountInfo extends Component {
           <div className="current-info">
             <p className="item-title">毕业院校</p>
             <p className="item-value">
-              {accountInfo.school_id ? constDataHolder.schoolsNormalized[accountInfo.school_id].cn : '未设置'}
+              {accountInfo.school ? accountInfo.school.cn : '未设置'}
             </p>
           </div>
           <div className="update-account-info-item">

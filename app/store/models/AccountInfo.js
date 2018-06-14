@@ -12,7 +12,7 @@ const AccountInfo = {
     email: null,
     role_id: 2,
     place: 'both',
-    school_id: null,
+    school: {},
     country: null,
     majors: [],
     degree_id: null,
@@ -56,16 +56,15 @@ const AccountInfo = {
         })
       }
     },
-    updateUserIfo(data = { userId: null, field: null, value: null }) {
+    async updateUserIfo(data = { userId: null, field: null, value: null }) {
       const { userId, field, value } = data
       const requestData = {
         [field]: value,
       }
       // 发请求更新
-      return Request.updateUserInfo(userId, requestData).then(() => {
-        // 更新本地数据
-        this.updateAccountInfo(requestData)
-      })
+      const res = await Request.updateUserInfo(userId, requestData)
+      // 更新本地数据
+      this.updateAccountInfo(res.body)
     },
     async updateUserMajors(majors) {
       return await Request.createMajors(majors).then((res) => {

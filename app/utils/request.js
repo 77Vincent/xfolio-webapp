@@ -81,8 +81,8 @@ const Request = {
   },
 
   // School
-  getSchools(country_code = '', search = '') {
-    return agent.get('/api/schools').query({ country_code, search })
+  getSchools(id = '', country_code = '', search = '') {
+    return agent.get('/api/schools').query({ id, country_code, search })
   },
 }
 
