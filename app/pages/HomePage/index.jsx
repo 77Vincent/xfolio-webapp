@@ -37,7 +37,7 @@ class HomePage extends Component {
             effect="fade"
             dots={false}
             autoplay
-            speed={1000}
+            speed={1500}
             lazyLoad={false}
           >
             <div className="slide-wrap">
@@ -47,7 +47,7 @@ class HomePage extends Component {
                   backgroundImage: `url("${getImage('minimalism-3111110.jpg')}")`,
                 }}
               />
-              <p className="slide-intro">一个直接找到设计导师的网站1</p>
+              <p className="slide-intro">找到你的设计导师</p>
             </div>
             <div className="slide-wrap">
               <div
@@ -56,7 +56,7 @@ class HomePage extends Component {
                   backgroundImage: `url("${getImage('modern-3224786.jpg')}")`,
                 }}
               />
-              <p className="slide-intro">一个直接找到设计导师的网站2</p>
+              <p className="slide-intro color-white">分享设计知识</p>
             </div>
             <div className="slide-wrap">
               <div
@@ -65,7 +65,7 @@ class HomePage extends Component {
                   backgroundImage: `url("${getImage('painter-1246619.jpg')}")`,
                 }}
               />
-              <p className="slide-intro">一个直接找到设计导师的网站3</p>
+              <p className="slide-intro color-white">一个直接找到设计导师的网站3</p>
             </div>
             <div className="slide-wrap">
               <div
