@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { Anchor, Divider, Select, Radio, Pagination } from 'antd'
+import { Anchor, Select, Radio, Pagination } from 'antd'
 import { connect } from 'react-redux'
 
 import { TeacherInfoSnapshot, SelectCountry, SelectMajors, SelectCity } from '../../components'
@@ -91,7 +91,6 @@ class Teachers extends Component {
           <div className="teachers-filter-wrap">
             <div className="filter-item-wrap">
               <h4 className="title">专业</h4>
-              <Divider />
               <SelectMajors
                 value={(
                   _.reduce(this.state.filterOptions.majors, (r, v) => {
@@ -112,7 +111,6 @@ class Teachers extends Component {
             </div>
             <div className="filter-item-wrap">
               <h4 className="title">申请国家</h4>
-              <Divider />
               <SelectCountry
                 onChange={(value) => {
                   log('SelectCountry onChange ', value)
@@ -121,7 +119,6 @@ class Teachers extends Component {
             </div>
             <div className="filter-item-wrap">
               <h4 className="title">授课方式</h4>
-              <Divider />
               <Select
                 defaultValue={this.state.filterOptions.place}
                 onChange={(value) => {
@@ -139,7 +136,6 @@ class Teachers extends Component {
             </div>
             <div className="filter-item-wrap">
               <h4 className="title">性别</h4>
-              <Divider />
               <Select
                 defaultValue={this.state.filterOptions.gender}
                 onChange={(value) => {
@@ -157,7 +153,6 @@ class Teachers extends Component {
             </div>
             <div className="filter-item-wrap">
               <h4 className="title">城市</h4>
-              <Divider />
               <SelectCity
                 onChange={(value) => {
                   this.state.filterOptions.city = value
@@ -169,7 +164,6 @@ class Teachers extends Component {
             </div>
             <div className="filter-item-wrap">
               <h4 className="title">价格</h4>
-              <Divider />
               <Radio.Group
                 defaultValue={PRICE_ORDER_OPTIONS.LOW_TO_HIGH}
                 onChange={(e) => {

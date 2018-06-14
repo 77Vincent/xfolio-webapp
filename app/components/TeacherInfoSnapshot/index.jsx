@@ -78,7 +78,7 @@ class TeacherInfoSnapshot extends Component {
                   avatar_id={teacherInfo.avatar_id}
                   userId={teacherInfo.id}
                   tipContent="修改头像"
-                  cropRatio={47 / 21}
+                  cropRatio={2 / 1}
                 />
               </div>
             )
