@@ -193,7 +193,7 @@ class TeacherCoursePlan extends Component {
             <div className="add-course-item">
               <Icon type="plus" />
               <span className="content">增加一节课</span>
-            </Button>
+            </div>
             <a href="" className="btn-lesson-plan-tip">遇到瓶颈了？看看其他人的教案吧</a>
           </div>
         </div>

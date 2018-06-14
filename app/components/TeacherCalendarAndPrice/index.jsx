@@ -2,13 +2,16 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { Calendar } from 'antd'
+import { connect } from 'react-redux'
 
 import PriceDetail from './PriceDetail'
 import './index.less'
 
-export default class TeacherCalendarAndPrice extends Component {
+class TeacherCalendarAndPrice extends Component {
   static propTypes = {
     style: PropTypes.object,
+    accountInfo: PropTypes.object.isRequired,
+    updateUserIfo: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -25,6 +28,8 @@ export default class TeacherCalendarAndPrice extends Component {
 
   render() {
     const wrapStyle = _.assign({}, this.props.style)
+    const { accountInfo } = this.props
+    log('accountInfo ', accountInfo)
 
     return (
       <div className="teacher-calendar-and-price-wrap" style={wrapStyle}>
@@ -41,7 +46,14 @@ export default class TeacherCalendarAndPrice extends Component {
           <h5 className="price-title">费用设置</h5>
           <div className="price-detail-wrap">
             <PriceDetail
-              price={500}
+              price={accountInfo.cost}
+              onSubmit={(cost) => {
+                return this.props.updateUserIfo({
+                  userId: accountInfo.id,
+                  field: 'cost',
+                  value: cost,
+                })
+              }}
             />
           </div>
           <p className="share-tip">
@@ -55,3 +67,13 @@ export default class TeacherCalendarAndPrice extends Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  accountInfo: state.AccountInfo,
+})
+
+const mapDispatchToProps = dispatch => ({
+  updateUserIfo: dispatch.AccountInfo.updateUserIfo,
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(TeacherCalendarAndPrice)
