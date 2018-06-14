@@ -37,14 +37,14 @@ class HomePage extends Component {
             effect="fade"
             dots={false}
             autoplay
-            speed={1500}
+            speed={1000}
             lazyLoad={false}
           >
             <div className="slide-wrap">
               <div
                 className="slide-bg-image"
                 style={{
-                  backgroundImage: `url("${getImage('minimalism-3111110.jpg')}")`,
+                  backgroundImage: `url("${getImage('bg-7.jpg')}")`,
                 }}
               />
               <p className="slide-intro">找到你的设计导师</p>
@@ -53,7 +53,7 @@ class HomePage extends Component {
               <div
                 className="slide-bg-image"
                 style={{
-                  backgroundImage: `url("${getImage('modern-3224786.jpg')}")`,
+                  backgroundImage: `url("${getImage('bg-3.jpg')}")`,
                 }}
               />
               <p className="slide-intro color-white">分享设计知识</p>
@@ -62,37 +62,19 @@ class HomePage extends Component {
               <div
                 className="slide-bg-image"
                 style={{
-                  backgroundImage: `url("${getImage('painter-1246619.jpg')}")`,
+                  backgroundImage: `url("${getImage('bg-4.jpg')}")`,
                 }}
               />
-              <p className="slide-intro color-white">一个直接找到设计导师的网站3</p>
+              <p className="slide-intro color-white">一站式、沉浸式设计教学体验</p>
             </div>
             <div className="slide-wrap">
               <div
                 className="slide-bg-image"
                 style={{
-                  backgroundImage: `url("${getImage('slider-180612.jpg')}")`,
+                  backgroundImage: `url("${getImage('bg-5.jpg')}")`,
                 }}
               />
-              <p className="slide-intro">一个直接找到设计导师的网站4</p>
-            </div>
-            <div className="slide-wrap">
-              <div
-                className="slide-bg-image"
-                style={{
-                  backgroundImage: `url("${getImage('tiles-shapes-2617112.jpg')}")`,
-                }}
-              />
-              <p className="slide-intro">一个直接找到设计导师的网站5</p>
-            </div>
-            <div className="slide-wrap">
-              <div
-                className="slide-bg-image"
-                style={{
-                  backgroundImage: `url("${getImage('winter-3292563.jpg')}")`,
-                }}
-              />
-              <p className="slide-intro">一个直接找到设计导师的网站6</p>
+              <p className="slide-intro">迎接设计教育新纪元</p>
             </div>
           </Carousel>
           <Button
