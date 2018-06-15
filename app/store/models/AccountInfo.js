@@ -14,6 +14,7 @@ const AccountInfo = {
     place: 'both',
     school: {},
     country: null,
+    city: null,
     majors: [],
     degree_id: null,
     cost: null,

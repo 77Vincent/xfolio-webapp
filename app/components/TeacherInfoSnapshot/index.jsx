@@ -124,7 +124,7 @@ class TeacherInfoSnapshot extends Component {
           <Row className="block-bottom" type="flex" justify="space-between" align="bottom" style={{ width: '100%' }}>
             <Col>
               <span>{teacherInfo.school.cn}</span>
-              <span>{teacherInfo.majors[0].cn}</span>
+              <span>{teacherInfo.majors.length !== 0 ? teacherInfo.majors[0].cn : '未设置'}</span>
             </Col>
             <Col style={{ textAlign: 'right' }}>
               {
