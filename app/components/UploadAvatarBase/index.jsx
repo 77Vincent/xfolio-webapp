@@ -64,13 +64,13 @@ export default class UploadAvatarBase extends Component {
     }
     try {
       if (this.props.avatar_id === null) {
-        await Request.uploadAvatar(avatarData)
-          .then(res => JSON.parse(res.text))
-        message.success('修改成功！')
+        await Request
+          .uploadAvatar(avatarData)
+          .then(() => message.success('修改成功！'))
       } else {
-        await Request.updateAvatar(this.props.avatar_id, avatarData)
-          .then(res => JSON.parse(res.text))
-        message.success('修改成功！')
+        await Request
+          .updateAvatar(this.props.avatar_id, avatarData)
+          .then(() => message.success('修改成功！'))
       }
     } catch (e) {
       log('upload image filed ', e)
