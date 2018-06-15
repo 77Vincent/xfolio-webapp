@@ -8,24 +8,19 @@ import { TeacherBasicAccountInfo, TeacherInfoSnapshot } from '../index'
 import { Request } from '../../utils'
 import './index.less'
 
-const commonTags = [
-  {
-    id: 3,
-    content: '专业',
-  },
-  {
-    id: 4,
-    content: '口才好',
-  },
-  {
-    id: 5,
-    content: '和蔼可亲',
-  },
-  {
-    id: 6,
-    content: '闷骚',
-  },
-]
+const commonTags = [{
+  id: 3,
+  content: '专业',
+}, {
+  id: 4,
+  content: '口才好',
+}, {
+  id: 5,
+  content: '和蔼可亲',
+}, {
+  id: 6,
+  content: '闷骚',
+}]
 
 class TeachersProfiles extends Component {
   static propTypes = {
