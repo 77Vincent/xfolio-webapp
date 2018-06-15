@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import cx from 'classnames'
 
+import { COURSE_PLACE_OPTIONS } from '../../Consts'
+import constDataHolder from '../../store/constDataHolder'
 import { Request } from '../../utils'
 import UploadAvatarBase from '../UploadAvatarBase'
 import './index.less'
@@ -20,7 +22,7 @@ class TeacherInfoSnapshot extends Component {
     editMode: PropTypes.bool,
     removeFollowingId: PropTypes.func.isRequired,
     addFollowingId: PropTypes.func.isRequired,
-  };
+  }
 
   static defaultProps = {
     style: {},
@@ -28,7 +30,7 @@ class TeacherInfoSnapshot extends Component {
     showAppointBtn: true,
     showFavBtn: true,
     editMode: false,
-  };
+  }
 
   componentDidMount() {
 
@@ -89,37 +91,62 @@ class TeacherInfoSnapshot extends Component {
               { _.map(teacherInfo.tags, tag => <Tag key={tag.id}>{tag.content}</Tag>) }
             </div>
           }
-          <Row>
-            <h2 className="teacher-major">{teacherInfo.students_onboard_url}</h2>
+          <Row className="block-top">
+            <Col span={12}>
+              <section>
+                <span>已教授学生</span>
+                <span>{teacherInfo.students - teacherInfo.students_onboard}</span>
+              </section>
+              <section>
+                <span>在授学生</span>
+                <span>{teacherInfo.students_onboard}</span>
+              </section>
+              <section>
+                <span>可预约时间</span>
+                <span>{teacherInfo.available}</span>
+              </section>
+            </Col>
+            <Col span={12}>
+              <section>
+                <span>现居地</span>
+                <span>{teacherInfo.city !== null ? constDataHolder.citiesNormalized[teacherInfo.city].name : '未设置'}</span>
+              </section>
+              <section>
+                <span>授课方式</span>
+                <span>{teacherInfo.place !== null ? COURSE_PLACE_OPTIONS[teacherInfo.place].name : '未设置'}</span>
+              </section>
+              <section>
+                <span>收费</span>
+                <span>{teacherInfo.cost !== null ? `${teacherInfo.cost} ¥/小时` : '未设置'}</span>
+              </section>
+            </Col>
           </Row>
-          <div className="block-bottom">
-            <Row type="flex" justify="space-between" align="bottom" style={{ width: '100%' }}>
-              <Col>
-                <span>{teacherInfo.school.cn}</span>
-                <span>{teacherInfo.majors[0].cn}</span>
-              </Col>
-              <Col style={{ textAlign: 'right' }}>
-                {
-                  this.props.showFavBtn === true &&
-                  <a href="javascript:;" className="btn-follow" onClick={this.handleUpdateFollowStatus}>
-                    {
-                      this.props.isFollowing ? <Icon type="heart" /> : <Icon type="heart-o" />
-                    }
-                  </a>
-                }
-                {
-                  this.props.showAppointBtn === true &&
-                  <span className="btn-order">
-                    {
-                      available > 0 ?
-                        <Link to={`/submit-order?userId=${teacherInfo.id}`}>预约</Link> :
-                        '已约满'
-                    }
-                  </span>
-                }
-              </Col>
-            </Row>
-          </div>
+          <Row className="block-bottom" type="flex" justify="space-between" align="bottom" style={{ width: '100%' }}>
+            <Col>
+              <span>{teacherInfo.school.cn}</span>
+              <span>{teacherInfo.majors[0].cn}</span>
+            </Col>
+            <Col style={{ textAlign: 'right' }}>
+              {
+                this.props.showFavBtn === true &&
+                <a href="javascript:;" className="btn-follow" onClick={this.handleUpdateFollowStatus}>
+                  {
+                    this.props.isFollowing ? <Icon type="heart" /> : <Icon type="heart-o" />
+                  }
+                </a>
+              }
+              {
+                this.props.showAppointBtn === true &&
+                <span className="btn-order">
+                  {
+                    available > 0 ?
+                      <Link to={`/submit-order?userId=${teacherInfo.id}`}>预约</Link> :
+                      '已约满'
+                  }
+                </span>
+              }
+            </Col>
+          </Row>
         </div>
       </div>
     )

@@ -22,21 +22,6 @@ const constDataHolder = {
     this.majorsNormalizedValue = value
   },
 
-  schoolsValue: [],
-  get schools() {
-    return this.schoolsValue
-  },
-  set schools(value) {
-    this.schoolsValue = value
-  },
-  schoolsNormalizedValue: [],
-  get schoolsNormalized() {
-    return this.schoolsNormalizedValue
-  },
-  set schoolsNormalized(value) {
-    this.schoolsNormalizedValue = value
-  },
-
   degreesValue: [],
   get degrees() {
     return this.degreesValue

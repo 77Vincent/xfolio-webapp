@@ -27,8 +27,8 @@ const Request = {
   },
 
   // student
-  getStudents(teacherId) {
-    return agent.get(`/api/users/${teacherId}/students`)
+  getStudents(teacherId, options = {}) {
+    return agent.get(`/api/users/${teacherId}/students`).query(options)
   },
 
   // follower following
