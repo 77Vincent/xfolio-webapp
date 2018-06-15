@@ -80,7 +80,13 @@ const Request = {
     return agent.delete(`/api/tags/${tagId}`)
   },
 
-  // School
+  /**
+   * Get all schools by default, filter or search with querystring
+   * @param {string} [id=''] Filter by school ID
+   * @param {string} [country_code=''] Filter by country_code
+   * @param {string} [search=''] Search
+   * @returns {object[]} school(s)
+   */
   getSchools(id = '', country_code = '', search = '') {
     return agent.get('/api/schools').query({ id, country_code, search })
   },

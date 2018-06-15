@@ -61,8 +61,8 @@ class TeachersProfiles extends Component {
   }
 
   handleClickAddTag = (tagContent) => {
-    Request.createTag(this.props.accountInfo.id, tagContent).then((res) => {
-      const tagInfo = JSON.parse(res.text)
+    Request.createTag(tagContent).then((res) => {
+      const tagInfo = res.body
       this.state.tagList.push({
         id: tagInfo.id,
         content: tagInfo.content,
@@ -98,7 +98,7 @@ class TeachersProfiles extends Component {
       <div className="teacher-profiles-wrap" style={wrapStyle}>
         <div className="edit-tag-warp">
           <div className="add-tags-wrap">
-            <h5 className="title">添加标签</h5>
+            <h5 className="title">标签</h5>
             <div className="current-tags-wrap">
               <Button className="btn-show-add-tags" onClick={this.toggleTagInput}>
                 <Icon type="plus" />
