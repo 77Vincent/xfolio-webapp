@@ -44,13 +44,12 @@ const AccountInfo = {
   },
   effects: {
     async getFollowingIds(userId) {
-      const [err, text] = await to(Request.getFollowerFollowings({
+      const [err, body] = await to(Request.getFollowerFollowings({
         follower_id: userId,
       }).then(res => res.text))
       if (!err) {
-        const data = JSON.parse(text)
         this.updateAccountInfo({
-          followingIds: _.reduce(data, (r, v) => {
+          followingIds: _.reduce(body, (r, v) => {
             r.push(v.following_id)
             return r
           }, []),

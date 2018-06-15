@@ -26,12 +26,8 @@ class TeacherCoursePlan extends Component {
     super(props)
     // 初始化学生列表
     Request.getStudents(this.props.accountInfo.id).then((res) => {
-      if (res.text !== null) {
-        this.setState({
-          studentList: JSON.parse(res.text),
-        })
-        this.getSchedules()
-      }
+      this.setState({ studentList: res.body })
+      this.getSchedules()
     })
   }
 
@@ -55,9 +51,8 @@ class TeacherCoursePlan extends Component {
       student_id: studentInfo.id,
     }).then(res => res.text))
     if (!err) {
-      const scheduleList = JSON.parse(schedules)
       this.setState({
-        scheduleInfo: scheduleList[0], // TODO  先取第一个
+        scheduleInfo: schedules[0], // TODO  先取第一个
       })
     }
   }

@@ -35,7 +35,7 @@ export default class SubmitOrder extends Component {
       Request.getUserInfo(urlSearch.userId).then((res) => {
         this.setState({
           teacherInfoInited: true,
-          teacherInfo: JSON.parse(res.text),
+          teacherInfo: res.body,
         })
       })
     }
