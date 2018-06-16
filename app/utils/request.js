@@ -22,8 +22,8 @@ const Request = {
   },
 
   // teachers
-  getTeachers: (options = {}) => {
-    return agent.get('/api/users?role_id=1').query(options)
+  getTeachers: (query = {}) => {
+    return agent.get('/api/users?role_id=1').query(query)
   },
 
   // student

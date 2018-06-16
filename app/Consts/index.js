@@ -50,6 +50,6 @@ export const GENDER_OPTIONS_NORMALIZED = {
 }
 
 export const PRICE_ORDER_OPTIONS = {
-  LOW_TO_HIGH: 1,
-  HIGH_TO_LOW: 2,
+  LOW_TO_HIGH: 'ASC',
+  HIGH_TO_LOW: 'DESC',
 }

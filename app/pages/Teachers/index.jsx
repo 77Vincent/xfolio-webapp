@@ -14,20 +14,20 @@ class Teachers extends Component {
     style: PropTypes.object,
     accountInfo: PropTypes.object.isRequired,
     getFollowingIds: PropTypes.func.isRequired,
-  };
+  }
 
   static defaultProps = {
     style: {},
-  };
+  }
 
   state = {
     filterOptions: {
-      majors: this.props.accountInfo.majors,
-      country: this.props.accountInfo.country,
-      place: this.props.accountInfo.place,
-      gender: 1,
+      // majors: this.props.accountInfo.majors,
+      country: null,
+      place: null,
+      gender: null,
       city: null,
-      price: 1,
+      price: null,
     },
     teacherList: [],
     currentPage: 1,
@@ -42,31 +42,15 @@ class Teachers extends Component {
   componentWillUnmount() {
   }
 
-  requestTeacherList = () => {
-    log('requestTeacherList ', this.state.filterOptions)
-    const options = _.assign({}, this.state.filterOptions, {
-      majors: this.state.filterOptions.majors.join(','),
-    })
-    log('options ', options)
-    Request.getTeachers({}).then((res) => {
-      const teacherList = res.body !== null ? res.body : []
-      log('teacherList ', teacherList)
-      if (_.isEmpty(teacherList) === false) {
-        this.setState({
-          teacherList,
-        })
-      }
-    }).catch((e) => {
-      log('getTeachers e ', e)
-    })
-  }
-
-  handleUpdateFilterOptions = (key, value) => {
-    log('handleUpdateFilterOptions ', key, value)
-    this.state.filterOptions.key = value
-    this.setState({
-      filterOptions: this.state.filterOptions,
-    })
+  requestTeacherList = async (key, value) => {
+    this.state.filterOptions[key] = value
+    this.setState({ filterOptions: this.state.filterOptions })
+    try {
+      const res = await Request.getTeachers(this.state.filterOptions)
+      this.setState({ teacherList: res.body })
+    } catch (err) {
+      log('getTeachers e ', err)
+    }
   }
 
   handlePaginationChange = (page) => {
@@ -90,40 +74,30 @@ class Teachers extends Component {
         >
           <div className="teachers-filter-wrap">
             <div className="filter-item-wrap">
-              <h4 className="title">专业</h4>
+              <h4 className="xfolio-text-info-title">专业</h4>
               <SelectMajors
                 value={(
                   _.reduce(this.state.filterOptions.majors, (r, v) => {
-                    r.push({
-                      key: `${v.id}`,
-                      label: v.cn,
-                    })
+                    r.push({ key: `${v.id}`, label: v.cn })
                     return r
                   }, [])
                 )}
                 onChange={(value) => {
-                  this.state.filterOptions.majors = value
-                  this.setState({
-                    filterOptions: this.state.filterOptions,
-                  })
+                  this.requestTeacherList('majors', value)
                 }}
               />
             </div>
             <div className="filter-item-wrap">
-              <h4 className="title">申请国家</h4>
+              <h4 className="xfolio-text-info-title">申请国家</h4>
               <SelectCountry
-                onChange={(value) => {
-                  log('SelectCountry onChange ', value)
-                }}
+                onChange={(value) => { this.requestTeacherList('country', value) }}
               />
             </div>
             <div className="filter-item-wrap">
-              <h4 className="title">授课方式</h4>
+              <h4 className="xfolio-text-info-title">授课方式</h4>
               <Select
-                defaultValue={this.state.filterOptions.place}
-                onChange={(value) => {
-                  this.handleUpdateFilterOptions('place', value)
-                }}
+                defaultValue="请选择"
+                onChange={async (value) => { this.requestTeacherList('place', value) }}
               >
                 {
                   _.map(_.values(COURSE_PLACE_OPTIONS), (placeInfo, i) => {
@@ -135,12 +109,10 @@ class Teachers extends Component {
               </Select>
             </div>
             <div className="filter-item-wrap">
-              <h4 className="title">性别</h4>
+              <h4 className="xfolio-text-info-title">性别</h4>
               <Select
-                defaultValue={this.state.filterOptions.gender}
-                onChange={(value) => {
-                  this.handleUpdateFilterOptions('gender', value)
-                }}
+                defaultValue="请选择"
+                onChange={(value) => { this.requestTeacherList('gender', value) }}
               >
                 {
                   _.map(_.values(GENDER_OPTIONS), (genderInfo, i) => {
@@ -152,26 +124,19 @@ class Teachers extends Component {
               </Select>
             </div>
             <div className="filter-item-wrap">
-              <h4 className="title">城市</h4>
+              <h4 className="xfolio-text-info-title">城市</h4>
               <SelectCity
-                onChange={(value) => {
-                  this.state.filterOptions.city = value
-                  this.setState({
-                    filterOptions: this.state.filterOptions,
-                  })
-                }}
+                onChange={(value) => { this.requestTeacherList('city', value) }}
               />
             </div>
             <div className="filter-item-wrap">
-              <h4 className="title">价格</h4>
+              <h4 className="xfolio-text-info-title">价格</h4>
               <Radio.Group
-                defaultValue={PRICE_ORDER_OPTIONS.LOW_TO_HIGH}
-                onChange={(e) => {
-                  this.handleUpdateFilterOptions('price', e.target.value)
-                }}
+                onChange={(e) => { this.requestTeacherList('cost', e.target.value) }}
               >
                 <Radio value={PRICE_ORDER_OPTIONS.LOW_TO_HIGH}>由低到高</Radio>
                 <Radio value={PRICE_ORDER_OPTIONS.HIGH_TO_LOW}>由高到低</Radio>
+                <Radio value={null}>默认排序</Radio>
               </Radio.Group>
             </div>
           </div>
@@ -191,7 +156,7 @@ class Teachers extends Component {
             }
             {
               teacherList.length === 0 && (
-                <p>没有符合条件的老师~</p>
+                <h3 style={{ textAlign: 'center' }}>没有符合条件的老师~</h3>
               )
             }
           </div>
