@@ -10,7 +10,7 @@ import './index.less'
 export default class UpdateAccountInfoItem extends Component {
   static propTypes = {
     style: PropTypes.object,
-    inputType: PropTypes.oneOf(['input', 'select', 'custom']).isRequired,
+    inputType: PropTypes.oneOf(['input', 'select', 'custom', 'textarea']).isRequired,
     placeholder: PropTypes.string,
     value: PropTypes.any,
     options: PropTypes.array,
@@ -69,6 +69,9 @@ export default class UpdateAccountInfoItem extends Component {
     case 'input':
       newValue = e.target.value
       break
+    case 'textarea':
+      newValue = e.target.value
+      break
     case 'select':
     case 'custom':
       log('select change ', e)
@@ -92,7 +95,7 @@ export default class UpdateAccountInfoItem extends Component {
       try {
         await this.props.onSubmit(this.state.value)
         message.success('修改成功！')
-        if (this.props.inputType === 'input') {
+        if (this.props.inputType === ('input' || 'textarea')) {
           this.setState({ value: '' })
         }
       } catch (err) {
@@ -142,6 +145,15 @@ export default class UpdateAccountInfoItem extends Component {
               {
                 this.props.inputType === 'input' && (
                   <Input
+                    placeholder={this.props.placeholder}
+                    onChange={this.handleInputChange}
+                    value={this.state.value}
+                  />
+                )
+              }
+              {
+                this.props.inputType === 'textarea' && (
+                  <Input.TextArea
                     placeholder={this.props.placeholder}
                     onChange={this.handleInputChange}
                     value={this.state.value}

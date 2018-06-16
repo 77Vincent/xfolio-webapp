@@ -228,6 +228,22 @@ class TeacherBasicAccountInfo extends Component {
             />
           </div>
         </div>
+        <div className="xfolio-account-info-item">
+          <div className="xfolio-current-info-wrapper">
+            <p className="xfolio-text-info-title">一句话介绍</p>
+            <p className="xfolio-text-info-value">{accountInfo.bio || '未设置'}</p>
+          </div>
+          <div className="update-account-info-item">
+            <UpdateAccountInfoItem
+              inputType="textarea"
+              placeholder="请写一句话表达自己"
+              value=""
+              onSubmit={(value) => {
+                return this.props.updateUserIfo({ userId, field: 'bio', value })
+              }}
+            />
+          </div>
+        </div>
       </div>
     )
   }
