@@ -65,7 +65,10 @@ const Request = {
     return agent.post('/api/orders').send(data)
   },
 
-  // major
+  // Major
+  getMajors(query = {}) {
+    return agent.get('/api/majors').query(query)
+  },
   createMajors(majors) {
     return agent.put('/api/users_majors').send({
       major_id: majors,
@@ -80,15 +83,9 @@ const Request = {
     return agent.delete(`/api/tags/${tagId}`)
   },
 
-  /**
-   * Get all schools by default, filter or search with querystring
-   * @param {string} [id=''] Filter by school ID
-   * @param {string} [country_code=''] Filter by country_code
-   * @param {string} [search=''] Search
-   * @returns {object[]} school(s)
-   */
-  getSchools(id = '', country_code = '', search = '') {
-    return agent.get('/api/schools').query({ id, country_code, search })
+  // School
+  getSchools(query = {}) {
+    return agent.get('/api/schools').query(query)
   },
 
   // schedule

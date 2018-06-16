@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 import { Select, Spin } from 'antd'
-import uuidv1 from 'uuid/v1'
 import PropTypes from 'prop-types'
 
 import { Request } from '../../utils'
@@ -33,7 +32,7 @@ class SelectSchool extends Component {
 
   limitedRequest = _.throttle(_.debounce(async (search) => {
     let schoolOptions = []
-    const res = await Request.getSchools('', '', search)
+    const res = await Request.getSchools({ search })
     schoolOptions = _.map(res.body, school => ({
       value: `${school.id}`,
       name: school.cn,
@@ -64,8 +63,8 @@ class SelectSchool extends Component {
         onSelect={this.handleSelectOption}
       >
         {
-          _.map(this.state.schoolOptions, optionInfo => (
-            <Select.Option value={optionInfo.value} key={uuidv1()}>{optionInfo.name}</Select.Option>
+          _.map(this.state.schoolOptions, (optionInfo, index) => (
+            <Select.Option value={optionInfo.value} key={index}>{optionInfo.name}</Select.Option>
           ))
         }
       </Select>
