@@ -121,32 +121,30 @@ class TeacherInfoSnapshot extends Component {
               </section>
             </Col>
           </Row>
-          <Row className="block-bottom" type="flex" justify="space-between" align="bottom" style={{ width: '100%' }}>
-            <Col>
-              <span>{teacherInfo.school.cn}</span>
-              <span>{teacherInfo.majors.length !== 0 ? teacherInfo.majors[0].cn : '未设置'}</span>
-            </Col>
-            <Col style={{ textAlign: 'right' }}>
-              {
-                this.props.showFavBtn === true &&
-                <a href="javascript:;" className="btn-follow" onClick={this.handleUpdateFollowStatus}>
-                  {
-                    this.props.isFollowing ? <Icon type="heart" /> : <Icon type="heart-o" />
-                  }
-                </a>
-              }
-              {
-                this.props.showAppointBtn === true &&
-                <span className="btn-order">
-                  {
-                    available > 0 ?
-                      <Link to={`/submit-order?userId=${teacherInfo.id}`}>预约</Link> :
-                      '已约满'
-                  }
-                </span>
-              }
-            </Col>
-          </Row>
+          <div className="block-edu">
+            <span>{teacherInfo.school.cn ? teacherInfo.school.cn : '未设置'}</span>
+            <span>{teacherInfo.majors.length !== 0 ? teacherInfo.majors[0].cn : '未设置'}</span>
+          </div>
+          <div className="block-bottom" style={{ textAlign: 'right' }}>
+            {
+              this.props.showFavBtn === true &&
+              <a href="javascript:;" className="btn-follow" onClick={this.handleUpdateFollowStatus}>
+                {
+                  this.props.isFollowing ? <Icon type="heart" /> : <Icon type="heart-o" />
+                }
+              </a>
+            }
+            {
+              this.props.showAppointBtn === true &&
+              <span className="btn-order">
+                {
+                  available > 0 ?
+                    <Link to={`/submit-order?userId=${teacherInfo.id}`}>预约</Link> :
+                    '已约满'
+                }
+              </span>
+            }
+          </div>
         </div>
       </div>
     )
