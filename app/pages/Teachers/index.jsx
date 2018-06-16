@@ -21,30 +21,42 @@ class Teachers extends Component {
   }
 
   state = {
-    filterOptions: {
-      // majors: this.props.accountInfo.majors,
-      country: null,
-      place: null,
-      gender: null,
-      city: null,
-      price: null,
-    },
+    filterOptions: {},
     teacherList: [],
     currentPage: 1,
     pageSize: 7,
   }
 
   componentDidMount() {
-    this.requestTeacherList()
+    const { city, country, place } = this.props.accountInfo
+    this.myFilter = _.assign({}, {
+      city,
+      country,
+      place,
+      major_id: _.map(this.props.accountInfo.majors, (major) => { return major.id }),
+    })
+
+
+    this.requestTeacherList(this.defaultFilter)
     this.props.getFollowingIds(this.props.accountInfo.id)
   }
 
   componentWillUnmount() {
   }
 
-  requestTeacherList = async (key, value) => {
-    this.state.filterOptions[key] = value
-    this.setState({ filterOptions: this.state.filterOptions })
+  defaultFilter = {
+    major_id: null,
+    country: null,
+    city: null,
+    place: null,
+    gender: null,
+    cost: null,
+  }
+
+  requestTeacherList = async (query = {}) => {
+    this.setState({
+      filterOptions: _.assign(this.state.filterOptions, query),
+    })
     try {
       const res = await Request.getTeachers(this.state.filterOptions)
       this.setState({ teacherList: res.body })
@@ -83,21 +95,21 @@ class Teachers extends Component {
                   }, [])
                 )}
                 onChange={(value) => {
-                  this.requestTeacherList('major_id', value)
+                  this.requestTeacherList({ major_id: value })
                 }}
               />
             </div>
             <div className="filter-item-wrap">
               <div className="xfolio-text-info-title">申请国家</div>
               <SelectCountry
-                onChange={(value) => { this.requestTeacherList('country', value) }}
+                onChange={(value) => { this.requestTeacherList({ country: value }) }}
               />
             </div>
             <div className="filter-item-wrap">
               <div className="xfolio-text-info-title">授课方式</div>
               <Select
                 defaultValue="请选择"
-                onChange={async (value) => { this.requestTeacherList('place', value) }}
+                onChange={async (value) => { this.requestTeacherList({ place: value }) }}
               >
                 {
                   _.map(_.values(COURSE_PLACE_OPTIONS), (placeInfo, i) => {
@@ -110,7 +122,7 @@ class Teachers extends Component {
               <div className="xfolio-text-info-title">性别</div>
               <Select
                 defaultValue="请选择"
-                onChange={(value) => { this.requestTeacherList('gender', value) }}
+                onChange={(value) => { this.requestTeacherList({ gender: value }) }}
               >
                 {
                   _.map(_.values(GENDER_OPTIONS), (genderInfo, i) => {
@@ -122,17 +134,25 @@ class Teachers extends Component {
             <div className="filter-item-wrap">
               <div className="xfolio-text-info-title">城市</div>
               <SelectCity
-                onChange={(value) => { this.requestTeacherList('city', value) }}
+                onChange={(value) => { this.requestTeacherList({ city: value }) }}
               />
             </div>
             <div className="filter-item-wrap">
               <div className="xfolio-text-info-title">价格</div>
               <Radio.Group
-                onChange={(e) => { this.requestTeacherList('cost', e.target.value) }}
+                onChange={(e) => { this.requestTeacherList({ cost: e.target.value }) }}
               >
                 <Radio value={PRICE_ORDER_OPTIONS.LOW_TO_HIGH}>由低到高</Radio><br />
                 <Radio value={PRICE_ORDER_OPTIONS.HIGH_TO_LOW}>由高到低</Radio><br />
-                <Radio value={null}>默认排序</Radio>
+              </Radio.Group>
+            </div>
+            <div className="filter-item-wrap">
+              <div className="xfolio-text-info-title">其他操作</div>
+              <Radio.Group
+                onChange={(e) => { this.requestTeacherList(e.target.value) }}
+              >
+                <Radio value={this.myFilter}>为我挑选</Radio><br />
+                <Radio value={this.defaultFilter}>默认列表</Radio><br />
               </Radio.Group>
             </div>
           </div>
