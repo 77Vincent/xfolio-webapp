@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { Icon, Button } from 'antd'
+import { Icon } from 'antd'
 import cx from 'classnames'
 import { connect } from 'react-redux'
 import to from 'await-to'
@@ -46,6 +46,7 @@ class TeacherCoursePlan extends Component {
 
   getSchedules = async () => {
     const studentInfo = this.state.studentList[this.state.currentStudentIndex]
+    if (!studentInfo) { return }
     const [err, schedules] = await to(Request.getSchedules({
       teacher_id: this.props.accountInfo.id,
       student_id: studentInfo.id,
@@ -110,9 +111,9 @@ class TeacherCoursePlan extends Component {
               alt="avatar"
               className="student-avatar"
             />
-            <div className="student-info-item">
-              <span className="info-title">性别</span>
-              <span className="info-value">
+            <div className="xfolio-current-info-wrapper">
+              <span className="xfolio-text-info-title">性别</span>
+              <span className="xfolio-text-info-value">
                 {
                   _.isNil(currentStudentInfo.gender) === false
                     ? GENDER_OPTIONS_NORMALIZED[Number(currentStudentInfo.gender)].name
@@ -120,13 +121,13 @@ class TeacherCoursePlan extends Component {
                 }
               </span>
             </div>
-            <div className="student-info-item">
-              <span className="info-title">专业</span>
-              <span className="info-value">{currentStudentInfo.majors || '未设置'}</span>
+            <div className="xfolio-current-info-wrapper">
+              <span className="xfolio-text-info-title">专业</span>
+              <span className="xfolio-text-info-value">{currentStudentInfo.majors || '未设置'}</span>
             </div>
-            <div className="student-info-item">
-              <span className="info-title">授课形式</span>
-              <span className="info-value">
+            <div className="xfolio-current-info-wrapper">
+              <span className="xfolio-text-info-title">授课形式</span>
+              <span className="xfolio-text-info-value">
                 {
                   currentStudentInfo.place
                     ? COURSE_PLACE_OPTIONS[currentStudentInfo.place].name
@@ -134,9 +135,9 @@ class TeacherCoursePlan extends Component {
                 }
               </span>
             </div>
-            <div className="student-info-item">
-              <span className="info-title">申请学历</span>
-              <span className="info-value">
+            <div className="xfolio-current-info-wrapper">
+              <span className="xfolio-text-info-title">申请学历</span>
+              <span className="xfolio-text-info-value">
                 {
                   currentStudentInfo.degree_id
                     ? constDataHolder.degrees[currentStudentInfo.degree_id].cn
@@ -144,15 +145,15 @@ class TeacherCoursePlan extends Component {
                 }
               </span>
             </div>
-            <div className="student-info-item">
-              <span className="info-title">目标院校</span>
-              <span className="info-value">
+            <div className="xfolio-current-info-wrapper">
+              <span className="xfolio-text-info-title">目标院校</span>
+              <span className="xfolio-text-info-value">
                 {currentStudentInfo.school ? currentStudentInfo.school.cn : '未设置'}
               </span>
             </div>
-            <div className="student-info-item">
-              <span className="info-title">申请国家</span>
-              <span className="info-value">
+            <div className="xfolio-current-info-wrapper">
+              <span className="xfolio-text-info-title">申请国家</span>
+              <span className="xfolio-text-info-value">
                 {
                   currentStudentInfo.country
                     ? constDataHolder.countriesNormalized[currentStudentInfo.country].cn

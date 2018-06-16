@@ -120,7 +120,7 @@ export default class UploadAvatarBase extends Component {
             )
           }
           <div className="tip-wrap">
-            <Icon type={this.state.uploading === true ? 'loading' : 'plus'} className="upload-icon" />
+            <Icon type={this.state.uploading === true ? 'loading' : 'plus'} />
             {
               typeof this.props.tipContent === 'string' && this.props.tipContent.length > 0 && (
                 <p className="tip">{ this.props.tipContent }</p>

@@ -43,7 +43,7 @@ class Header extends Component {
                 className="header-nav-button"
                 activeClassName="current"
               >
-                寻找导师
+                发现导师
               </NavLink>
               <NavLink
                 to="/signup-as-teacher"

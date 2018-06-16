@@ -81,7 +81,7 @@ class HomePage extends Component {
             type="primary"
             className="slide-button"
           >
-            <Link to={this.props.teacherFilterInited ? '/teachers' : '/init-teacher-filter'}>寻找导师</Link>
+            <Link to={this.props.teacherFilterInited ? '/teachers' : '/init-teacher-filter'}>发现导师</Link>
           </Button>
         </div>
         <div className="content-wrap">
