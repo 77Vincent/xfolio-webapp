@@ -31,10 +31,10 @@ class StudentBasicAccountInfo extends Component {
 
     return (
       <div className="student-basic-account-info" style={wrapStyle}>
-        <div className="account-info-item">
-          <div className="current-info">
-            <p className="item-title">姓名</p>
-            <p className="item-value">{accountInfo.name || '未设置'}</p>
+        <div className="xfolio-account-info-item">
+          <div className="xfolio-current-info-wrapper">
+            <p className="xfolio-text-info-title">姓名</p>
+            <p className="xfolio-text-info-value">{accountInfo.name || '未设置'}</p>
           </div>
           <div className="update-account-info-item">
             <UpdateAccountInfoItem
@@ -47,10 +47,10 @@ class StudentBasicAccountInfo extends Component {
             />
           </div>
         </div>
-        <div className="account-info-item">
-          <div className="current-info">
-            <p className="item-title">性别</p>
-            <p className="item-value">
+        <div className="xfolio-account-info-item">
+          <div className="xfolio-current-info-wrapper">
+            <p className="xfolio-text-info-title">性别</p>
+            <p className="xfolio-text-info-value">
               {accountInfo.gender !== null ? GENDER_OPTIONS_NORMALIZED[Number(accountInfo.gender)].name : '未设置'}
             </p>
           </div>
@@ -66,10 +66,10 @@ class StudentBasicAccountInfo extends Component {
             />
           </div>
         </div>
-        <div className="account-info-item">
-          <div className="current-info">
-            <p className="item-title">电话</p>
-            <p className="item-value">{accountInfo.mobilephone || '未设置'}</p>
+        <div className="xfolio-account-info-item">
+          <div className="xfolio-current-info-wrapper">
+            <p className="xfolio-text-info-title">电话</p>
+            <p className="xfolio-text-info-value">{accountInfo.mobilephone || '未设置'}</p>
           </div>
           <div className="update-account-info-item">
             <UpdateAccountInfoItem
@@ -82,10 +82,10 @@ class StudentBasicAccountInfo extends Component {
             />
           </div>
         </div>
-        <div className="account-info-item">
-          <div className="current-info">
-            <p className="item-title">邮箱</p>
-            <p className="item-value">{accountInfo.email || '未设置'}</p>
+        <div className="xfolio-account-info-item">
+          <div className="xfolio-current-info-wrapper">
+            <p className="xfolio-text-info-title">邮箱</p>
+            <p className="xfolio-text-info-value">{accountInfo.email || '未设置'}</p>
           </div>
           <div className="update-account-info-item">
             <UpdateAccountInfoItem
@@ -98,15 +98,15 @@ class StudentBasicAccountInfo extends Component {
             />
           </div>
         </div>
-        <div className="account-info-item">
-          <div className="current-info">
-            <p className="item-title">申请专业</p>
+        <div className="xfolio-account-info-item">
+          <div className="xfolio-current-info-wrapper">
+            <p className="xfolio-text-info-title">申请专业</p>
             {
               accountInfo.majors.length ?
                 _.map(accountInfo.majors, (major, i) => {
-                  return <p className="item-value" key={i}>{major.cn}</p>
+                  return <p className="xfolio-text-info-value" key={i}>{major.cn}</p>
                 }) :
-                <p className="item-value">未设置</p>
+                <p className="xfolio-text-info-value">未设置</p>
             }
           </div>
           <div className="update-account-info-item">
@@ -131,10 +131,10 @@ class StudentBasicAccountInfo extends Component {
             />
           </div>
         </div>
-        <div className="account-info-item">
-          <div className="current-info">
-            <p className="item-title">授课形式</p>
-            <p className="item-value">
+        <div className="xfolio-account-info-item">
+          <div className="xfolio-current-info-wrapper">
+            <p className="xfolio-text-info-title">授课形式</p>
+            <p className="xfolio-text-info-value">
               {COURSE_PLACE_OPTIONS[accountInfo.place] ? COURSE_PLACE_OPTIONS[accountInfo.place].name : '未设置'}
             </p>
           </div>
@@ -150,10 +150,10 @@ class StudentBasicAccountInfo extends Component {
             />
           </div>
         </div>
-        <div className="account-info-item">
-          <div className="current-info">
-            <p className="item-title">申请学历</p>
-            <p className="item-value">
+        <div className="xfolio-account-info-item">
+          <div className="xfolio-current-info-wrapper">
+            <p className="xfolio-text-info-title">申请学历</p>
+            <p className="xfolio-text-info-value">
               {accountInfo.degree_id !== null ? constDataHolder.degrees[accountInfo.degree_id].cn : '未设置'}
             </p>
           </div>
@@ -177,10 +177,10 @@ class StudentBasicAccountInfo extends Component {
             />
           </div>
         </div>
-        <div className="account-info-item">
-          <div className="current-info">
-            <p className="item-title">目标院校</p>
-            <p className="item-value">
+        <div className="xfolio-account-info-item">
+          <div className="xfolio-current-info-wrapper">
+            <p className="xfolio-text-info-title">目标院校</p>
+            <p className="xfolio-text-info-value">
               {_.keys(accountInfo.school).length ? accountInfo.school.cn : '未设置'}
             </p>
           </div>
@@ -194,10 +194,10 @@ class StudentBasicAccountInfo extends Component {
             />
           </div>
         </div>
-        <div className="account-info-item">
-          <div className="current-info">
-            <p className="item-title">申请国家</p>
-            <p className="item-value">
+        <div className="xfolio-account-info-item">
+          <div className="xfolio-current-info-wrapper">
+            <p className="xfolio-text-info-title">申请国家</p>
+            <p className="xfolio-text-info-value">
               {accountInfo.country ? constDataHolder.countriesNormalized[accountInfo.country].cn : '未设置'}
             </p>
           </div>
