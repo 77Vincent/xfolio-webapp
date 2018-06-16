@@ -7,7 +7,7 @@ import anime from 'animejs'
 import { USER_ROLE } from '../../Consts'
 import './index.less'
 
-export default class CourseListItem extends Component {
+export default class ClassListItem extends Component {
   static propTypes = {
     style: PropTypes.object,
     userRole: PropTypes.oneOf([USER_ROLE.STUDENT, USER_ROLE.TEACHER]).isRequired,
@@ -58,7 +58,7 @@ export default class CourseListItem extends Component {
           this.setState({
             courseInfo: _.assign(this.state.courseInfo, {
               finished: true,
-              rated: true, // TODO 老师的课程表默认评价过
+              rated: true,
             }),
           })
         },
@@ -86,7 +86,7 @@ export default class CourseListItem extends Component {
       <span className="course-content">{ courseInfo.content }</span>
     )
     const courseTime = (
-      <span className="course-time">{ courseInfo.time }</span>
+      <span className="course-time">{ courseInfo.date }</span>
     )
     const courseContentWrap = (
       <div className="course-content-wrap">
@@ -180,33 +180,33 @@ export default class CourseListItem extends Component {
     )
 
     return (
-      <div className="course-list-item" style={wrapStyle}>
-        {
-          courseInfo.finished === true && courseInfo.rated === true && (
-            courseFinishedAndRated
-          )
-        }
+      <div className="class-list-item" style={wrapStyle}>
         {
           userRole === USER_ROLE.STUDENT && (
             <Fragment>
               {
-                courseInfo.finished === true && courseInfo.rated === false && (
+                courseInfo.finished === true ? (
                   <Fragment>
                     {
-                      this.state.showRatePanel === false && (
-                        courseFinishedAndNotRated
-                      )
-                    }
-                    {
-                      this.state.showRatePanel === true && (
-                        rateCourse
+                      courseInfo.rated === false ? (
+                        <Fragment>
+                          {
+                            this.state.showRatePanel === false && (
+                              courseFinishedAndNotRated
+                            )
+                          }
+                          {
+                            this.state.showRatePanel === true && (
+                              rateCourse
+                            )
+                          }
+                        </Fragment>
+                      ) : (
+                        courseFinishedAndRated
                       )
                     }
                   </Fragment>
-                )
-              }
-              {
-                userRole === USER_ROLE.STUDENT && courseInfo.finished === false && (
+                ) : (
                   appointCourseTime
                 )
               }
@@ -214,8 +214,16 @@ export default class CourseListItem extends Component {
           )
         }
         {
-          userRole === USER_ROLE.TEACHER && courseInfo.finished === false && (
-            endCourse
+          userRole === USER_ROLE.TEACHER && (
+            <Fragment>
+              {
+                courseInfo.finished === true ? (
+                  courseFinishedAndRated
+                ) : (
+                  endCourse
+                )
+              }
+            </Fragment>
           )
         }
       </div>

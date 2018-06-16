@@ -57,7 +57,6 @@ class TeacherInfoSnapshot extends Component {
     const wrapStyle = _.assign({}, this.props.style)
     const { teacherInfo, editMode } = this.props
     const { available } = teacherInfo
-    log('editMode ', editMode)
 
     return (
       <div

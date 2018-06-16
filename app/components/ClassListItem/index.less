@@ -1,6 +1,6 @@
 @import "../../theme";
 
-.course-list-item {
+.class-list-item {
   display: flex;
   justify-content: flex-start;
   align-items: stretch;
@@ -24,6 +24,7 @@
     line-height: 22px;
     color: #000;
     display: inline;
+    white-space: pre-line;
   }
   .course-time {
     font-size: 12px;
@@ -31,7 +32,10 @@
     color: #000;
     text-align: center;
     white-space: pre-wrap;
-    display: inline;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
   }
   .opera-btn {
     display: flex;
@@ -49,12 +53,8 @@
   }
   .course-content-wrap {
     display: flex;
-    justify-content: space-between;
+    flex: 1;
     align-items: center;
-
-    .course-time {
-      margin-left: 60px;
-    }
   }
 
   .course-finished-rated {
@@ -63,6 +63,7 @@
     justify-content: flex-start;
     align-items: center;
     background-color: #bfbfbf;
+    padding-right: 60px;
   }
   .course-finished-not-rated {
     display: flex;

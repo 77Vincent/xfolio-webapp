@@ -1,6 +1,6 @@
 @import "../../theme";
 
-.edit-new-course-item {
+.edit-new-class-item {
   display: flex;
   justify-content: flex-start;
   align-items: stretch;
@@ -54,13 +54,32 @@
       justify-content: space-between;
       align-items: center;
 
-      .course-content {
-        width: 280px;
-        font-size: 14px;
-        line-height: 22px;
-        color: #000;
+      .course-content-wrap {
+        display: flex;
+        flex: 1;
+        justify-content: space-between;
+
+        .course-content {
+          width: 280px;
+          font-size: 14px;
+          line-height: 22px;
+          color: #000;
+          white-space: pre-wrap;
+        }
+        .course-time {
+          display: flex;
+          flex: 1;
+          justify-content: center;
+          align-items: center;
+          font-size: 12px;
+          line-height: 16px;
+          color: #000;
+          text-align: center;
+          white-space: pre-wrap;
+        }
       }
-      .btn-submit {
+
+      .btn-delete {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -125,20 +144,26 @@
     .content-list {
       display: flex;
       flex-direction: column;
-      padding: 4px 14px;
+      padding: 4px 0;
       height: 180px;
       overflow: auto;
       border-bottom: 1px solid #eee;
 
       .content-tem {
         display: inline-block;
-        flex: 1 0 auto;
+        flex: 0 0 auto;
+        padding: 0 14px;
         font-size: 15px;
         color: #bfbfbf;
         line-height: 24px;
         white-space: pre;
         overflow: hidden;
         text-overflow: ellipsis;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #f2f2f2;
+        }
 
         .high-light {
           color: #f19ec2;

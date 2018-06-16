@@ -1,14 +1,14 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { Icon } from 'antd'
+import { Icon, Spin } from 'antd'
 import cx from 'classnames'
 import { connect } from 'react-redux'
 import to from 'await-to'
 
 import { USER_ROLE, COURSE_PLACE_OPTIONS, GENDER_OPTIONS_NORMALIZED } from '../../Consts'
-import { Request } from '../../utils'
-import { CourseListItem, EditNewCourseItem } from '../../components'
+import { Request, formatClassDate } from '../../utils'
+import { ClassListItem, EditNewClassItem } from '../../components'
 import './index.less'
 import constDataHolder from '../../store/constDataHolder'
 
@@ -22,57 +22,97 @@ class TeacherCoursePlan extends Component {
     style: {},
   };
 
-  constructor(props) {
-    super(props)
-    // 初始化学生列表
-    Request.getStudents(this.props.accountInfo.id).then((res) => {
-      this.setState({ studentList: res.body })
-      this.getSchedules()
-    })
-  }
-
   state = {
     studentList: [],
     currentStudentIndex: 0,
-    scheduleInfo: {},
-    showScheduleEditor: false,
+    classes: [],
+    showClassEditor: false,
+    getStudentListLoading: true,
+    getStudentInfoLoading: true,
+    getClassesLoading: true,
   }
 
-  componentDidMount() {
+  componentDidMount = async () => {
+    const studentList = await this.getStudents()
+    this.setState({
+      getStudentListLoading: false,
+      getStudentInfoLoading: false,
+    })
+    if (studentList.length > 0) {
+      await this.getClasses(studentList[0].id)
+      this.setState({
+        getClassesLoading: false,
+      })
+    }
   }
 
   componentWillUnmount() {
   }
 
-  getSchedules = async () => {
-    const studentInfo = this.state.studentList[this.state.currentStudentIndex]
-    if (!studentInfo) { return }
-    const [err, schedules] = await to(Request.getSchedules({
+  getStudents = async () => {
+    // 初始化学生列表
+    let studentList = await Request.getStudents(this.props.accountInfo.id).then(res => res.body)
+    if (_.isArray(studentList)) {
+      this.setState({ studentList })
+    } else {
+      studentList = []
+    }
+    return studentList
+  }
+
+  getClasses = async (studentInfo) => {
+    // 先获取 schedule 再获取 class
+    const [getScheduleError, schedules] = await to(Request.getSchedules({
       teacher_id: this.props.accountInfo.id,
       student_id: studentInfo.id,
-    }).then(res => res.text))
-    if (!err) {
+    }).then(res => res.body))
+
+    /* eslint-disable prefer-destructuring */
+    this.scheduleInfo = schedules[0] // TODO 先取第一个 schedule
+
+    if (!getScheduleError && _.isArray(schedules) && schedules.length > 0) {
+      const [getClassesError, classes] = await to(Request.getClasses({
+        schedule_id: this.scheduleInfo.id,
+      }).then(res => res.body))
+
+      if (!getClassesError && _.isArray(classes) && classes.length !== 0) {
+        this.setState({
+          classes,
+        })
+      }
+    }
+  }
+
+  scheduleInfo = {}
+
+  handleSelectStudent = async (i) => {
+    this.setState({
+      currentStudentIndex: i,
+      getStudentInfoLoading: true,
+      getClassesLoading: true,
+    })
+    await this.getClasses(this.state.studentList[i])
+    this.setState({
+      getStudentInfoLoading: false,
+      getClassesLoading: false,
+    })
+  }
+
+  handleClickAddClass = async () => {
+    if (_.isEmpty(this.scheduleInfo) === false) {
+      const classInfo = await Request.createClass({
+        schedule_id: this.scheduleInfo.id,
+      })
+      log('classInfo ', classInfo)
       this.setState({
-        scheduleInfo: schedules[0], // TODO  先取第一个
+        showClassEditor: true,
       })
     }
   }
 
-  handleSelectStudent = (i) => {
-    this.setState({
-      currentStudentIndex: i,
-    })
-  }
-
-  handleClickAddSchedule = () => {
-    this.setState({
-      showScheduleEditor: true,
-    })
-  }
-
   render() {
     const wrapStyle = _.assign({}, this.props.style)
-    const { studentList, currentStudentIndex } = this.state
+    const { studentList, currentStudentIndex, classes } = this.state
     let currentStudentInfo = {}
     if (studentList.length > 0) {
       currentStudentInfo = studentList[currentStudentIndex]
@@ -84,113 +124,145 @@ class TeacherCoursePlan extends Component {
           <h5 className="title">我的学生</h5>
           <div className="student-name-list list-wrap">
             {
-              _.map(studentList, (studentInfo, index) => (
-                <a
-                  href="javascript:;"
-                  className={cx({
-                    'student-name': true,
-                    current: index === currentStudentIndex,
-                  })}
-                  title={studentInfo.name}
-                  key={index}
-                  onClick={() => {
-                    this.handleSelectStudent(index)
-                  }}
-                >
-                  {studentInfo.name}
-                </a>
-              ))
+              this.state.getStudentListLoading ? (
+                <Spin />
+              ) : (
+                _.map(studentList, (studentInfo, index) => (
+                  <a
+                    href="javascript:;"
+                    className={cx({
+                      'student-name': true,
+                      current: index === currentStudentIndex,
+                    })}
+                    title={studentInfo.name}
+                    key={index}
+                    onClick={() => {
+                      this.handleSelectStudent(index)
+                    }}
+                  >
+                    {studentInfo.name}
+                  </a>
+                ))
+              )
             }
           </div>
         </div>
         <div className="student-info  module-wrap">
           <h5 className="title">学生信息</h5>
           <div className="student-info-detail">
-            <img
-              src={currentStudentInfo.avatar_id && `/api/avatars/${currentStudentInfo.avatar_id}`}
-              alt="avatar"
-              className="student-avatar"
-            />
-            <div className="xfolio-current-info-wrapper">
-              <span className="xfolio-text-info-title">性别</span>
-              <span className="xfolio-text-info-value">
-                {
-                  _.isNil(currentStudentInfo.gender) === false
-                    ? GENDER_OPTIONS_NORMALIZED[Number(currentStudentInfo.gender)].name
-                    : '未设置'
-                }
-              </span>
-            </div>
-            <div className="xfolio-current-info-wrapper">
-              <span className="xfolio-text-info-title">专业</span>
-              <span className="xfolio-text-info-value">{currentStudentInfo.majors || '未设置'}</span>
-            </div>
-            <div className="xfolio-current-info-wrapper">
-              <span className="xfolio-text-info-title">授课形式</span>
-              <span className="xfolio-text-info-value">
-                {
-                  currentStudentInfo.place
-                    ? COURSE_PLACE_OPTIONS[currentStudentInfo.place].name
-                    : '未设置'
-                }
-              </span>
-            </div>
-            <div className="xfolio-current-info-wrapper">
-              <span className="xfolio-text-info-title">申请学历</span>
-              <span className="xfolio-text-info-value">
-                {
-                  currentStudentInfo.degree_id
-                    ? constDataHolder.degrees[currentStudentInfo.degree_id].cn
-                    : '未设置'
-                }
-              </span>
-            </div>
-            <div className="xfolio-current-info-wrapper">
-              <span className="xfolio-text-info-title">目标院校</span>
-              <span className="xfolio-text-info-value">
-                {currentStudentInfo.school ? currentStudentInfo.school.cn : '未设置'}
-              </span>
-            </div>
-            <div className="xfolio-current-info-wrapper">
-              <span className="xfolio-text-info-title">申请国家</span>
-              <span className="xfolio-text-info-value">
-                {
-                  currentStudentInfo.country
-                    ? constDataHolder.countriesNormalized[currentStudentInfo.country].cn
-                    : '未设置'
-                }
-              </span>
-            </div>
+            {
+              this.state.getStudentInfoLoading ? (
+                <Spin />
+              ) : (
+                <Fragment>
+                  <img
+                    src={currentStudentInfo.avatar_id && `/api/avatars/${currentStudentInfo.avatar_id}`}
+                    alt="avatar"
+                    className="student-avatar"
+                  />
+                  <div className="student-info-item">
+                    <span className="info-title">性别</span>
+                    <span className="info-value">
+                      {
+                        _.isNil(currentStudentInfo.gender) === false
+                          ? GENDER_OPTIONS_NORMALIZED[Number(currentStudentInfo.gender)].name
+                          : '未设置'
+                      }
+                    </span>
+                  </div>
+                  <div className="student-info-item">
+                    <span className="info-title">专业</span>
+                    <span className="info-value">{currentStudentInfo.majors || '未设置'}</span>
+                  </div>
+                  <div className="student-info-item">
+                    <span className="info-title">授课形式</span>
+                    <span className="info-value">
+                      {
+                        currentStudentInfo.place
+                          ? COURSE_PLACE_OPTIONS[currentStudentInfo.place].name
+                          : '未设置'
+                      }
+                    </span>
+                  </div>
+                  <div className="student-info-item">
+                    <span className="info-title">申请学历</span>
+                    <span className="info-value">
+                      {
+                        currentStudentInfo.degree_id
+                          ? constDataHolder.degrees[currentStudentInfo.degree_id].cn
+                          : '未设置'
+                      }
+                    </span>
+                  </div>
+                  <div className="student-info-item">
+                    <span className="info-title">目标院校</span>
+                    <span className="info-value">
+                      {currentStudentInfo.school ? currentStudentInfo.school.cn : '未设置'}
+                    </span>
+                  </div>
+                  <div className="student-info-item">
+                    <span className="info-title">申请国家</span>
+                    <span className="info-value">
+                      {
+                        currentStudentInfo.country
+                          ? constDataHolder.countriesNormalized[currentStudentInfo.country].cn
+                          : '未设置'
+                      }
+                    </span>
+                  </div>
+                </Fragment>
+              )
+            }
           </div>
         </div>
-        <div className="my-course-list module-wrap">
+        <div className="my-class-list module-wrap">
           <h5 className="title">课程</h5>
-          <div className="course-list list-wrap">
-            <CourseListItem
-              userRole={USER_ROLE.TEACHER}
-              courseInfo={{
-                order: 1,
-                content: '对学生进行评估，讲解专业概况\n制定学习计划和课表，明确学习目标',
-                time: '2018/05/03\n上午8:00-9:00',
-                finished: true,
-                rated: true,
-              }}
-            />
-            <CourseListItem
-              userRole={USER_ROLE.TEACHER}
-              courseInfo={{
-                order: 2,
-                content: '对学生进行评估，讲解专业概况\n制定学习计划和课表，明确学习目标',
-                time: '2018/05/03\n上午8:00-9:00',
-                finished: false,
-              }}
-            />
-            <EditNewCourseItem />
-            <div className="add-course-item">
-              <Icon type="plus" />
-              <span className="content">增加一节课</span>
-            </div>
-            <a href="" className="btn-lesson-plan-tip">遇到瓶颈了？看看其他人的教案吧</a>
+          <div className="class-list list-wrap">
+            {
+              this.state.getClassesLoading ? (
+                <Spin />
+              ) : (
+                <Fragment>
+                  {
+                    _.map(classes, (classInfo, index) => {
+                      // 未编辑完 或者 未预约 的课程都显示为编辑状态
+                      if (_.isEmpty(classInfo.courses) === false && classInfo.date !== null) {
+                        const classContent = (
+                          _.reduce(classInfo.courses, (r, v) => {
+                            r.push(v.label)
+                            return r
+                          }, []).join('\n')
+                        )
+                        return (
+                          <ClassListItem
+                            userRole={USER_ROLE.TEACHER}
+                            courseInfo={{
+                              order: index + 1,
+                              content: classContent,
+                              date: formatClassDate(new Date(classInfo.date).getTime(), classInfo.length),
+                              finished: classInfo.finished,
+                            }}
+                            key={index}
+                          />
+                        )
+                      }
+                      return (
+                        <EditNewClassItem
+                          schedule_id={this.scheduleInfo.id}
+                          classInfo={classInfo}
+                          key={index}
+                        />
+                      )
+                    })
+                  }
+                  <div className="add-course-item" onClick={this.handleClickAddClass} role="button" tabIndex={0}>
+                    <Icon type="plus" />
+                    <span className="content">增加一节课</span>
+                  </div>
+                  <a href="" className="btn-lesson-plan-tip">遇到瓶颈了？看看其他人的教案吧</a>
+                </Fragment>
+              )
+            }
           </div>
         </div>
       </div>

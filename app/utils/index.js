@@ -1,15 +1,7 @@
-import Request from './request'
-import getImage from './getImage'
-import updateState from './updateState'
-import transformUserInfo from './transformUserInfo'
-import cleanUpBeforeSignOut from './cleanUpBeforeSignOut'
-import dressUpAfterSignIn from './dressUpAfterSignIn'
-
-export {
-  Request,
-  getImage,
-  updateState,
-  transformUserInfo,
-  cleanUpBeforeSignOut,
-  dressUpAfterSignIn,
-}
+export { default as Request } from './request'
+export { default as getImage } from './getImage'
+export { default as updateState } from './updateState'
+export { default as transformUserInfo } from './transformUserInfo'
+export { default as cleanUpBeforeSignOut } from './cleanUpBeforeSignOut'
+export { default as dressUpAfterSignIn } from './dressUpAfterSignIn'
+export { default as formatClassDate } from './formatClassDate'

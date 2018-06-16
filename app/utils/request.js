@@ -94,6 +94,36 @@ const Request = {
   }) {
     return agent.get('/api/schedules').query(values)
   },
+
+  // class
+  getClasses(values = {
+    schedule_id: undefined,
+  }) {
+    return agent.get('/api/classes').query(values)
+  },
+  createClass(values = {
+    schedule_id: undefined,
+  }) {
+    return agent.put('/api/classes').send(values)
+  },
+  deleteClass(classId) {
+    return agent.delete(`/api/classes/${classId}`)
+  },
+
+  // course
+  searchCourse(values = {
+    search: undefined,
+  }) {
+    return agent.get('/api/courses').query(values)
+  },
+
+  // classes courses
+  addCourseForClass(value = {
+    class_id: undefined,
+    course_id: undefined,
+  }) {
+    return agent.put('/api/classes_courses').send(value)
+  },
 }
 
 window.agent = agent

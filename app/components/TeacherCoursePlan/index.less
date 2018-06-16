@@ -48,10 +48,9 @@
         }
       }
 
-      &.course-list {
-        padding: 0 18px;
+      &.class-list {
 
-        .course-list-item {
+        .class-list-item {
           margin-bottom: 10px;
 
           &:last-child {
@@ -63,11 +62,12 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          width: 100%;
+          width: 570px;
           height: 33px;
           border: 1px dashed #cacaca;
           border-radius: 5px;
           cursor: pointer;
+          outline: none;
 
           &:hover {
             background-color: #fafafa;
@@ -114,8 +114,12 @@
       }
     }
 
-    &.my-course-list {
-      padding-bottom: 40px;
+    &.my-class-list {
+      padding: 0 18px 40px 18px;
+
+      .title {
+        width: 570px;
+      }
     }
   }
 }
