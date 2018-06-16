@@ -248,7 +248,6 @@ class TeacherCoursePlan extends Component {
                       }
                       return (
                         <EditNewClassItem
-                          schedule_id={this.scheduleInfo.id}
                           classInfo={classInfo}
                           key={index}
                         />

@@ -10,7 +10,6 @@ import './index.less'
 export default class EditNewClassItem extends Component {
   static propTypes = {
     style: PropTypes.object,
-    schedule_id: PropTypes.number.isRequired,
     classInfo: PropTypes.object.isRequired,
   };
 
@@ -20,7 +19,7 @@ export default class EditNewClassItem extends Component {
 
   state = {
     contentInput: '',
-    courses: this.props.classInfo.courses || [],
+    courses: [],
     selectedCourses: this.props.classInfo.courses || [],
     showEditContentPopUp: false,
   }
