@@ -101,7 +101,11 @@ export default class EditNewClassItem extends Component {
                   }, []).join('\n')
                 }
               </span>
-              <span className="course-time">未预约</span>
+              {
+                _.isEmpty(this.props.classInfo.courses) === false && (
+                  <span className="course-time">未预约</span>
+                )
+              }
             </div>
             <a
               href="javascript:;"
