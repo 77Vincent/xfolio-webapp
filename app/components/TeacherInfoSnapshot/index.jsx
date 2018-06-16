@@ -62,6 +62,7 @@ class TeacherInfoSnapshot extends Component {
     return (
       <div className="teacher-info-snapshot-wrap" style={wrapStyle}>
         <h1 className="teacher-name">{teacherInfo.name}</h1>
+        <p className="teacher-bio">{teacherInfo.bio}</p>
         <div
           className={cx({
             'avatar-wrap': true,

@@ -8,6 +8,7 @@ const AccountInfo = {
     id: null,
     name: null,
     gender: null,
+    bio: null,
     mobilephone: null,
     email: null,
     role_id: 2,

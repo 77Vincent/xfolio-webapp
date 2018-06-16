@@ -8,19 +8,12 @@ import { TeacherBasicAccountInfo, TeacherInfoSnapshot } from '../index'
 import { Request } from '../../utils'
 import './index.less'
 
-const commonTags = [{
-  id: 3,
-  content: '专业',
-}, {
-  id: 4,
-  content: '口才好',
-}, {
-  id: 5,
-  content: '和蔼可亲',
-}, {
-  id: 6,
-  content: '闷骚',
-}]
+const commonTags = [
+  { id: 3, content: '专业' },
+  { id: 4, content: '口才好' },
+  { id: 5, content: '和蔼可亲' },
+  { id: 6, content: '闷骚' }
+]
 
 class TeachersProfiles extends Component {
   static propTypes = {
@@ -122,7 +115,7 @@ class TeachersProfiles extends Component {
                     </Button>
                   </div>
                   <div className="common-tags-wrap">
-                    <p className="title">常用标签</p>
+                    <p className="xfolio-text-info-title">常用标签</p>
                     <div className="tags-wrap">
                       {
                         _.map(commonTags, tagInfo => (
