@@ -60,13 +60,18 @@ class TeacherInfoSnapshot extends Component {
     log('editMode ', editMode)
 
     return (
-      <div className="teacher-info-snapshot-wrap" style={wrapStyle}>
+      <div
+        className={cx({
+          'teacher-info-snapshot-wrap': true,
+          'edit-mode': editMode === true,
+        })}
+        style={wrapStyle}
+      >
         <h1 className="teacher-name">{teacherInfo.name}</h1>
         <p className="teacher-bio">{teacherInfo.bio}</p>
         <div
           className={cx({
             'avatar-wrap': true,
-            'edit-mode': editMode === true,
             'has-avatar': teacherInfo.avatar_id !== null,
           })}
         >

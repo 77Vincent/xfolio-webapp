@@ -10,6 +10,12 @@
   background-color: #eee;
   margin-bottom: @wrapper-padding-vertical;
 
+  &.edit-mode {
+    .teacher-details {
+      display: none;
+    }
+  }
+
   &:hover {
     .teacher-details {
       opacity: 1;
@@ -43,10 +49,6 @@
     height: @custom-teacher-snapshot-height;
     overflow: hidden;
 
-    &.edit-mode {
-      &.has-avatar {
-      }
-    }
     .teacher-avatar {
       width: 100%;
     }
