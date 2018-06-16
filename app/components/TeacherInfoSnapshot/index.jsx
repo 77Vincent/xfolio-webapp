@@ -109,11 +109,19 @@ class TeacherInfoSnapshot extends Component {
             <Col span={12}>
               <section>
                 <span>现居地</span>
-                <span>{teacherInfo.city !== null ? constDataHolder.citiesNormalized[teacherInfo.city].name : '未设置'}</span>
+                <span>
+                  {
+                    teacherInfo.city !== null ? constDataHolder.citiesNormalized[teacherInfo.city].name : '未设置'
+                  }
+                </span>
               </section>
               <section>
                 <span>授课方式</span>
-                <span>{teacherInfo.place !== null ? COURSE_PLACE_OPTIONS[teacherInfo.place].name : '未设置'}</span>
+                <span>
+                  {
+                    teacherInfo.place !== null ? COURSE_PLACE_OPTIONS[teacherInfo.place].name : '未设置'
+                  }
+                </span>
               </section>
               <section>
                 <span>收费</span>
@@ -123,7 +131,13 @@ class TeacherInfoSnapshot extends Component {
           </Row>
           <div className="block-edu">
             <span>{teacherInfo.school.cn ? teacherInfo.school.cn : '未设置'}</span>
-            <span>{teacherInfo.majors.length !== 0 ? teacherInfo.majors[0].cn : '未设置'}</span>
+            <span>
+              {
+                teacherInfo.majors.length ?
+                  _.map(teacherInfo.majors, (major, index) => { return <span key={index}>{major.cn}</span> }) :
+                  '未设置'
+              }
+            </span>
           </div>
           <div className="block-bottom" style={{ textAlign: 'right' }}>
             {

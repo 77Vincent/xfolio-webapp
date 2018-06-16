@@ -74,7 +74,7 @@ class Teachers extends Component {
         >
           <div className="teachers-filter-wrap">
             <div className="filter-item-wrap">
-              <h4 className="xfolio-text-info-title">专业</h4>
+              <div className="xfolio-text-info-title">专业</div>
               <SelectMajors
                 value={(
                   _.reduce(this.state.filterOptions.majors, (r, v) => {
@@ -83,59 +83,55 @@ class Teachers extends Component {
                   }, [])
                 )}
                 onChange={(value) => {
-                  this.requestTeacherList('majors', value)
+                  this.requestTeacherList('major_id', value)
                 }}
               />
             </div>
             <div className="filter-item-wrap">
-              <h4 className="xfolio-text-info-title">申请国家</h4>
+              <div className="xfolio-text-info-title">申请国家</div>
               <SelectCountry
                 onChange={(value) => { this.requestTeacherList('country', value) }}
               />
             </div>
             <div className="filter-item-wrap">
-              <h4 className="xfolio-text-info-title">授课方式</h4>
+              <div className="xfolio-text-info-title">授课方式</div>
               <Select
                 defaultValue="请选择"
                 onChange={async (value) => { this.requestTeacherList('place', value) }}
               >
                 {
                   _.map(_.values(COURSE_PLACE_OPTIONS), (placeInfo, i) => {
-                    return (
-                      <Select.Option value={placeInfo.value} key={i}>{placeInfo.name}</Select.Option>
-                    )
+                    return <Select.Option value={placeInfo.value} key={i}>{placeInfo.name}</Select.Option>
                   })
                 }
               </Select>
             </div>
             <div className="filter-item-wrap">
-              <h4 className="xfolio-text-info-title">性别</h4>
+              <div className="xfolio-text-info-title">性别</div>
               <Select
                 defaultValue="请选择"
                 onChange={(value) => { this.requestTeacherList('gender', value) }}
               >
                 {
                   _.map(_.values(GENDER_OPTIONS), (genderInfo, i) => {
-                    return (
-                      <Select.Option value={genderInfo.value} key={i}>{genderInfo.name}</Select.Option>
-                    )
+                    return <Select.Option value={genderInfo.value} key={i}>{genderInfo.name}</Select.Option>
                   })
                 }
               </Select>
             </div>
             <div className="filter-item-wrap">
-              <h4 className="xfolio-text-info-title">城市</h4>
+              <div className="xfolio-text-info-title">城市</div>
               <SelectCity
                 onChange={(value) => { this.requestTeacherList('city', value) }}
               />
             </div>
             <div className="filter-item-wrap">
-              <h4 className="xfolio-text-info-title">价格</h4>
+              <div className="xfolio-text-info-title">价格</div>
               <Radio.Group
                 onChange={(e) => { this.requestTeacherList('cost', e.target.value) }}
               >
-                <Radio value={PRICE_ORDER_OPTIONS.LOW_TO_HIGH}>由低到高</Radio>
-                <Radio value={PRICE_ORDER_OPTIONS.HIGH_TO_LOW}>由高到低</Radio>
+                <Radio value={PRICE_ORDER_OPTIONS.LOW_TO_HIGH}>由低到高</Radio><br />
+                <Radio value={PRICE_ORDER_OPTIONS.HIGH_TO_LOW}>由高到低</Radio><br />
                 <Radio value={null}>默认排序</Radio>
               </Radio.Group>
             </div>
