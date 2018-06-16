@@ -22,6 +22,8 @@ const AccountInfo = {
     avatar_id: null,
     tags: [],
     available: 0,
+    students: null,
+    students_onboard: null,
   },
   reducers: {
     updateAccountInfo(state, payload) {
