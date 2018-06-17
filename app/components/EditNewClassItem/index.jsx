@@ -105,8 +105,8 @@ export default class EditNewClassItem extends Component {
             </a>
           </div>
           <div className="content-wrap">
-            <div className="course-content-wrap">
-              <span className="course-content">
+            <div className="class-content-wrap">
+              <span className="class-content">
                 {
                   _.reduce(this.state.selectedCourses, (r, v) => {
                     r.push(v.label)
@@ -116,7 +116,7 @@ export default class EditNewClassItem extends Component {
               </span>
               {
                 _.isEmpty(this.props.classInfo.courses) === false && (
-                  <span className="course-time">未预约</span>
+                  <span className="class-time">未预约</span>
                 )
               }
             </div>

@@ -46,13 +46,13 @@ export default class ClassListItem extends Component {
     })
   }
 
-  endCourseProgressElem;
-  endCourseProgressAnimation;
+  endClassProgressElem;
+  endClassProgressAnimation;
 
-  handleClickEndCourseStart = () => {
-    if (this.endCourseProgressAnimation === undefined || this.endCourseProgressAnimation.completed === false) {
-      this.endCourseProgressAnimation = anime({
-        targets: this.endCourseProgressElem,
+  handleClickEndClassStart = () => {
+    if (this.endClassProgressAnimation === undefined || this.endClassProgressAnimation.completed === false) {
+      this.endClassProgressAnimation = anime({
+        targets: this.endClassProgressElem,
         width: '100%',
         duration: 1000,
         easing: 'linear',
@@ -75,10 +75,10 @@ export default class ClassListItem extends Component {
     }
   }
 
-  handleClickEndCourseFinish = () => {
-    if (this.endCourseProgressAnimation.completed !== true) {
-      this.endCourseProgressAnimation.pause()
-      this.endCourseProgressElem.style.width = '0px'
+  handleClickEndClassFinish = () => {
+    if (this.endClassProgressAnimation.completed !== true) {
+      this.endClassProgressAnimation.pause()
+      this.endClassProgressElem.style.width = '0px'
     }
   }
 
@@ -88,33 +88,33 @@ export default class ClassListItem extends Component {
     const { classInfo } = this.state
 
     // 公共
-    const courseOrder = (
-      <div className="course-order">{ classInfo.order }</div>
+    const classOrder = (
+      <div className="class-order">{ classInfo.order }</div>
     )
-    const courseContent = (
-      <span className="course-content">{ classInfo.content }</span>
+    const classContent = (
+      <span className="class-content">{ classInfo.content }</span>
     )
-    const courseTime = (
-      <span className="course-time">{ classInfo.date }</span>
+    const classTime = (
+      <span className="class-time">{ classInfo.date }</span>
     )
-    const courseContentWrap = (
-      <div className="course-content-wrap">
-        { courseContent }
-        { courseTime }
+    const classContentWrap = (
+      <div className="class-content-wrap">
+        { classContent }
+        { classTime }
       </div>
     )
 
     // 学生
-    const courseFinishedAndRated = (
-      <div className="course-finished-rated">
-        { courseOrder }
-        { courseContentWrap }
+    const classFinishedAndRated = (
+      <div className="class-finished-rated">
+        { classOrder }
+        { classContentWrap }
       </div>
     )
-    const courseFinishedAndNotRated = (
-      <div className="course-finished-not-rated">
-        { courseOrder }
-        { courseContentWrap }
+    const classFinishedAndNotRated = (
+      <div className="class-finished-not-rated">
+        { classOrder }
+        { classContentWrap }
         <a
           href="javascript:;"
           className="opera-btn btn-rate"
@@ -124,9 +124,9 @@ export default class ClassListItem extends Component {
         </a>
       </div>
     )
-    const rateCourse = (
-      <div className="rate-course-wrap">
-        { courseOrder }
+    const rateClass = (
+      <div className="rate-class-wrap">
+        { classOrder }
         <div className="rate-opera-wrap">
           <div className="rate-wrap">
             <Rate value={3} style={{ fontSize: 25 }} />
@@ -141,11 +141,11 @@ export default class ClassListItem extends Component {
         </div>
       </div>
     )
-    const appointCourseTime = (
-      <div className="appoint-course-time">
-        { courseOrder }
+    const appointClassTime = (
+      <div className="appoint-class-time">
+        { classOrder }
         <div className="content-wrap">
-          { courseContent }
+          { classContent }
           <a
             href="javascript:;"
             className="opera-btn btn-appoint-time"
@@ -165,23 +165,23 @@ export default class ClassListItem extends Component {
     )
 
     // 老师
-    const endCourse = (
-      <div className="end-course-wrap">
+    const endClass = (
+      <div className="end-class-wrap">
         <div className="content-wrap">
           <div className="content">
-            { courseOrder }
-            { courseContentWrap }
+            { classOrder }
+            { classContentWrap }
           </div>
           <div
-            className="end-course-progress-tip"
-            ref={(r) => { this.endCourseProgressElem = r }}
+            className="end-class-progress-tip"
+            ref={(r) => { this.endClassProgressElem = r }}
           />
         </div>
         <a
           href="javascript:;"
-          className="opera-btn btn-end-course"
-          onMouseDown={this.handleClickEndCourseStart}
-          onMouseUp={this.handleClickEndCourseFinish}
+          className="opera-btn btn-end-class"
+          onMouseDown={this.handleClickEndClassStart}
+          onMouseUp={this.handleClickEndClassFinish}
         >
           {'长按\n结课'}
         </a>
@@ -201,22 +201,22 @@ export default class ClassListItem extends Component {
                         <Fragment>
                           {
                             this.state.showRatePanel === false && (
-                              courseFinishedAndNotRated
+                              classFinishedAndNotRated
                             )
                           }
                           {
                             this.state.showRatePanel === true && (
-                              rateCourse
+                              rateClass
                             )
                           }
                         </Fragment>
                       ) : (
-                        courseFinishedAndRated
+                        classFinishedAndRated
                       )
                     }
                   </Fragment>
                 ) : (
-                  appointCourseTime
+                  appointClassTime
                 )
               }
             </Fragment>
@@ -227,9 +227,9 @@ export default class ClassListItem extends Component {
             <Fragment>
               {
                 classInfo.finished === true ? (
-                  courseFinishedAndRated
+                  classFinishedAndRated
                 ) : (
-                  endCourse
+                  endClass
                 )
               }
             </Fragment>
