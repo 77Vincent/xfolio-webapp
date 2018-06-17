@@ -92,7 +92,7 @@ preRender().then(() => {
     document.getElementById('root'),
     () => {
       // remove initial spinning loader after react dom is rendered
-      document.getElementById('root').classList.remove('App-spinner')
+      document.getElementById('root').classList.remove('xfolio-loader')
     },
   )
 })
