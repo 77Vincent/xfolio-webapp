@@ -1,17 +1,19 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { Rate, Calendar } from 'antd'
+import { Rate, Calendar, message } from 'antd'
 import anime from 'animejs'
+import to from 'await-to'
 
 import { USER_ROLE } from '../../Consts'
 import './index.less'
+import { Request } from '../../utils'
 
 export default class ClassListItem extends Component {
   static propTypes = {
     style: PropTypes.object,
     userRole: PropTypes.oneOf([USER_ROLE.STUDENT, USER_ROLE.TEACHER]).isRequired,
-    courseInfo: PropTypes.object.isRequired, //  order, content, time, finished, rated
+    classInfo: PropTypes.object.isRequired, //  order, content, time, finished, rated
   };
 
   static defaultProps = {
@@ -21,7 +23,7 @@ export default class ClassListItem extends Component {
   state = {
     showRatePanel: false,
     showDatePicker: false,
-    courseInfo: this.props.courseInfo,
+    classInfo: this.props.classInfo,
   }
 
   componentDidMount() {
@@ -54,13 +56,20 @@ export default class ClassListItem extends Component {
         width: '100%',
         duration: 1000,
         easing: 'linear',
-        complete: () => {
-          this.setState({
-            courseInfo: _.assign(this.state.courseInfo, {
-              finished: true,
-              rated: true,
-            }),
-          })
+        complete: async () => {
+          // 结束课程
+          const [err] = await to(Request.updateClass(this.props.classInfo.id, { finished: true }))
+          if (!err) {
+            message.success('课程结束成功！')
+            this.setState({
+              classInfo: _.assign(this.state.classInfo, {
+                finished: true,
+                rated: true,
+              }),
+            })
+          } else {
+            message.error('课程结束失败！')
+          }
         },
       })
     }
@@ -76,17 +85,17 @@ export default class ClassListItem extends Component {
   render() {
     const wrapStyle = _.assign({}, this.props.style)
     const { userRole } = this.props
-    const { courseInfo } = this.state
+    const { classInfo } = this.state
 
     // 公共
     const courseOrder = (
-      <div className="course-order">{ courseInfo.order }</div>
+      <div className="course-order">{ classInfo.order }</div>
     )
     const courseContent = (
-      <span className="course-content">{ courseInfo.content }</span>
+      <span className="course-content">{ classInfo.content }</span>
     )
     const courseTime = (
-      <span className="course-time">{ courseInfo.date }</span>
+      <span className="course-time">{ classInfo.date }</span>
     )
     const courseContentWrap = (
       <div className="course-content-wrap">
@@ -185,10 +194,10 @@ export default class ClassListItem extends Component {
           userRole === USER_ROLE.STUDENT && (
             <Fragment>
               {
-                courseInfo.finished === true ? (
+                classInfo.finished === true ? (
                   <Fragment>
                     {
-                      courseInfo.rated === false ? (
+                      classInfo.rated === false ? (
                         <Fragment>
                           {
                             this.state.showRatePanel === false && (
@@ -217,7 +226,7 @@ export default class ClassListItem extends Component {
           userRole === USER_ROLE.TEACHER && (
             <Fragment>
               {
-                courseInfo.finished === true ? (
+                classInfo.finished === true ? (
                   courseFinishedAndRated
                 ) : (
                   endCourse

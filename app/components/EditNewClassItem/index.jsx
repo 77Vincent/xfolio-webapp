@@ -11,6 +11,7 @@ export default class EditNewClassItem extends Component {
   static propTypes = {
     style: PropTypes.object,
     classInfo: PropTypes.object.isRequired,
+    onDelete: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -25,11 +26,21 @@ export default class EditNewClassItem extends Component {
   }
 
   componentDidMount() {
-
+    document.body.addEventListener('click', this.handleClickBody)
   }
 
   componentWillUnmount() {
+    document.body.removeEventListener('click', this.handleClickBody)
+  }
 
+  newClassItemElem
+
+  handleClickBody = (e) => {
+    if (this.newClassItemElem.contains(e.target) === false) {
+      this.setState({
+        showEditContentPopUp: false,
+      })
+    }
   }
 
   toggleShowContentPopup = () => {
@@ -57,7 +68,6 @@ export default class EditNewClassItem extends Component {
 
   handleSelectCourse = async (courseInfo) => {
     const index = _.findIndex(this.state.selectedCourses, ['id', courseInfo.id])
-    log('handleSelectCourse ', index, this.state.selectedCourses, courseInfo)
     if (index === -1) {
       await Request.addCourseForClass({
         class_id: this.props.classInfo.id,
@@ -67,15 +77,19 @@ export default class EditNewClassItem extends Component {
       this.setState({
         selectedCourses: this.state.selectedCourses,
       })
+      message.warning('添加成功！')
     } else {
-      message.warning('此课程已添加！')
+      message.warning('重复的课程！')
     }
   }
 
   handleClickDeleteClass = async () => {
-    const [err] = await Request.deleteClass(this.props.classInfo.id)
+    const [err] = await to(Request.deleteClass(this.props.classInfo.id))
     if (err) {
       message.error('删除失败！')
+    } else {
+      message.success('删除成功！')
+      this.props.onDelete(this.props.classInfo.id)
     }
   }
 
@@ -83,7 +97,7 @@ export default class EditNewClassItem extends Component {
     const wrapStyle = _.assign({}, this.props.style)
 
     return (
-      <div className="edit-new-class-item" style={wrapStyle}>
+      <div className="edit-new-class-item" style={wrapStyle} ref={(r) => { this.newClassItemElem = r }}>
         <div className="new-course-content-wrap">
           <div className="button-wrap">
             <a className="add-course-content" onClick={this.toggleShowContentPopup} role="button" tabIndex={0}>

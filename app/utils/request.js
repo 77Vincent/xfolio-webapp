@@ -109,12 +109,18 @@ const Request = {
   deleteClass(classId) {
     return agent.delete(`/api/classes/${classId}`)
   },
+  updateClass(classId, values = {}) {
+    return agent.post(`/api/classes/${classId}`).send(values)
+  },
 
   // course
   searchCourse(values = {
     search: undefined,
   }) {
     return agent.get('/api/courses').query(values)
+  },
+  updateCourse(courseId, values = {}) {
+    return agent.post(`/api/courses/${courseId}`).send(values)
   },
 
   // classes courses

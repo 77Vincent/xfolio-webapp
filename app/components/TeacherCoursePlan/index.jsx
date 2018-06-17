@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { Icon, Spin } from 'antd'
+import { Icon, Spin, message } from 'antd'
 import cx from 'classnames'
 import { connect } from 'react-redux'
 import to from 'await-to'
@@ -26,7 +26,6 @@ class TeacherCoursePlan extends Component {
     studentList: [],
     currentStudentIndex: 0,
     classes: [],
-    showClassEditor: false,
     getStudentListLoading: true,
     getStudentInfoLoading: true,
     getClassesLoading: true,
@@ -100,12 +99,28 @@ class TeacherCoursePlan extends Component {
 
   handleClickAddClass = async () => {
     if (_.isEmpty(this.scheduleInfo) === false) {
-      const classInfo = await Request.createClass({
+      const [err, classInfo] = await to(Request.createClass({
         schedule_id: this.scheduleInfo.id,
-      })
-      log('classInfo ', classInfo)
+      }).then(res => res.body))
+      if (!err) {
+        this.state.classes.push(classInfo)
+        this.setState({
+          classes: this.state.classes,
+        })
+        message.success('课程添加成功！')
+      } else {
+        message.success('课程添加失败！')
+      }
+    }
+  }
+
+  handleDeleteClass = (classId) => {
+    log('handleDeleteClass ', classId)
+    const index = _.findIndex(this.state.classes, ['id', classId])
+    if (index !== -1) {
+      this.state.classes.splice(index, 1)
       this.setState({
-        showClassEditor: true,
+        classes: this.state.classes,
       })
     }
   }
@@ -236,7 +251,8 @@ class TeacherCoursePlan extends Component {
                         return (
                           <ClassListItem
                             userRole={USER_ROLE.TEACHER}
-                            courseInfo={{
+                            classInfo={{
+                              id: classInfo.id,
                               order: index + 1,
                               content: classContent,
                               date: formatClassDate(new Date(classInfo.date).getTime(), classInfo.length),
@@ -249,6 +265,7 @@ class TeacherCoursePlan extends Component {
                       return (
                         <EditNewClassItem
                           classInfo={classInfo}
+                          onDelete={this.handleDeleteClass}
                           key={index}
                         />
                       )
