@@ -8,15 +8,8 @@
     display: flex;
     flex-direction: column;
 
-    .title {
-      font-size: 15px;
-      color: #000;
-      text-align: center;
-      margin-bottom: 15px;
-    }
     .list-wrap {
       display: flex;
-      flex: 1;
       flex-direction: column;
 
       &.student-name-list {
@@ -49,6 +42,7 @@
       }
 
       &.class-list {
+        margin-bottom: 30px;
 
         .class-list-item {
           margin-bottom: 10px;
@@ -96,7 +90,7 @@
       .title {
         visibility: hidden;
       }
-      .student-info-detail{
+      .student-info-detail {
         display: flex;
         flex: 1;
         flex-direction: column;
@@ -104,6 +98,9 @@
         border-left: 1px solid #eee;
         border-right: 1px solid #eee;
 
+        .xfolio-current-info-wrapper {
+          margin-bottom: 10px;
+        }
         .student-avatar {
           width: 100px;
           height: 100px;

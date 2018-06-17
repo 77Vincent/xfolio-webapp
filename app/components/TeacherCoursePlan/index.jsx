@@ -231,8 +231,8 @@ class TeacherCoursePlan extends Component {
           </div>
         </div>
         <div className="my-class-list module-wrap">
-          <h5 className="title">课程</h5>
           <div className="class-list list-wrap">
+            <h5 className="xfolio-text-section-title">课程表</h5>
             {
               this.state.getClassesLoading ? (
                 <Spin />
@@ -279,6 +279,10 @@ class TeacherCoursePlan extends Component {
                 </Fragment>
               )
             }
+          </div>
+
+          <div>
+            <h5 className="xfolio-text-section-title">我的课程</h5>
           </div>
         </div>
       </div>
