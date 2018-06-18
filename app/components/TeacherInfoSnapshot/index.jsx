@@ -113,6 +113,14 @@ class TeacherInfoSnapshot extends Component {
             </Col>
             <Col span={12}>
               <section>
+                <span>最高学历</span>
+                <span>
+                  {
+                    teacherInfo.degree_id !== null ? constDataHolder.degrees[teacherInfo.degree_id].cn : '未设置'
+                  }
+                </span>
+              </section>
+              <section>
                 <span>现居地</span>
                 <span>
                   {
@@ -135,6 +143,7 @@ class TeacherInfoSnapshot extends Component {
             </Col>
           </Row>
           <div className="block-edu">
+            <span>{teacherInfo.countries.length ? teacherInfo.countries[0].cn : '未设置'}</span>
             <span>{teacherInfo.school.cn ? teacherInfo.school.cn : '未设置'}</span>
             <span>
               {
