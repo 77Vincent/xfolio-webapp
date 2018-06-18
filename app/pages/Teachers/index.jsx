@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { Anchor, Select, Radio, Pagination } from 'antd'
+import { Anchor, Select, Radio, Pagination, Button } from 'antd'
 import { connect } from 'react-redux'
 
 import { TeacherInfoSnapshot, SelectCountry, SelectMajors, SelectCity } from '../../components'
@@ -94,15 +94,13 @@ class Teachers extends Component {
                     return r
                   }, [])
                 )}
-                onChange={(value) => {
-                  this.requestTeacherList({ major_id: value })
-                }}
+                onChange={(value) => { this.requestTeacherList({ major_id: value }) }}
               />
             </div>
             <div className="filter-item-wrap">
               <div className="xfolio-text-info-title">申请国家</div>
               <SelectCountry
-                onChange={(value) => { this.requestTeacherList({ country: value }) }}
+                onChange={(value) => { this.requestTeacherList({ country_id: value }) }}
               />
             </div>
             <div className="filter-item-wrap">
@@ -147,13 +145,7 @@ class Teachers extends Component {
               </Radio.Group>
             </div>
             <div className="filter-item-wrap">
-              <div className="xfolio-text-info-title">其他操作</div>
-              <Radio.Group
-                onChange={(e) => { this.requestTeacherList(e.target.value) }}
-              >
-                <Radio value={this.myFilter}>为我挑选</Radio><br />
-                <Radio value={this.defaultFilter}>默认列表</Radio><br />
-              </Radio.Group>
+              <Button onClick={() => { this.requestTeacherList(this.defaultFilter) }}>清空筛选</Button>
             </div>
           </div>
         </Anchor>

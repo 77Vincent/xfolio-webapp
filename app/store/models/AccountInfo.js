@@ -14,9 +14,9 @@ const AccountInfo = {
     role_id: 2,
     place: 'both',
     school: {},
-    country: null,
     city: null,
     majors: [],
+    countries: [],
     degree_id: null,
     cost: null,
     followingIds: [], // 已关注用户的 id
@@ -73,6 +73,13 @@ const AccountInfo = {
       return await Request.createMajors(majors).then((res) => {
         this.updateAccountInfo({
           majors: res.body,
+        })
+      })
+    },
+    async updateUserCountries(countries) {
+      return await Request.createCountries(countries).then((res) => {
+        this.updateAccountInfo({
+          countries: res.body,
         })
       })
     },

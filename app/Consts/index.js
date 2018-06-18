@@ -5,7 +5,7 @@ export const CONST_DATA_URLS = {
   FOLLOWER_FOLLOWING: '/api/followers_followings/',
   // Static resources
   DEGREES: '/resources/degrees.json',
-  COUNTRIES: '/resources/locale/countries.json',
+  COUNTRIES: '/api/countries',
   PROVINCES: '/resources/locale/CN/provinces.json',
   CITIES: '/resources/locale/CN/cities.json',
 }

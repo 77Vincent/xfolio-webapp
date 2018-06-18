@@ -10,38 +10,38 @@ class SelectMajors extends Component {
   static propTypes = {
     onChange: PropTypes.func,
     value: PropTypes.array,
-  };
+  }
 
   static defaultProps = {
     onChange: _.noop,
     value: [],
-  };
+  }
 
   constructor(props) {
     super(props)
-    this.majorsInfo = _.map(constDataHolder.majors, major => ({
-      value: String(major.id), // 数字转成字符
-      name: major.cn,
+    this.entireOptions = _.map(constDataHolder.majors, each => ({
+      value: String(each.id), // 数字转成字符
+      name: each.cn,
     }))
   }
 
   state = {
-    majorOptions: [],
+    options: [],
     value: this.props.value,
     fetching: false,
   }
 
-  majorsInfo = []
+  entireOptions = []
 
   limitedRequest = _.throttle(_.debounce(async (search) => {
-    let majorOptions = []
+    let options = []
     const res = await Request.getMajors({ search })
-    majorOptions = _.map(res.body, each => ({
+    options = _.map(res.body, each => ({
       value: `${each.id}`,
       name: each.cn,
     }))
     this.setState({
-      majorOptions,
+      options,
       fetching: false,
     })
   }, 100), 100)
@@ -54,28 +54,28 @@ class SelectMajors extends Component {
   handleOptionChange = (value) => {
     this.setState({
       value: _.uniqWith(value, (a, b) => `${a.key}` === `${b.key}`),
-      majorOptions: [],
+      options: [],
     })
-    this.props.onChange(_.map(value, major => Number(major.key))) // 字符转回数字
+    this.props.onChange(_.map(value, each => Number(each.key))) // 字符转回数字
   }
 
   render() {
-    const majorOptionsData = _.isEmpty(this.state.majorOptions) ? this.majorsInfo : this.state.majorOptions
+    const optionsData = _.isEmpty(this.state.options) ? this.entireOptions : this.state.options
 
     return (
       <Select
         mode="multiple"
-        placeholder="请输入专业名称"
+        placeholder="搜索专业"
         notFoundContent={this.state.fetching ? <Spin size="small" /> : null}
         labelInValue
-        value={this.state.value}
         filterOption={false}
+        value={this.state.value}
         onSearch={this.handleInputChange}
         onChange={this.handleOptionChange}
       >
         {
-          _.map(majorOptionsData, (major, index) => (
-            <Select.Option value={major.value} key={index}>{major.name}</Select.Option>
+          _.map(optionsData, (each, index) => (
+            <Select.Option value={each.value} key={index}>{each.name}</Select.Option>
           ))
         }
       </Select>

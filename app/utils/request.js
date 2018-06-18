@@ -65,13 +65,23 @@ const Request = {
     return agent.post('/api/orders').send(data)
   },
 
+  // Country
+  getCountries(query = {}) {
+    return agent.get('/api/countries').query(query)
+  },
+  createCountries(idList) {
+    return agent.put('/api/users_countries').send({
+      country_id: idList,
+    })
+  },
+
   // Major
   getMajors(query = {}) {
     return agent.get('/api/majors').query(query)
   },
-  createMajors(majors) {
+  createMajors(idList) {
     return agent.put('/api/users_majors').send({
-      major_id: majors,
+      major_id: idList,
     })
   },
 
@@ -115,7 +125,8 @@ const Request = {
 
   // course
   searchCourse(values = {
-    search: undefined,
+    user_id: null,
+    search: null,
   }) {
     return agent.get('/api/courses').query(values)
   },

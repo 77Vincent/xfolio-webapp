@@ -282,7 +282,7 @@ class TeacherCoursePlan extends Component {
           </div>
 
           <div>
-            <h5 className="xfolio-text-section-title">我的课程</h5>
+            <h5 className="xfolio-text-section-title">我创建的课程</h5>
           </div>
         </div>
       </div>

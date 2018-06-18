@@ -17,6 +17,7 @@ class TeacherBasicAccountInfo extends Component {
     style: PropTypes.object,
     accountInfo: PropTypes.object.isRequired,
     updateUserIfo: PropTypes.func.isRequired,
+    updateUserCountries: PropTypes.func.isRequired,
     updateUserMajors: PropTypes.func.isRequired,
   };
 
@@ -197,17 +198,33 @@ class TeacherBasicAccountInfo extends Component {
         <div className="xfolio-account-info-item">
           <div className="xfolio-current-info-wrapper">
             <p className="xfolio-text-info-title">毕业国家</p>
-            <p className="xfolio-text-info-value">
-              {accountInfo.country ? constDataHolder.countriesNormalized[accountInfo.country].cn : '未设置'}
-            </p>
+            {
+              accountInfo.countries.length ?
+                _.map(accountInfo.countries, (country, i) => {
+                  return <p className="xfolio-text-info-value" key={i}>{country.cn}</p>
+                }) :
+                <p className="xfolio-text-info-value">未设置</p>
+            }
           </div>
           <div className="update-account-info-item">
             <div className="update-account-info-item">
               <UpdateAccountInfoItem
                 inputType="custom"
-                inputElem={<SelectCountry />}
+                inputElem={(
+                  <SelectCountry
+                    value={(
+                      _.reduce(accountInfo.countries, (r, v) => {
+                        r.push({
+                          key: `${v.id}`,
+                          label: v.cn,
+                        })
+                        return r
+                      }, [])
+                    )}
+                  />
+                )}
                 onSubmit={(value) => {
-                  return this.props.updateUserIfo({ userId, field: 'country', value })
+                  return this.props.updateUserCountries(value)
                 }}
               />
             </div>
@@ -256,6 +273,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   updateUserIfo: dispatch.AccountInfo.updateUserIfo,
   updateUserMajors: dispatch.AccountInfo.updateUserMajors,
+  updateUserCountries: dispatch.AccountInfo.updateUserCountries,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeacherBasicAccountInfo)

@@ -53,7 +53,7 @@ class SelectSchool extends Component {
     return (
       <Select
         mode="combobox"
-        placeholder="请输入学校名称"
+        placeholder="搜索学校"
         defaultActiveFirstOption={false}
         notFoundContent={this.state.fetching ? <Spin size="small" /> : null}
         showArrow={false}

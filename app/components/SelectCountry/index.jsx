@@ -1,72 +1,81 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
-import { Select } from 'antd'
-import uuidv1 from 'uuid/v1'
+import { Select, Spin } from 'antd'
 import PropTypes from 'prop-types'
 
+import { Request } from '../../utils'
 import constDataHolder from '../../store/constDataHolder'
 
 class SelectCountry extends Component {
   static propTypes = {
     onChange: PropTypes.func,
-  };
+    value: PropTypes.array,
+  }
 
   static defaultProps = {
     onChange: _.noop,
-  };
+    value: [],
+  }
+
+  constructor(props) {
+    super(props)
+    this.entireOptions = _.map(constDataHolder.countries, each => ({
+      value: String(each.id), // 数字转成字符
+      name: each.cn,
+    }))
+  }
 
   state = {
-    countryOptions: [],
-    value: '',
+    options: [],
+    value: this.props.value,
+    fetching: false,
   }
 
-  componentDidMount() {
-    this.countryInfoCN = (
-      _.map(constDataHolder.countries, countryInfo => ({
-        value: countryInfo.code,
-        name: countryInfo.cn,
-      }))
-    )
-  }
+  entireOptions = []
 
-  countryInfoCN = []
-
-  handleSelectOption = (value) => {
-    const countryName = constDataHolder.countriesNormalized[value].cn
+  limitedRequest = _.throttle(_.debounce(async (search) => {
+    let options = []
+    const res = await Request.getCountries({ search })
+    options = _.map(res.body, each => ({
+      value: `${each.id}`,
+      name: each.cn,
+    }))
     this.setState({
-      value: countryName,
+      options,
+      fetching: false,
     })
-    // 上报修改
-    this.props.onChange(value)
-  }
+  }, 100), 100)
 
   handleInputChange = (input) => {
-    const inputValue = _.trim(input)
-    let countryOptions = []
-    if (inputValue !== '') {
-      countryOptions = _.filter(this.countryInfoCN, info => info.name.indexOf(input) !== -1)
-    }
+    this.setState({ fetching: true })
+    this.limitedRequest(_.trim(input))
+  }
+
+  handleOptionChange = (value) => {
     this.setState({
-      value: input,
-      countryOptions,
+      value: _.uniqWith(value, (a, b) => `${a.key}` === `${b.key}`),
+      options: [],
     })
+    this.props.onChange(_.map(value, each => Number(each.key))) // 字符转回数字
   }
 
   render() {
+    const optionsData = _.isEmpty(this.state.options) ? this.entireOptions : this.state.options
+
     return (
       <Select
-        mode="combobox"
-        placeholder="请输入国家名称"
-        defaultActiveFirstOption={false}
-        showArrow={false}
+        mode="multiple"
+        placeholder="搜索国家"
+        notFoundContent={this.state.fetching ? <Spin size="small" /> : null}
+        labelInValue
         filterOption={false}
         value={this.state.value}
         onSearch={this.handleInputChange}
-        onSelect={this.handleSelectOption}
+        onChange={this.handleOptionChange}
       >
         {
-          _.map(this.state.countryOptions, optionInfo => (
-            <Select.Option value={optionInfo.value} key={uuidv1()}>{optionInfo.name}</Select.Option>
+          _.map(optionsData, (each, index) => (
+            <Select.Option value={each.value} key={index}>{each.name}</Select.Option>
           ))
         }
       </Select>
