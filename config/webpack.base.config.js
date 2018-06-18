@@ -68,7 +68,7 @@ const webpackConfigBase = {
         }),
       },
       {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
         loader: 'url',
         options: {
           limit: 8192,
@@ -99,6 +99,7 @@ const webpackConfigBase = {
     new ExtractTextPlugin('build.[hash:4].css'),
     // 将打包后的资源注入到html文件内    
     new HtmlWebpackPlugin({
+      favicon: resolve('./app/assets/images/favicon.ico'),
       template: resolve('./app/index.html'),
     }),
   ],
