@@ -126,11 +126,11 @@ class Teachers extends Component {
               <div className="xfolio-text-info-title">导师性别</div>
               <Select
                 defaultValue="请选择"
-                onChange={(value) => { this.requestTeacherList({ gender: value }) }}
+                onChange={(value) => { this.requestTeacherList({ gender: value.split(',') }) }}
               >
                 {
                   _.map(_.values(GENDER_OPTIONS), (genderInfo, i) => {
-                    return <Select.Option value={genderInfo.value} key={i}>{genderInfo.name}</Select.Option>
+                    return <Select.Option value={String(genderInfo.value)} key={i}>{genderInfo.name}</Select.Option>
                   })
                 }
               </Select>
