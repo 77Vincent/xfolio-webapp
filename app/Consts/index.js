@@ -37,6 +37,9 @@ export const COURSE_PLACE_OPTIONS = {
 }
 
 export const GENDER_OPTIONS = [{
+  value: [0, 1],
+  name: '不限',
+}, {
   value: 0,
   name: '女',
 }, {
