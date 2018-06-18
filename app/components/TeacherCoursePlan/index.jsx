@@ -107,7 +107,6 @@ class TeacherCoursePlan extends Component {
         this.setState({
           classes: this.state.classes,
         })
-        message.success('课程添加成功！')
       } else {
         message.success('课程添加失败！')
       }
@@ -264,7 +263,10 @@ class TeacherCoursePlan extends Component {
                       }
                       return (
                         <EditNewClassItem
-                          classInfo={classInfo}
+                          classInfo={{
+                            order: index + 1,
+                            ...classInfo,
+                          }}
                           onDelete={this.handleDeleteClass}
                           key={index}
                         />

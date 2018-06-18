@@ -6,8 +6,8 @@ import anime from 'animejs'
 import to from 'await-to'
 
 import { USER_ROLE } from '../../Consts'
-import './index.less'
 import { Request } from '../../utils'
+import './index.less'
 
 export default class ClassListItem extends Component {
   static propTypes = {
@@ -95,7 +95,7 @@ export default class ClassListItem extends Component {
       <span className="class-content">{ classInfo.content }</span>
     )
     const classTime = (
-      <span className="class-time">{ classInfo.date }</span>
+      <span className="time-format">{ classInfo.date }</span>
     )
     const classContentWrap = (
       <div className="class-content-wrap">
@@ -109,6 +109,7 @@ export default class ClassListItem extends Component {
       <div className="class-finished-rated">
         { classOrder }
         { classContentWrap }
+        <span className="class-finished-tip">{'已\n结\n课'}</span>
       </div>
     )
     const classFinishedAndNotRated = (

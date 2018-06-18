@@ -29,7 +29,6 @@ class TeacherCalendarAndPrice extends Component {
   render() {
     const wrapStyle = _.assign({}, this.props.style)
     const { accountInfo } = this.props
-    log('accountInfo ', accountInfo)
 
     return (
       <div className="teacher-calendar-and-price-wrap" style={wrapStyle}>
@@ -39,6 +38,9 @@ class TeacherCalendarAndPrice extends Component {
           <div className="calendar-detail">
             <Calendar
               fullscreen={false}
+              disabledDate={(targetDate, currentDate) => {
+                return targetDate.month() !== currentDate.month()
+              }}
             />
           </div>
         </div>

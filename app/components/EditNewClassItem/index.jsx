@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { Tag, Icon, message } from 'antd'
+import { message, Modal, Radio, Select, Spin } from 'antd'
 import to from 'await-to'
 
-import { Request } from '../../utils'
+import { formatClassDate, Request } from '../../utils'
+import SelectMajors from '../SelectMajors'
 import './index.less'
 
 export default class EditNewClassItem extends Component {
@@ -19,50 +20,36 @@ export default class EditNewClassItem extends Component {
   };
 
   state = {
-    contentInput: '',
-    courses: [],
-    selectedCourses: this.props.classInfo.courses || [],
-    showEditContentPopUp: false,
+    showEditCourseModal: false,
+    modalMode: 'search', // search, create
+    fetchingCourses: false,
+    searchCourseOptions: [],
+    selectedCourses: [],
   }
 
   componentDidMount() {
-    document.body.addEventListener('click', this.handleClickBody)
   }
 
   componentWillUnmount() {
-    document.body.removeEventListener('click', this.handleClickBody)
   }
 
   newClassItemElem
 
-  handleClickBody = (e) => {
-    if (this.newClassItemElem.contains(e.target) === false) {
-      this.setState({
-        showEditContentPopUp: false,
-      })
-    }
-  }
-
-  toggleShowContentPopup = () => {
+  toggleShowEditCoursePopup = () => {
     this.setState({
-      showEditContentPopUp: !this.state.showEditContentPopUp,
+      showEditCourseModal: !this.state.showEditCourseModal,
     })
   }
 
   handleInputChange = (e) => {
     const contentInput = e.target.value
-    this.setState({
-      contentInput,
-    })
     this.limitRequestCourses(contentInput)
   }
 
   limitRequestCourses = _.debounce(async (search) => {
     const [err, courses] = await to(Request.searchCourse({ search }).then(res => res.body))
     if (!err && _.isArray(courses) && courses.length > 0) {
-      this.setState({
-        courses,
-      })
+      // TODO 处理获取到的 courses
     }
   }, 100)
 
@@ -88,9 +75,14 @@ export default class EditNewClassItem extends Component {
     if (err) {
       message.error('删除失败！')
     } else {
-      message.success('删除成功！')
       this.props.onDelete(this.props.classInfo.id)
     }
+  }
+
+  handleSelectModalMode = (e) => {
+    this.setState({
+      modalMode: e.target.value,
+    })
   }
 
   render() {
@@ -99,26 +91,32 @@ export default class EditNewClassItem extends Component {
     return (
       <div className="edit-new-class-item" style={wrapStyle} ref={(r) => { this.newClassItemElem = r }}>
         <div className="new-course-content-wrap">
-          <div className="button-wrap">
-            <a className="add-course-content" onClick={this.toggleShowContentPopup} role="button" tabIndex={0}>
-              <Icon type="plus" />
-            </a>
-          </div>
+          <div className="class-order">{this.props.classInfo.order}</div>
           <div className="content-wrap">
             <div className="class-content-wrap">
-              <span className="class-content">
+              <div className="class-content">
                 {
-                  _.reduce(this.state.selectedCourses, (r, v) => {
-                    r.push(v.label)
-                    return r
-                  }, []).join('\n')
+                  _.isEmpty(this.state.selectedCourses) === false ? (
+                    _.reduce(this.state.selectedCourses, (r, v) => {
+                      r.push(v.label)
+                      return r
+                    }, []).join('\n')
+                  ) : (
+                    <a href="javascript:;" className="btn-add-courses" onClick={this.toggleShowEditCoursePopup}>添加课程</a>
+                  )
                 }
-              </span>
-              {
-                _.isEmpty(this.props.classInfo.courses) === false && (
-                  <span className="class-time">未预约</span>
-                )
-              }
+              </div>
+              <div className="class-time">
+                {
+                  _.isNil(this.props.classInfo.date) ? (
+                    <a href="javascript:;" className="btn-set-date">设置时间</a>
+                  ) : (
+                    <span className="time-format">
+                      {formatClassDate(new Date(this.props.classInfo.date).getTime(), this.props.classInfo.length)}
+                    </span>
+                  )
+                }
+              </div>
             </div>
             <a
               href="javascript:;"
@@ -129,70 +127,62 @@ export default class EditNewClassItem extends Component {
             </a>
           </div>
         </div>
-        {
-          this.state.showEditContentPopUp && (
-            <div className="add-course-content-popup">
-              <div className="input-wrap">
-                <input
-                  type="text"
-                  value={this.state.contentInput}
-                  className="input-content"
-                  onChange={this.handleInputChange}
-                  placeholder="请输入内容"
-                />
-                <a
-                  href="javascript:;"
-                  className="btn-add-content"
-                  onClick={this.toggleShowContentPopup}
-                  role="button"
-                  tabIndex={0}
-                >
-                  <Icon type="plus" />
-                </a>
-              </div>
-              <div className="content-list">
-                {
-                  _.map(this.state.courses, (courseInfo, index) => {
-                    const search = this.state.contentInput
-                    const resultElem = <span className="content-tem" key={index} />
-                    let resultContent = courseInfo.label
-                    if (search !== '') {
-                      // 高亮搜索词 TODO 目前只支持一个搜索词高亮
-                      let result = courseInfo.label.split(search)
-                      if (result.length > 1) {
-                        result = _.reduce(result, (r, v, i) => {
-                          r.push(<span key={i}>{v}</span>)
-                          r.push(<span className="high-light" key={`${i}-high`}>{search}</span>)
-                          return r
-                        }, [])
-                        result.pop() // 去掉最后一个多余的
-                        resultContent = result
-                      }
-                    }
-                    return React.cloneElement(resultElem, {
-                      onClick: this.handleSelectCourse.bind(null, courseInfo),
-                    }, resultContent)
-                  })
-                }
-              </div>
-              {
-                false && (
-                  <div className="content-tag-wrap">
-                    <p className="title">选择内容标签</p>
-                    <div className="tags-wrap">
-                      <Tag className="tag current">调研</Tag>
-                      <Tag className="tag">概念</Tag>
-                      <Tag className="tag">软件</Tag>
-                      <Tag className="tag">设计方法</Tag>
-                      <Tag className="tag">表达形式</Tag>
-                      <Tag className="tag">学习习惯</Tag>
-                    </div>
+        <Modal
+          className="edit-class-courses-modal"
+          title="添加课程"
+          visible={this.state.showEditCourseModal}
+          onOk={this.toggleShowEditCoursePopup}
+          onCancel={this.toggleShowEditCoursePopup}
+        >
+          <Radio.Group
+            value={this.state.modalMode}
+            onChange={this.handleSelectModalMode}
+            style={{ marginBottom: 16 }}
+          >
+            <Radio.Button value="search">从已有课程库里添加</Radio.Button>
+            <Radio.Button value="create">创建我的课程</Radio.Button>
+          </Radio.Group>
+          <div className="modal-body-wrap">
+            {
+              this.state.modalMode === 'search' && (
+                <div className="search-courses-wrap">
+                  <div className="select-major-wrap">
+                    <p className="title">按专业筛选</p>
+                    <SelectMajors />
                   </div>
-                )
-              }
-            </div>
-          )
-        }
+                  <div className="search-course">
+                    <p className="title">搜索课程关键词</p>
+                    <Select
+                      mode="multiple"
+                      placeholder="请输入关键词"
+                      notFoundContent={this.state.fetchingCourses ? <Spin size="small" /> : null}
+                      labelInValue
+                      value={this.state.value}
+                      filterOption={false}
+                      onSearch={this.handleInputChange}
+                      onChange={this.handleOptionChange}
+                    >
+                      {
+                        _.map(this.state.searchCourseOptions, (courseInfo, index) => {
+                          return (
+                            <Select.Option value={courseInfo.value} key={index}>{courseInfo.name}</Select.Option>
+                          )
+                        })
+                      }
+                    </Select>
+                  </div>
+                </div>
+              )
+            }
+            {
+              this.state.modalMode === 'create' && (
+                <div className="create-courses-wrap">
+
+                </div>
+              )
+            }
+          </div>
+        </Modal>
       </div>
     )
   }
