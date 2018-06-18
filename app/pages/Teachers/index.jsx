@@ -28,12 +28,12 @@ class Teachers extends Component {
   }
 
   componentDidMount() {
-    const { city, country, place } = this.props.accountInfo
+    const { city, place } = this.props.accountInfo
     this.myFilter = _.assign({}, {
       city,
-      country,
       place,
-      major_id: _.map(this.props.accountInfo.majors, (major) => { return major.id }),
+      major_id: _.map(this.props.accountInfo.majors, each => (each.id)),
+      country_id: _.map(this.props.accountInfo.countries, each => (each.id)),
     })
 
 
@@ -46,7 +46,7 @@ class Teachers extends Component {
 
   defaultFilter = {
     major_id: null,
-    country: null,
+    country_id: null,
     city: null,
     place: null,
     gender: null,
@@ -86,7 +86,7 @@ class Teachers extends Component {
         >
           <div className="teachers-filter-wrap">
             <div className="filter-item-wrap">
-              <div className="xfolio-text-info-title">专业</div>
+              <div className="xfolio-text-info-title">申请专业</div>
               <SelectMajors
                 value={(
                   _.reduce(this.state.filterOptions.majors, (r, v) => {
@@ -100,6 +100,12 @@ class Teachers extends Component {
             <div className="filter-item-wrap">
               <div className="xfolio-text-info-title">申请国家</div>
               <SelectCountry
+                value={(
+                  _.reduce(this.state.filterOptions.countries, (r, v) => {
+                    r.push({ key: `${v.id}`, label: v.cn })
+                    return r
+                  }, [])
+                )}
                 onChange={(value) => { this.requestTeacherList({ country_id: value }) }}
               />
             </div>
@@ -117,7 +123,7 @@ class Teachers extends Component {
               </Select>
             </div>
             <div className="filter-item-wrap">
-              <div className="xfolio-text-info-title">性别</div>
+              <div className="xfolio-text-info-title">导师性别</div>
               <Select
                 defaultValue="请选择"
                 onChange={(value) => { this.requestTeacherList({ gender: value }) }}
@@ -130,13 +136,13 @@ class Teachers extends Component {
               </Select>
             </div>
             <div className="filter-item-wrap">
-              <div className="xfolio-text-info-title">城市</div>
+              <div className="xfolio-text-info-title">所在城市</div>
               <SelectCity
                 onChange={(value) => { this.requestTeacherList({ city: value }) }}
               />
             </div>
             <div className="filter-item-wrap">
-              <div className="xfolio-text-info-title">价格</div>
+              <div className="xfolio-text-info-title">导师收费</div>
               <Radio.Group
                 onChange={(e) => { this.requestTeacherList({ cost: e.target.value }) }}
               >

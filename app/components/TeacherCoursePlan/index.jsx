@@ -136,7 +136,7 @@ class TeacherCoursePlan extends Component {
     return (
       <div className="teacher-course-plan" style={wrapStyle}>
         <div className="my-student module-wrap">
-          <h5 className="title">我的学生</h5>
+          <h5 className="xfolio-text-section-title">我的学生</h5>
           <div className="student-name-list list-wrap">
             {
               this.state.getStudentListLoading ? (
