@@ -144,7 +144,7 @@ class TeacherInfoSnapshot extends Component {
           </Row>
           <div className="block-edu">
             <span>{teacherInfo.countries.length ? teacherInfo.countries[0].cn : '未设置'}</span>
-            <span>{teacherInfo.school.cn ? teacherInfo.school.cn : '未设置'}</span>
+            <span>{teacherInfo.schools.length ? teacherInfo.schools[0].cn : '未设置'}</span>
             <span>
               {
                 teacherInfo.majors.length ?

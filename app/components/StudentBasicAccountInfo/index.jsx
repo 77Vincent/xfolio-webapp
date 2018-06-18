@@ -17,8 +17,9 @@ class StudentBasicAccountInfo extends Component {
     style: PropTypes.object,
     accountInfo: PropTypes.object.isRequired,
     updateUserIfo: PropTypes.func.isRequired,
-    updateUserMajors: PropTypes.func.isRequired,
     updateUserCountries: PropTypes.func.isRequired,
+    updateUserSchools: PropTypes.func.isRequired,
+    updateUserMajors: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -101,39 +102,6 @@ class StudentBasicAccountInfo extends Component {
         </div>
         <div className="xfolio-account-info-item">
           <div className="xfolio-current-info-wrapper">
-            <p className="xfolio-text-info-title">申请专业</p>
-            {
-              accountInfo.majors.length ?
-                _.map(accountInfo.majors, (major, i) => {
-                  return <p className="xfolio-text-info-value" key={i}>{major.cn}</p>
-                }) :
-                <p className="xfolio-text-info-value">未设置</p>
-            }
-          </div>
-          <div className="update-account-info-item">
-            <UpdateAccountInfoItem
-              inputType="custom"
-              inputElem={(
-                <SelectMajors
-                  value={(
-                    _.reduce(accountInfo.majors, (r, v) => {
-                      r.push({
-                        key: `${v.id}`,
-                        label: v.cn,
-                      })
-                      return r
-                    }, [])
-                  )}
-                />
-              )}
-              onSubmit={(value) => {
-                return this.props.updateUserMajors(value)
-              }}
-            />
-          </div>
-        </div>
-        <div className="xfolio-account-info-item">
-          <div className="xfolio-current-info-wrapper">
             <p className="xfolio-text-info-title">授课形式</p>
             <p className="xfolio-text-info-value">
               {COURSE_PLACE_OPTIONS[accountInfo.place] ? COURSE_PLACE_OPTIONS[accountInfo.place].name : '未设置'}
@@ -147,50 +115,6 @@ class StudentBasicAccountInfo extends Component {
               options={_.values(COURSE_PLACE_OPTIONS)}
               onSubmit={(value) => {
                 return this.props.updateUserIfo({ userId, field: 'place', value })
-              }}
-            />
-          </div>
-        </div>
-        <div className="xfolio-account-info-item">
-          <div className="xfolio-current-info-wrapper">
-            <p className="xfolio-text-info-title">申请学历</p>
-            <p className="xfolio-text-info-value">
-              {accountInfo.degree_id !== null ? constDataHolder.degrees[accountInfo.degree_id].cn : '未设置'}
-            </p>
-          </div>
-          <div className="update-account-info-item">
-            <UpdateAccountInfoItem
-              inputType="select"
-              placeholder="请选择"
-              value={accountInfo.degree_id}
-              options={(
-                _.reduce(constDataHolder.degrees, (r, v, i) => {
-                  r[i] = {
-                    value: i,
-                    name: v.cn,
-                  }
-                  return r
-                }, [])
-              )}
-              onSubmit={(value) => {
-                return this.props.updateUserIfo({ userId, field: 'degree_id', value })
-              }}
-            />
-          </div>
-        </div>
-        <div className="xfolio-account-info-item">
-          <div className="xfolio-current-info-wrapper">
-            <p className="xfolio-text-info-title">目标院校</p>
-            <p className="xfolio-text-info-value">
-              {_.keys(accountInfo.school).length ? accountInfo.school.cn : '未设置'}
-            </p>
-          </div>
-          <div className="update-account-info-item">
-            <UpdateAccountInfoItem
-              inputType="custom"
-              inputElem={<SelectSchool />}
-              onSubmit={(value) => {
-                return this.props.updateUserIfo({ userId, field: 'school_id', value })
               }}
             />
           </div>
@@ -228,6 +152,99 @@ class StudentBasicAccountInfo extends Component {
             />
           </div>
         </div>
+        <div className="xfolio-account-info-item">
+          <div className="xfolio-current-info-wrapper">
+            <p className="xfolio-text-info-title">目标院校</p>
+            {
+              accountInfo.schools.length ?
+                _.map(accountInfo.schools, (each, i) => {
+                  return <p className="xfolio-text-info-value" key={i}>{each.cn}</p>
+                }) :
+                <p className="xfolio-text-info-value">未设置</p>
+            }
+          </div>
+          <div className="update-account-info-item">
+            <UpdateAccountInfoItem
+              inputType="custom"
+              inputElem={(
+                <SelectSchool
+                  value={(
+                    _.reduce(accountInfo.schools, (r, v) => {
+                      r.push({
+                        key: `${v.id}`,
+                        label: v.cn,
+                      })
+                      return r
+                    }, [])
+                  )}
+                />
+              )}
+              onSubmit={(value) => {
+                return this.props.updateUserSchools(value)
+              }}
+            />
+          </div>
+        </div>
+        <div className="xfolio-account-info-item">
+          <div className="xfolio-current-info-wrapper">
+            <p className="xfolio-text-info-title">申请专业</p>
+            {
+              accountInfo.majors.length ?
+                _.map(accountInfo.majors, (each, i) => {
+                  return <p className="xfolio-text-info-value" key={i}>{each.cn}</p>
+                }) :
+                <p className="xfolio-text-info-value">未设置</p>
+            }
+          </div>
+          <div className="update-account-info-item">
+            <UpdateAccountInfoItem
+              inputType="custom"
+              inputElem={(
+                <SelectMajors
+                  value={(
+                    _.reduce(accountInfo.majors, (r, v) => {
+                      r.push({
+                        key: `${v.id}`,
+                        label: v.cn,
+                      })
+                      return r
+                    }, [])
+                  )}
+                />
+              )}
+              onSubmit={(value) => {
+                return this.props.updateUserMajors(value)
+              }}
+            />
+          </div>
+        </div>
+        <div className="xfolio-account-info-item">
+          <div className="xfolio-current-info-wrapper">
+            <p className="xfolio-text-info-title">申请学历</p>
+            <p className="xfolio-text-info-value">
+              {accountInfo.degree_id !== null ? constDataHolder.degrees[accountInfo.degree_id].cn : '未设置'}
+            </p>
+          </div>
+          <div className="update-account-info-item">
+            <UpdateAccountInfoItem
+              inputType="select"
+              placeholder="请选择"
+              value={accountInfo.degree_id}
+              options={(
+                _.reduce(constDataHolder.degrees, (r, v, i) => {
+                  r[i] = {
+                    value: i,
+                    name: v.cn,
+                  }
+                  return r
+                }, [])
+              )}
+              onSubmit={(value) => {
+                return this.props.updateUserIfo({ userId, field: 'degree_id', value })
+              }}
+            />
+          </div>
+        </div>
       </div>
     )
   }
@@ -239,8 +256,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   updateUserIfo: dispatch.AccountInfo.updateUserIfo,
-  updateUserMajors: dispatch.AccountInfo.updateUserMajors,
   updateUserCountries: dispatch.AccountInfo.updateUserCountries,
+  updateUserSchools: dispatch.AccountInfo.updateUserSchools,
+  updateUserMajors: dispatch.AccountInfo.updateUserMajors,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(StudentBasicAccountInfo)

@@ -75,6 +75,17 @@ const Request = {
     })
   },
 
+  // School
+  getSchools(query = {}) {
+    return agent.get('/api/schools').query(query)
+  },
+  createSchools(idList) {
+    return agent.put('/api/users_schools').send({
+      school_id: idList,
+    })
+  },
+
+
   // Major
   getMajors(query = {}) {
     return agent.get('/api/majors').query(query)
@@ -91,11 +102,6 @@ const Request = {
   },
   removeTag(tagId) {
     return agent.delete(`/api/tags/${tagId}`)
-  },
-
-  // School
-  getSchools(query = {}) {
-    return agent.get('/api/schools').query(query)
   },
 
   // schedule

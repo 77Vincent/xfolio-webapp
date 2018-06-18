@@ -50,12 +50,11 @@ async function preRender() {
 
   // 初始化常量数据
   await Promise.all([
+    agent.get(CONST_DATA_URLS.SCHOOLS).then((res) => {
+      constDataHolder.schools = res.body
+    }),
     agent.get(CONST_DATA_URLS.MAJORS).then((res) => {
       constDataHolder.majors = res.body
-      constDataHolder.majorsNormalized = _.reduce(constDataHolder.majors, (r, v) => {
-        r[v.id] = v
-        return r
-      }, {})
     }),
     agent.get(CONST_DATA_URLS.PROVINCES).then((res) => {
       constDataHolder.provinces = res.body

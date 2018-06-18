@@ -18,6 +18,7 @@ class TeacherBasicAccountInfo extends Component {
     accountInfo: PropTypes.object.isRequired,
     updateUserIfo: PropTypes.func.isRequired,
     updateUserCountries: PropTypes.func.isRequired,
+    updateUserSchools: PropTypes.func.isRequired,
     updateUserMajors: PropTypes.func.isRequired,
   };
 
@@ -101,39 +102,6 @@ class TeacherBasicAccountInfo extends Component {
         </div>
         <div className="xfolio-account-info-item">
           <div className="xfolio-current-info-wrapper">
-            <p className="xfolio-text-info-title">授课专业</p>
-            {
-              accountInfo.majors.length ?
-                _.map(accountInfo.majors, (major, i) => {
-                  return <p className="xfolio-text-info-value" key={i}>{major.cn}</p>
-                }) :
-                <p className="xfolio-text-info-value">未设置</p>
-            }
-          </div>
-          <div className="update-account-info-item">
-            <UpdateAccountInfoItem
-              inputType="custom"
-              inputElem={(
-                <SelectMajors
-                  value={(
-                    _.reduce(accountInfo.majors, (r, v) => {
-                      r.push({
-                        key: `${v.id}`,
-                        label: v.cn,
-                      })
-                      return r
-                    }, [])
-                  )}
-                />
-              )}
-              onSubmit={(value) => {
-                return this.props.updateUserMajors(value)
-              }}
-            />
-          </div>
-        </div>
-        <div className="xfolio-account-info-item">
-          <div className="xfolio-current-info-wrapper">
             <p className="xfolio-text-info-title">授课形式</p>
             <p className="xfolio-text-info-value">
               {COURSE_PLACE_OPTIONS[accountInfo.place] ? COURSE_PLACE_OPTIONS[accountInfo.place].name : '未设置'}
@@ -180,28 +148,11 @@ class TeacherBasicAccountInfo extends Component {
         </div>
         <div className="xfolio-account-info-item">
           <div className="xfolio-current-info-wrapper">
-            <p className="xfolio-text-info-title">毕业院校</p>
-            <p className="xfolio-text-info-value">
-              {_.keys(accountInfo.school).length ? accountInfo.school.cn : '未设置'}
-            </p>
-          </div>
-          <div className="update-account-info-item">
-            <UpdateAccountInfoItem
-              inputType="custom"
-              inputElem={<SelectSchool />}
-              onSubmit={(value) => {
-                return this.props.updateUserIfo({ userId, field: 'school_id', value })
-              }}
-            />
-          </div>
-        </div>
-        <div className="xfolio-account-info-item">
-          <div className="xfolio-current-info-wrapper">
             <p className="xfolio-text-info-title">毕业国家</p>
             {
               accountInfo.countries.length ?
-                _.map(accountInfo.countries, (country, i) => {
-                  return <p className="xfolio-text-info-value" key={i}>{country.cn}</p>
+                _.map(accountInfo.countries, (each, i) => {
+                  return <p className="xfolio-text-info-value" key={i}>{each.cn}</p>
                 }) :
                 <p className="xfolio-text-info-value">未设置</p>
             }
@@ -229,6 +180,75 @@ class TeacherBasicAccountInfo extends Component {
                 }}
               />
             </div>
+          </div>
+        </div>
+        <div className="xfolio-account-info-item">
+          <div className="xfolio-current-info-wrapper">
+            <p className="xfolio-text-info-title">毕业院校</p>
+            {
+              accountInfo.schools.length ?
+                _.map(accountInfo.schools, (each, i) => {
+                  return <p className="xfolio-text-info-value" key={i}>{each.cn}</p>
+                }) :
+                <p className="xfolio-text-info-value">未设置</p>
+            }
+          </div>
+          <div className="update-account-info-item">
+            <div className="update-account-info-item">
+              <UpdateAccountInfoItem
+                inputType="custom"
+                inputElem={(
+                  <SelectSchool
+                    multiple={false}
+                    value={(
+                      _.reduce(accountInfo.schools, (r, v) => {
+                        r.push({
+                          key: `${v.id}`,
+                          label: v.cn,
+                        })
+                        return r
+                      }, [])
+                    )}
+                  />
+                )}
+                onSubmit={(value) => {
+                  return this.props.updateUserSchools(value)
+                }}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="xfolio-account-info-item">
+          <div className="xfolio-current-info-wrapper">
+            <p className="xfolio-text-info-title">授课专业</p>
+            {
+              accountInfo.majors.length ?
+                _.map(accountInfo.majors, (each, i) => {
+                  return <p className="xfolio-text-info-value" key={i}>{each.cn}</p>
+                }) :
+                <p className="xfolio-text-info-value">未设置</p>
+            }
+          </div>
+          <div className="update-account-info-item">
+            <UpdateAccountInfoItem
+              inputType="custom"
+              inputElem={(
+                <SelectMajors
+                  value={(
+                    _.reduce(accountInfo.majors, (r, v) => {
+                      r.push({
+                        key: `${v.id}`,
+                        label: v.cn,
+                      })
+                      return r
+                    }, [])
+                  )}
+                />
+              )}
+              onSubmit={(value) => {
+                return this.props.updateUserMajors(value)
+              }}
+            />
           </div>
         </div>
         <div className="xfolio-account-info-item">
@@ -273,8 +293,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   updateUserIfo: dispatch.AccountInfo.updateUserIfo,
-  updateUserMajors: dispatch.AccountInfo.updateUserMajors,
   updateUserCountries: dispatch.AccountInfo.updateUserCountries,
+  updateUserSchools: dispatch.AccountInfo.updateUserSchools,
+  updateUserMajors: dispatch.AccountInfo.updateUserMajors,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeacherBasicAccountInfo)

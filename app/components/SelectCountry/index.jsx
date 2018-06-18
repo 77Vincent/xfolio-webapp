@@ -55,7 +55,7 @@ class SelectCountry extends Component {
 
   handleOptionChange = (value) => {
     if (!this.props.multiple && value.length > 1) {
-      message.warning('只允许添加一个学校')
+      message.warning('只允许添加一个国家')
       return
     }
     this.setState({

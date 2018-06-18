@@ -13,10 +13,10 @@ const AccountInfo = {
     email: null,
     role_id: 2,
     place: 'both',
-    school: {},
     city: null,
-    majors: [],
     countries: [],
+    schools: [],
+    majors: [],
     degree_id: null,
     cost: null,
     followingIds: [], // 已关注用户的 id
@@ -69,17 +69,24 @@ const AccountInfo = {
       // 更新本地数据
       this.updateAccountInfo(res.body)
     },
-    async updateUserMajors(majors) {
-      return await Request.createMajors(majors).then((res) => {
+    async updateUserCountries(idList) {
+      return await Request.createCountries(idList).then((res) => {
         this.updateAccountInfo({
-          majors: res.body,
+          countries: res.body,
         })
       })
     },
-    async updateUserCountries(countries) {
-      return await Request.createCountries(countries).then((res) => {
+    async updateUserSchools(idList) {
+      return await Request.createSchools(idList).then((res) => {
         this.updateAccountInfo({
-          countries: res.body,
+          schools: res.body,
+        })
+      })
+    },
+    async updateUserMajors(idList) {
+      return await Request.createMajors(idList).then((res) => {
+        this.updateAccountInfo({
+          majors: res.body,
         })
       })
     },

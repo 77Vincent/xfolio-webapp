@@ -2,10 +2,11 @@
 export const CONST_DATA_URLS = {
   // REST API
   MAJORS: '/api/majors/',
+  SCHOOLS: '/api/schools/',
+  COUNTRIES: '/api/countries',
   FOLLOWER_FOLLOWING: '/api/followers_followings/',
   // Static resources
   DEGREES: '/resources/degrees.json',
-  COUNTRIES: '/api/countries',
   PROVINCES: '/resources/locale/CN/provinces.json',
   CITIES: '/resources/locale/CN/cities.json',
 }
