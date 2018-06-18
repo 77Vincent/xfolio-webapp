@@ -212,6 +212,7 @@ class TeacherBasicAccountInfo extends Component {
                 inputType="custom"
                 inputElem={(
                   <SelectCountry
+                    multiple={false}
                     value={(
                       _.reduce(accountInfo.countries, (r, v) => {
                         r.push({

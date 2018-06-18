@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
-import { Select, Spin } from 'antd'
+import { Select, Spin, message } from 'antd'
 import PropTypes from 'prop-types'
 
 import { Request } from '../../utils'
@@ -8,11 +8,13 @@ import constDataHolder from '../../store/constDataHolder'
 
 class SelectCountry extends Component {
   static propTypes = {
+    multiple: PropTypes.bool,
     onChange: PropTypes.func,
     value: PropTypes.array,
   }
 
   static defaultProps = {
+    multiple: true,
     onChange: _.noop,
     value: [],
   }
@@ -52,6 +54,10 @@ class SelectCountry extends Component {
   }
 
   handleOptionChange = (value) => {
+    if (!this.props.multiple && value.length > 1) {
+      message.warning('只允许添加一个学校')
+      return
+    }
     this.setState({
       value: _.uniqWith(value, (a, b) => `${a.key}` === `${b.key}`),
       options: [],

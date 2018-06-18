@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { Button, Icon, Tag } from 'antd'
+import { Button, Icon, Tag, message } from 'antd'
 import { connect } from 'react-redux'
 
 import { TeacherBasicAccountInfo, TeacherInfoSnapshot } from '../index'
@@ -12,7 +12,7 @@ const commonTags = [
   { id: 3, content: '专业' },
   { id: 4, content: '口才好' },
   { id: 5, content: '和蔼可亲' },
-  { id: 6, content: '闷骚' }
+  { id: 6, content: '闷骚' },
 ]
 
 class TeachersProfiles extends Component {
@@ -41,6 +41,11 @@ class TeachersProfiles extends Component {
   inputTagElem = '';
 
   handleCLickAddInputTag = () => {
+    log(this.state.tagList.length)
+    if (this.state.tagList.length > 4) {
+      message.warning('最多允许五个标签')
+      return
+    }
     const newTag = _.trim(this.inputTagElem.value)
     if (newTag !== '') {
       this.handleClickAddTag(newTag)

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
-import { Select, Spin } from 'antd'
+import { Select, Spin, message } from 'antd'
 import PropTypes from 'prop-types'
 
 import { Request } from '../../utils'
@@ -52,6 +52,10 @@ class SelectMajors extends Component {
   }
 
   handleOptionChange = (value) => {
+    if (value.length > 3) {
+      message.warning('最多只能添加三个专业')
+      return
+    }
     this.setState({
       value: _.uniqWith(value, (a, b) => `${a.key}` === `${b.key}`),
       options: [],
