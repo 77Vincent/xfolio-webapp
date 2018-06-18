@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { message, Modal, Radio, Select, Spin } from 'antd'
+import { message, Modal, Radio, Select, Spin, Form, Input } from 'antd'
 import to from 'await-to'
 
 import { formatClassDate, Request } from '../../utils'
 import SelectMajors from '../SelectMajors'
 import './index.less'
 
-export default class EditNewClassItem extends Component {
+class EditNewClassItem extends Component {
   static propTypes = {
     style: PropTypes.object,
     classInfo: PropTypes.object.isRequired,
     onDelete: PropTypes.func.isRequired,
+    form: PropTypes.object.isRequired,
   };
 
   static defaultProps = {
@@ -87,6 +88,7 @@ export default class EditNewClassItem extends Component {
 
   render() {
     const wrapStyle = _.assign({}, this.props.style)
+    const { getFieldDecorator } = this.props.form
 
     return (
       <div className="edit-new-class-item" style={wrapStyle} ref={(r) => { this.newClassItemElem = r }}>
@@ -177,7 +179,57 @@ export default class EditNewClassItem extends Component {
             {
               this.state.modalMode === 'create' && (
                 <div className="create-courses-wrap">
-
+                  <Form
+                    layout="horizontal"
+                  >
+                    <Form.Item
+                      label="课程名称"
+                      colon={false}
+                      labelCol={{
+                        span: 4,
+                      }}
+                      wrapperCol={{
+                        span: 20,
+                      }}
+                    >
+                      {
+                        getFieldDecorator('course-title')(<Input
+                          placeholder="请输入课程名称"
+                        />)
+                      }
+                    </Form.Item>
+                    <Form.Item
+                      label="课程简介"
+                      colon={false}
+                      labelCol={{
+                        span: 4,
+                      }}
+                      wrapperCol={{
+                        span: 20,
+                      }}
+                    >
+                      {
+                        getFieldDecorator('course-description')(<Input.TextArea
+                          autosize={false}
+                          placeholder="请输入课程简介"
+                        />)
+                      }
+                    </Form.Item>
+                    <Form.Item
+                      label="适用专业"
+                      colon={false}
+                      labelCol={{
+                        span: 4,
+                      }}
+                      wrapperCol={{
+                        span: 20,
+                      }}
+                    >
+                      {
+                        getFieldDecorator('course-majors')(<SelectMajors />)
+                      }
+                    </Form.Item>
+                  </Form>
                 </div>
               )
             }
@@ -187,3 +239,7 @@ export default class EditNewClassItem extends Component {
     )
   }
 }
+
+const EditNewClassItemWrapped = Form.create()(EditNewClassItem)
+
+export default EditNewClassItemWrapped

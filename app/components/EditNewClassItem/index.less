@@ -213,12 +213,12 @@
 
     .ant-radio-group {
       display: flex;
+      width: 100%;
 
       .ant-radio-button-wrapper {
         display: flex;
         flex: 1;
         justify-content: center;
-        width: 160px;
         color: #e4007f;
         border-color: #e4007f;
 
@@ -252,6 +252,26 @@
         }
         .search-course {
           margin-top: 20px;
+        }
+      }
+      .create-courses-wrap {
+
+        .ant-form-item {
+          display: flex;
+          align-items: center;
+
+          .ant-form-item-label {
+            display: flex;
+            justify-content: flex-start;
+
+            label {
+              font-size: 13px;
+              font-weight: 700;
+              color: #000;
+              line-height: 1.5;
+              letter-spacing: 2px;
+            }
+          }
         }
       }
     }
