@@ -5,7 +5,7 @@ import { message, Modal, Radio, Select, Spin, Form, Input } from 'antd'
 import to from 'await-to'
 
 import { formatClassDate, Request } from '../../utils'
-import SelectMajors from '../SelectMajors'
+import SelectMultiple from '../SelectMultiple'
 import './index.less'
 
 class EditNewClassItem extends Component {
@@ -150,7 +150,7 @@ class EditNewClassItem extends Component {
                 <div className="search-courses-wrap">
                   <div className="select-major-wrap">
                     <p className="title">按专业筛选</p>
-                    <SelectMajors />
+                    <SelectMultiple />
                   </div>
                   <div className="search-course">
                     <p className="title">搜索课程关键词</p>
@@ -226,7 +226,7 @@ class EditNewClassItem extends Component {
                       }}
                     >
                       {
-                        getFieldDecorator('course-majors')(<SelectMajors />)
+                        getFieldDecorator('course-majors')(<SelectMultiple />)
                       }
                     </Form.Item>
                   </Form>

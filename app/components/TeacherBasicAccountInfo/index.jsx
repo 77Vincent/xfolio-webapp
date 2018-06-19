@@ -8,9 +8,7 @@ import './index.less'
 import { COURSE_PLACE_OPTIONS, GENDER_OPTIONS, GENDER_OPTIONS_NORMALIZED } from '../../Consts'
 import constDataHolder from '../../store/constDataHolder'
 
-import SelectCountry from '../SelectCountry'
-import SelectSchool from '../SelectSchool'
-import SelectMajors from '../SelectMajors'
+import SelectMultiple from '../SelectMultiple'
 
 class TeacherBasicAccountInfo extends Component {
   static propTypes = {
@@ -158,28 +156,24 @@ class TeacherBasicAccountInfo extends Component {
             }
           </div>
           <div className="update-account-info-item">
-            <div className="update-account-info-item">
-              <UpdateAccountInfoItem
-                inputType="custom"
-                inputElem={(
-                  <SelectCountry
-                    multiple={false}
-                    value={(
-                      _.reduce(accountInfo.countries, (r, v) => {
-                        r.push({
-                          key: `${v.id}`,
-                          label: v.cn,
-                        })
-                        return r
-                      }, [])
-                    )}
-                  />
-                )}
-                onSubmit={(value) => {
-                  return this.props.updateUserCountries(value)
-                }}
-              />
-            </div>
+            <UpdateAccountInfoItem
+              inputType="custom"
+              inputElem={(
+                <SelectMultiple
+                  resource="countries"
+                  maxSelection={1}
+                  value={(
+                    _.reduce(accountInfo.countries, (r, v) => {
+                      r.push({ key: `${v.id}`, label: v.cn })
+                      return r
+                    }, [])
+                  )}
+                />
+              )}
+              onSubmit={(value) => {
+                return this.props.updateUserCountries(value)
+              }}
+            />
           </div>
         </div>
         <div className="xfolio-account-info-item">
@@ -194,28 +188,24 @@ class TeacherBasicAccountInfo extends Component {
             }
           </div>
           <div className="update-account-info-item">
-            <div className="update-account-info-item">
-              <UpdateAccountInfoItem
-                inputType="custom"
-                inputElem={(
-                  <SelectSchool
-                    multiple={false}
-                    value={(
-                      _.reduce(accountInfo.schools, (r, v) => {
-                        r.push({
-                          key: `${v.id}`,
-                          label: v.cn,
-                        })
-                        return r
-                      }, [])
-                    )}
-                  />
-                )}
-                onSubmit={(value) => {
-                  return this.props.updateUserSchools(value)
-                }}
-              />
-            </div>
+            <UpdateAccountInfoItem
+              inputType="custom"
+              inputElem={(
+                <SelectMultiple
+                  resource="schools"
+                  maxSelection={1}
+                  value={(
+                    _.reduce(accountInfo.schools, (r, v) => {
+                      r.push({ key: `${v.id}`, label: v.cn })
+                      return r
+                    }, [])
+                  )}
+                />
+              )}
+              onSubmit={(value) => {
+                return this.props.updateUserSchools(value)
+              }}
+            />
           </div>
         </div>
         <div className="xfolio-account-info-item">
@@ -233,13 +223,12 @@ class TeacherBasicAccountInfo extends Component {
             <UpdateAccountInfoItem
               inputType="custom"
               inputElem={(
-                <SelectMajors
+                <SelectMultiple
+                  resource="majors"
+                  maxSelection={3}
                   value={(
                     _.reduce(accountInfo.majors, (r, v) => {
-                      r.push({
-                        key: `${v.id}`,
-                        label: v.cn,
-                      })
+                      r.push({ key: `${v.id}`, label: v.cn })
                       return r
                     }, [])
                   )}
@@ -247,21 +236,6 @@ class TeacherBasicAccountInfo extends Component {
               )}
               onSubmit={(value) => {
                 return this.props.updateUserMajors(value)
-              }}
-            />
-          </div>
-        </div>
-        <div className="xfolio-account-info-item">
-          <div className="xfolio-current-info-wrapper">
-            <p className="xfolio-text-info-title">学生录取院校</p>
-            <p className="xfolio-text-info-value">CSM;LCF</p>
-          </div>
-          <div className="update-account-info-item">
-            <UpdateAccountInfoItem
-              inputType="custom"
-              inputElem={<SelectSchool />}
-              onSubmit={(value) => {
-                log('value ', value)
               }}
             />
           </div>

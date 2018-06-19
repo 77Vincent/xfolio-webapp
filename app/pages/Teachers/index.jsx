@@ -4,7 +4,7 @@ import _ from 'lodash'
 import { Anchor, Select, Radio, Pagination, Button } from 'antd'
 import { connect } from 'react-redux'
 
-import { TeacherInfoSnapshot, SelectCountry, SelectMajors, SelectCity } from '../../components'
+import { TeacherInfoSnapshot, SelectMultiple, SelectCity } from '../../components'
 import { Request } from '../../utils'
 import { COURSE_PLACE_OPTIONS, GENDER_OPTIONS, PRICE_ORDER_OPTIONS } from '../../Consts'
 import './index.less'
@@ -87,7 +87,9 @@ class Teachers extends Component {
           <div className="teachers-filter-wrap">
             <div className="filter-item-wrap">
               <div className="xfolio-text-info-title">申请专业</div>
-              <SelectMajors
+              <SelectMultiple
+                resource="majors"
+                maxSelection={3}
                 value={(
                   _.reduce(this.state.filterOptions.majors, (r, v) => {
                     r.push({ key: `${v.id}`, label: v.cn })
@@ -99,7 +101,9 @@ class Teachers extends Component {
             </div>
             <div className="filter-item-wrap">
               <div className="xfolio-text-info-title">申请国家</div>
-              <SelectCountry
+              <SelectMultiple
+                resource="countries"
+                maxSelection={5}
                 value={(
                   _.reduce(this.state.filterOptions.countries, (r, v) => {
                     r.push({ key: `${v.id}`, label: v.cn })

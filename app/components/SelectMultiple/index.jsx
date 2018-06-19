@@ -6,20 +6,23 @@ import PropTypes from 'prop-types'
 import { Request } from '../../utils'
 import constDataHolder from '../../store/constDataHolder'
 
-class SelectMajors extends Component {
+class SelectMultiple extends Component {
   static propTypes = {
+    resource: PropTypes.string.isRequired,
+    maxSelection: PropTypes.number,
     onChange: PropTypes.func,
     value: PropTypes.array,
   }
 
   static defaultProps = {
+    maxSelection: 1,
     onChange: _.noop,
     value: [],
   }
 
   constructor(props) {
     super(props)
-    this.entireOptions = _.map(constDataHolder.majors, each => ({
+    this.entireOptions = _.map(constDataHolder[this.props.resource], each => ({
       value: String(each.id), // 数字转成字符
       name: each.cn,
     }))
@@ -35,7 +38,7 @@ class SelectMajors extends Component {
 
   limitedRequest = _.throttle(_.debounce(async (search) => {
     let options = []
-    const res = await Request.getMajors({ search })
+    const res = await Request[`get${_.capitalize(this.props.resource)}`]({ search })
     options = _.map(res.body, each => ({
       value: `${each.id}`,
       name: each.cn,
@@ -52,8 +55,8 @@ class SelectMajors extends Component {
   }
 
   handleOptionChange = (value) => {
-    if (value.length > 3) {
-      message.warning('最多只能添加三个专业')
+    if (value.length > this.props.maxSelection) {
+      message.warning(`只允许添加${this.props.maxSelection}条`)
       return
     }
     this.setState({
@@ -69,7 +72,7 @@ class SelectMajors extends Component {
     return (
       <Select
         mode="multiple"
-        placeholder="搜索专业"
+        placeholder="搜索学校"
         notFoundContent={this.state.fetching ? <Spin size="small" /> : null}
         labelInValue
         filterOption={false}
@@ -87,4 +90,4 @@ class SelectMajors extends Component {
   }
 }
 
-export default SelectMajors
+export default SelectMultiple

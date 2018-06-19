@@ -8,9 +8,7 @@ import './index.less'
 import { COURSE_PLACE_OPTIONS, GENDER_OPTIONS, GENDER_OPTIONS_NORMALIZED } from '../../Consts'
 import constDataHolder from '../../store/constDataHolder'
 
-import SelectCountry from '../SelectCountry'
-import SelectMajors from '../SelectMajors'
-import SelectSchool from '../SelectSchool'
+import SelectMultiple from '../SelectMultiple'
 
 class StudentBasicAccountInfo extends Component {
   static propTypes = {
@@ -134,13 +132,12 @@ class StudentBasicAccountInfo extends Component {
             <UpdateAccountInfoItem
               inputType="custom"
               inputElem={(
-                <SelectCountry
+                <SelectMultiple
+                  resource="countries"
+                  maxSelection={5}
                   value={(
                     _.reduce(accountInfo.countries, (r, v) => {
-                      r.push({
-                        key: `${v.id}`,
-                        label: v.cn,
-                      })
+                      r.push({ key: `${v.id}`, label: v.cn })
                       return r
                     }, [])
                   )}
@@ -167,13 +164,12 @@ class StudentBasicAccountInfo extends Component {
             <UpdateAccountInfoItem
               inputType="custom"
               inputElem={(
-                <SelectSchool
+                <SelectMultiple
+                  resource="schools"
+                  maxSelection={5}
                   value={(
                     _.reduce(accountInfo.schools, (r, v) => {
-                      r.push({
-                        key: `${v.id}`,
-                        label: v.cn,
-                      })
+                      r.push({ key: `${v.id}`, label: v.cn })
                       return r
                     }, [])
                   )}
@@ -200,13 +196,12 @@ class StudentBasicAccountInfo extends Component {
             <UpdateAccountInfoItem
               inputType="custom"
               inputElem={(
-                <SelectMajors
+                <SelectMultiple
+                  resource="majors"
+                  maxSelection={3}
                   value={(
                     _.reduce(accountInfo.majors, (r, v) => {
-                      r.push({
-                        key: `${v.id}`,
-                        label: v.cn,
-                      })
+                      r.push({ key: `${v.id}`, label: v.cn })
                       return r
                     }, [])
                   )}
