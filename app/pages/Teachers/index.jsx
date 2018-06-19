@@ -86,6 +86,36 @@ class Teachers extends Component {
         >
           <div className="teachers-filter-wrap">
             <div className="filter-item-wrap">
+              <div className="xfolio-text-info-title">申请地区</div>
+              <SelectMultiple
+                resource="countries"
+                maxSelection={5}
+                value={(
+                  _.reduce(this.state.filterOptions.countries, (r, v) => {
+                    r.push({ key: `${v.id}`, label: v.cn })
+                    return r
+                  }, [])
+                )}
+                onChange={(value) => { this.requestTeacherList({ country_id: value }) }}
+              />
+            </div>
+
+            <div className="filter-item-wrap">
+              <div className="xfolio-text-info-title">申请院校</div>
+              <SelectMultiple
+                resource="schools"
+                maxSelection={5}
+                value={(
+                  _.reduce(this.state.filterOptions.schools, (r, v) => {
+                    r.push({ key: `${v.id}`, label: v.cn })
+                    return r
+                  }, [])
+                )}
+                onChange={(value) => { this.requestTeacherList({ school_id: value }) }}
+              />
+            </div>
+
+            <div className="filter-item-wrap">
               <div className="xfolio-text-info-title">申请专业</div>
               <SelectMultiple
                 resource="majors"
@@ -99,20 +129,7 @@ class Teachers extends Component {
                 onChange={(value) => { this.requestTeacherList({ major_id: value }) }}
               />
             </div>
-            <div className="filter-item-wrap">
-              <div className="xfolio-text-info-title">申请国家</div>
-              <SelectMultiple
-                resource="countries"
-                maxSelection={5}
-                value={(
-                  _.reduce(this.state.filterOptions.countries, (r, v) => {
-                    r.push({ key: `${v.id}`, label: v.cn })
-                    return r
-                  }, [])
-                )}
-                onChange={(value) => { this.requestTeacherList({ country_id: value }) }}
-              />
-            </div>
+
             <div className="filter-item-wrap">
               <div className="xfolio-text-info-title">授课方式</div>
               <Select

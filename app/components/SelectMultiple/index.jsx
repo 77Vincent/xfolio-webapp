@@ -72,7 +72,7 @@ class SelectMultiple extends Component {
     return (
       <Select
         mode="multiple"
-        placeholder="搜索学校"
+        placeholder="输入搜索"
         notFoundContent={this.state.fetching ? <Spin size="small" /> : null}
         labelInValue
         filterOption={false}
