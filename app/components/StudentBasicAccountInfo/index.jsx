@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import { UpdateAccountInfoItem } from '../../components'
 import './index.less'
-import { GENDER_OPTIONS, GENDER_OPTIONS_NORMALIZED } from '../../Consts'
+import { GENDER_OPTIONS } from '../../Consts'
 import constDataHolder from '../../store/constDataHolder'
 
 import SelectMultiple from '../SelectMultiple'
@@ -53,7 +53,11 @@ class StudentBasicAccountInfo extends Component {
           <div className="xfolio-current-info-wrapper">
             <p className="xfolio-text-info-title">性别</p>
             <p className="xfolio-text-info-value">
-              {accountInfo.gender !== null ? GENDER_OPTIONS_NORMALIZED[Number(accountInfo.gender)].name : '未设置'}
+              {
+                accountInfo.gender !== null ?
+                GENDER_OPTIONS.filter(each => (Number(accountInfo.gender) === each.value))[0].name :
+                '未设置'
+              }
             </p>
           </div>
           <div className="update-account-info-item">

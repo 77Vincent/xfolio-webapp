@@ -69,25 +69,13 @@ const Request = {
   getCountries(query = {}) {
     return agent.get('/api/countries').query(query)
   },
-  createCountries(idList) {
-    return agent.put('/api/users_countries').send({
-      country_id: idList,
-    })
-  },
 
   // Schools
   getSchools(query = {}) {
     return agent.get('/api/schools').query(query)
   },
   createSchools(idList) {
-    return agent.put('/api/users_schools').send({
-      school_id: idList,
-    })
-  },
-
-  // Cities
-  getCities(query = {}) {
-    return agent.get('/api/districts').query(query)
+    return agent.put('/api/users_schools').send({ school_id: idList })
   },
 
   // Majors
@@ -95,9 +83,7 @@ const Request = {
     return agent.get('/api/majors').query(query)
   },
   createMajors(idList) {
-    return agent.put('/api/users_majors').send({
-      major_id: idList,
-    })
+    return agent.put('/api/users_majors').send({ major_id: idList })
   },
 
   // Places
@@ -105,9 +91,16 @@ const Request = {
     return agent.get('/api/places').query(query)
   },
   createPlaces(idList) {
-    return agent.put('/api/users_places').send({
-      place_id: idList,
-    })
+    return agent.put('/api/users_places').send({ place_id: idList })
+  },
+
+  // Cities
+  getCities(query = {}) {
+    return agent.get('/api/districts').query(query)
+  },
+  createCity(userId, cityId) {
+    console.log()
+    return agent.post(`/api/users/${userId}`).send({ city: cityId })
   },
 
   // tags

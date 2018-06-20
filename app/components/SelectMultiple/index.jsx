@@ -24,7 +24,7 @@ class SelectMultiple extends Component {
     super(props)
     this.entireOptions = _.map(constDataHolder[this.props.resource], each => ({
       value: String(each.id), // 数字转成字符
-      name: each.cn,
+      name: each.cn || each.fullname,
     }))
   }
 
@@ -41,13 +41,13 @@ class SelectMultiple extends Component {
     const res = await Request[`get${_.capitalize(this.props.resource)}`]({ search })
     options = _.map(res.body, each => ({
       value: `${each.id}`,
-      name: each.cn,
+      name: each.cn || each.address,
     }))
     this.setState({
       options,
       fetching: false,
     })
-  }, 100), 100)
+  }, 200), 200)
 
   handleInputChange = (input) => {
     this.setState({ fetching: true })

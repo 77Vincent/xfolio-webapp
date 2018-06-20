@@ -6,7 +6,7 @@ import cx from 'classnames'
 import { connect } from 'react-redux'
 import to from 'await-to'
 
-import { USER_ROLE, GENDER_OPTIONS_NORMALIZED } from '../../Consts'
+import { USER_ROLE, GENDER_OPTIONS } from '../../Consts'
 import { Request, formatClassDate } from '../../utils'
 import { ClassListItem, EditNewClassItem } from '../../components'
 import './index.less'
@@ -179,9 +179,9 @@ class TeacherCoursePlan extends Component {
                     <span className="xfolio-text-info-title">性别</span>
                     <span className="xfolio-text-info-value">
                       {
-                        _.isNil(currentStudent.gender) === false
-                          ? GENDER_OPTIONS_NORMALIZED[Number(currentStudent.gender)].name
-                          : '未设置'
+                        currentStudent.gender !== null ?
+                        GENDER_OPTIONS.filter(each => (Number(currentStudent.gender) === each.value))[0].name :
+                        '未设置'
                       }
                     </span>
                   </div>

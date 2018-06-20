@@ -40,6 +40,7 @@ class Teachers extends Component {
 
     this.requestTeacherList(this.defaultFilter)
     this.props.getFollowingIds(this.props.accountInfo.id)
+    console.log(this.state.filterOptions)
   }
 
   componentWillUnmount() {
@@ -151,11 +152,10 @@ class Teachers extends Component {
               <div className="xfolio-text-info-title">所在城市</div>
               <SelectMultiple
                 resource="cities"
-                maxSelection={1}
+                maxSelection={5}
                 onChange={(value) => { this.requestTeacherList({ city: value }) }}
                 value={(
                   _.reduce(this.state.filterOptions.cities, (r, v) => {
-                    console.log(v)
                     r.push({ key: String(v.id), label: v.fullname })
                     return r
                   }, [])

@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { connect } from 'react-redux'
 
+import { Request } from '../../utils'
 import { UpdateAccountInfoItem } from '../../components'
 import './index.less'
-import { GENDER_OPTIONS, GENDER_OPTIONS_NORMALIZED } from '../../Consts'
+import { GENDER_OPTIONS } from '../../Consts'
 import constDataHolder from '../../store/constDataHolder'
 
 import SelectMultiple from '../SelectMultiple'
@@ -19,11 +20,20 @@ class TeacherBasicAccountInfo extends Component {
     updateUserSchools: PropTypes.func.isRequired,
     updateUserMajors: PropTypes.func.isRequired,
     updateUserPlaces: PropTypes.func.isRequired,
-  };
+  }
 
   static defaultProps = {
     style: {},
-  };
+  }
+
+  state = {
+    cityInfo: [],
+  }
+
+  componentDidMount = async () => {
+    const data = await Request.getCities({ search: this.props.accountInfo.city })
+    this.setState({ cityInfo: data.body })
+  }
 
   render() {
     const wrapStyle = _.assign({}, this.props.style)
@@ -52,7 +62,11 @@ class TeacherBasicAccountInfo extends Component {
           <div className="xfolio-current-info-wrapper">
             <p className="xfolio-text-info-title">性别</p>
             <p className="xfolio-text-info-value">
-              {accountInfo.gender !== null ? GENDER_OPTIONS_NORMALIZED[Number(accountInfo.gender)].name : '未设置'}
+              {
+                accountInfo.gender !== null ?
+                GENDER_OPTIONS.filter(each => (Number(accountInfo.gender) === each.value))[0].name :
+                '未设置'
+              }
             </p>
           </div>
           <div className="update-account-info-item">
@@ -255,6 +269,36 @@ class TeacherBasicAccountInfo extends Component {
               )}
               onSubmit={(value) => {
                 return this.props.updateUserMajors(value)
+              }}
+            />
+          </div>
+        </div>
+
+        <div className="xfolio-account-info-item">
+          <div className="xfolio-current-info-wrapper">
+            <p className="xfolio-text-info-title">现居地</p>
+            <p className="xfolio-text-info-value">
+              { this.state.cityInfo.length ? this.state.cityInfo[0].address : '未设置' }
+            </p>
+          </div>
+          <div className="update-account-info-item">
+            <UpdateAccountInfoItem
+              inputType="custom"
+              inputElem={(
+                <SelectMultiple
+                  resource="cities"
+                  maxSelection={1}
+                  onChange={(value) => { this.requestTeacherList({ city: value }) }}
+                  value={(
+                    _.reduce(this.state.cityInfo, (r, v) => {
+                      r.push({ key: String(v.id), label: v.fullname })
+                      return r
+                    }, [])
+                  )}
+                />
+              )}
+              onSubmit={(value) => {
+                return this.props.updateUserIfo({ userId, field: 'city', value: String(value[0]) })
               }}
             />
           </div>

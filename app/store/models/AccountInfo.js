@@ -71,30 +71,22 @@ const AccountInfo = {
     },
     async updateUserCountries(idList) {
       return await Request.createCountries(idList).then((res) => {
-        this.updateAccountInfo({
-          countries: res.body,
-        })
+        this.updateAccountInfo({ countries: res.body })
       })
     },
     async updateUserSchools(idList) {
       return await Request.createSchools(idList).then((res) => {
-        this.updateAccountInfo({
-          schools: res.body,
-        })
+        this.updateAccountInfo({ schools: res.body })
       })
     },
     async updateUserMajors(idList) {
       return await Request.createMajors(idList).then((res) => {
-        this.updateAccountInfo({
-          majors: res.body,
-        })
+        this.updateAccountInfo({ majors: res.body })
       })
     },
     async updateUserPlaces(idList) {
       return await Request.createPlaces(idList).then((res) => {
-        this.updateAccountInfo({
-          places: res.body,
-        })
+        this.updateAccountInfo({ places: res.body })
       })
     },
   },
