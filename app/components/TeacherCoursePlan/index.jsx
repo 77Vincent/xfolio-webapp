@@ -313,7 +313,7 @@ const mapStateToProps = state => ({
   accountInfo: state.AccountInfo,
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = () => ({
 
 })
 

@@ -99,7 +99,6 @@ const Request = {
     return agent.get('/api/districts').query(query)
   },
   createCity(userId, cityId) {
-    console.log()
     return agent.post(`/api/users/${userId}`).send({ city: cityId })
   },
 

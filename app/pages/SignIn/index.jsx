@@ -138,7 +138,7 @@ class SignIn extends Component {
 
 const SignInWrapped = Form.create({})(SignIn)
 
-const mapStateToProps = state => ({
+const mapStateToProps = () => ({
 
 })
 

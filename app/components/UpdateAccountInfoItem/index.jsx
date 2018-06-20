@@ -64,19 +64,19 @@ export default class UpdateAccountInfoItem extends Component {
   }
 
   handleInputChange = (e) => {
-    let newValue
+    let newValue = null
     switch (this.props.inputType) {
-    case 'input':
-      newValue = e.target.value
-      break
-    case 'textarea':
-      newValue = e.target.value
-      break
-    case 'select':
-    case 'custom':
-      log('select change ', e)
-      newValue = e
-      break
+      case 'input':
+        newValue = e.target.value
+        break
+      case 'textarea':
+        newValue = e.target.value
+        break
+      case 'select':
+      case 'custom':
+        log('select change ', e)
+        newValue = e
+        break
     }
     this.setState({
       value: newValue,

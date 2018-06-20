@@ -46,7 +46,7 @@ const mapStateToProps = state => ({
   userId: state.AccountInfo.id,
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = () => ({
 
 })
 

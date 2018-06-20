@@ -180,7 +180,7 @@ class TeacherInfoSnapshot extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = () => ({
 
 })
 

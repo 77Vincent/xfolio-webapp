@@ -10,7 +10,6 @@ import { HashRouter as Router } from 'react-router-dom'
 import { LocaleProvider } from 'antd'
 import zhCN from 'antd/lib/locale-provider/zh_CN'
 import 'moment/locale/zh-cn'
-import _ from 'lodash'
 import to from 'await-to'
 import base64 from 'base-64'
 

@@ -40,7 +40,6 @@ class Teachers extends Component {
 
     this.requestTeacherList(this.defaultFilter)
     this.props.getFollowingIds(this.props.accountInfo.id)
-    console.log(this.state.filterOptions)
   }
 
   componentWillUnmount() {

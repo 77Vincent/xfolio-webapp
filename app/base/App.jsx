@@ -151,7 +151,7 @@ const mapStateToProps = state => ({
   accountInfo: state.AccountInfo,
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = () => ({
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))
