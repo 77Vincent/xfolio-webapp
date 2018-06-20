@@ -3,12 +3,13 @@ export const CONST_DATA_URLS = {
   // REST API
   MAJORS: '/api/majors/',
   SCHOOLS: '/api/schools/',
-  COUNTRIES: '/api/countries',
+  COUNTRIES: '/api/countries/',
+  PLACES: '/api/places/',
   FOLLOWER_FOLLOWING: '/api/followers_followings/',
+  CITIES: '/api/districts/',
   // Static resources
   DEGREES: '/resources/degrees.json',
-  PROVINCES: '/resources/locale/CN/provinces.json',
-  CITIES: '/resources/locale/CN/cities.json',
+  STATUS: '/resources/status.json',
 }
 
 export const USER_ROLE = {
@@ -21,21 +22,6 @@ export const LOCAL_STORAGE_TOKEN = 'LOCAL_STORAGE_TOKEN'
 export const LOCAL_STORAGE_USER_ID = 'LOCAL_STORAGE_USER_ID'
 
 export const SEND_CAPTCHA_COUNT_DOWN = 60
-
-export const COURSE_PLACE_OPTIONS = {
-  both: {
-    value: 'both',
-    name: '不限',
-  },
-  online: {
-    value: 'online',
-    name: '线上',
-  },
-  offline: {
-    value: 'offline',
-    name: '线下',
-  },
-}
 
 export const GENDER_OPTIONS = [{
   value: [0, 1],

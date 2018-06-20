@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import cx from 'classnames'
 
-import { COURSE_PLACE_OPTIONS } from '../../Consts'
 import constDataHolder from '../../store/constDataHolder'
 import { Request } from '../../utils'
 import UploadAvatarBase from '../UploadAvatarBase'
@@ -32,8 +31,13 @@ class TeacherInfoSnapshot extends Component {
     editMode: false,
   }
 
-  componentDidMount() {
+  state = {
+    cityName: null,
+  }
 
+  componentDidMount = async () => {
+    const data = await Request.getCities({ search: this.props.teacherInfo.city })
+    this.setState({ cityName: data.body[0].address })
   }
 
   componentWillUnmount() {
@@ -100,15 +104,15 @@ class TeacherInfoSnapshot extends Component {
             <Col span={12}>
               <section>
                 <span>已教授学生</span>
-                <span>{teacherInfo.students - teacherInfo.students_onboard}</span>
+                <span>{ teacherInfo.students - teacherInfo.students_onboard }</span>
               </section>
               <section>
                 <span>在授学生</span>
-                <span>{teacherInfo.students_onboard}</span>
+                <span>{ teacherInfo.students_onboard }</span>
               </section>
               <section>
                 <span>可预约时间</span>
-                <span>{teacherInfo.available}</span>
+                <span>{ teacherInfo.available }</span>
               </section>
             </Col>
             <Col span={12}>
@@ -122,33 +126,30 @@ class TeacherInfoSnapshot extends Component {
               </section>
               <section>
                 <span>现居地</span>
-                <span>
-                  {
-                    teacherInfo.city !== null ? constDataHolder.citiesNormalized[teacherInfo.city].name : '未设置'
-                  }
-                </span>
+                <span>{ this.state.cityName ? this.state.cityName : '未设置' }</span>
               </section>
               <section>
-                <span>授课方式</span>
-                <span>
-                  {
-                    teacherInfo.place !== null ? COURSE_PLACE_OPTIONS[teacherInfo.place].name : '未设置'
-                  }
-                </span>
+                <span>授课地点</span>
+                {
+                  teacherInfo.places.length ?
+                    _.map(teacherInfo.places, (each, index) => { return <span key={index}>{each.cn}</span> }) :
+                    '未设置'
+                }
               </section>
               <section>
                 <span>收费</span>
-                <span>{teacherInfo.cost !== null ? `${teacherInfo.cost} ¥/小时` : '未设置'}</span>
+                <span>{ teacherInfo.cost !== null ? `${teacherInfo.cost} ¥/小时` : '未设置' }</span>
               </section>
             </Col>
           </Row>
+
           <div className="block-edu">
-            <span>{teacherInfo.countries.length ? teacherInfo.countries[0].cn : '未设置'}</span>
-            <span>{teacherInfo.schools.length ? teacherInfo.schools[0].cn : '未设置'}</span>
+            <span>{ teacherInfo.countries.length ? teacherInfo.countries[0].cn : '未设置' }</span>
+            <span>{ teacherInfo.schools.length ? teacherInfo.schools[0].cn : '未设置' }</span>
             <span>
               {
                 teacherInfo.majors.length ?
-                  _.map(teacherInfo.majors, (major, index) => { return <span key={index}>{major.cn}</span> }) :
+                  _.map(teacherInfo.majors, (each, index) => { return <span key={index}>{each.cn}</span> }) :
                   '未设置'
               }
             </span>

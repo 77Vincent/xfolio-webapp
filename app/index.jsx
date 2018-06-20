@@ -50,32 +50,13 @@ async function preRender() {
 
   // 初始化常量数据
   await Promise.all([
-    agent.get(CONST_DATA_URLS.SCHOOLS).then((res) => {
-      constDataHolder.schools = res.body
-    }),
-    agent.get(CONST_DATA_URLS.MAJORS).then((res) => {
-      constDataHolder.majors = res.body
-    }),
-    agent.get(CONST_DATA_URLS.PROVINCES).then((res) => {
-      constDataHolder.provinces = res.body
-    }),
-    agent.get(CONST_DATA_URLS.CITIES).then((res) => {
-      constDataHolder.cities = res.body
-      constDataHolder.citiesNormalized = _.reduce(constDataHolder.cities, (r, v) => {
-        r[v.code] = v
-        return r
-      }, {})
-    }),
-    agent.get(CONST_DATA_URLS.DEGREES).then((res) => {
-      constDataHolder.degrees = res.body
-    }),
-    agent.get(CONST_DATA_URLS.COUNTRIES).then((res) => {
-      constDataHolder.countries = res.body
-      constDataHolder.countriesNormalized = _.reduce(constDataHolder.countries, (r, v) => {
-        r[v.code] = v
-        return r
-      }, {})
-    }),
+    agent.get(CONST_DATA_URLS.PLACES).then((res) => { constDataHolder.places = res.body }),
+    agent.get(CONST_DATA_URLS.SCHOOLS).then((res) => { constDataHolder.schools = res.body }),
+    agent.get(CONST_DATA_URLS.MAJORS).then((res) => { constDataHolder.majors = res.body }),
+    agent.get(CONST_DATA_URLS.COUNTRIES).then((res) => { constDataHolder.countries = res.body }),
+    agent.get(CONST_DATA_URLS.DEGREES).then((res) => { constDataHolder.degrees = res.body }),
+    agent.get(CONST_DATA_URLS.STATUS).then((res) => { constDataHolder.status = res.body }),
+    agent.get(CONST_DATA_URLS.CITIES).then((res) => { constDataHolder.cities = res.body }),
   ])
 }
 

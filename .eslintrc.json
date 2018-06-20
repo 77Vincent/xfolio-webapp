@@ -23,9 +23,10 @@
     "log": true
   },
   "rules": {
-    "indent": ["error", 2],
-    "quotes": ["error", "single"],
+    "init-declarations": ["error", "always"],
     "semi": ["error", "never"],
+    "camelcase": "off",
+    "linebreak-style": "off",
     "curly": "error",
     "no-console": ["error", {
       "allow": ["warn", "error"]

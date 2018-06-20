@@ -12,15 +12,15 @@ const AccountInfo = {
     mobilephone: null,
     email: null,
     role_id: 2,
-    place: 'both',
+    degree_id: null,
+    avatar_id: null,
     city: null,
+    places: [],
     countries: [],
     schools: [],
     majors: [],
-    degree_id: null,
     cost: null,
     followingIds: [], // 已关注用户的 id
-    avatar_id: null,
     tags: [],
     available: 0,
     students: null,
@@ -87,6 +87,13 @@ const AccountInfo = {
       return await Request.createMajors(idList).then((res) => {
         this.updateAccountInfo({
           majors: res.body,
+        })
+      })
+    },
+    async updateUserPlaces(idList) {
+      return await Request.createPlaces(idList).then((res) => {
+        this.updateAccountInfo({
+          places: res.body,
         })
       })
     },

@@ -52,7 +52,7 @@ const Request = {
     return agent.delete('/api/sessions')
   },
 
-  // avatar
+  // avatars
   uploadAvatar(data = { content: null, mime: null }) {
     return agent.put('/api/avatars').send(data)
   },
@@ -60,12 +60,12 @@ const Request = {
     return agent.post(`/api/avatars/${avatarId}`).send(data)
   },
 
-  // order
+  // orders
   createOrder(data) {
     return agent.post('/api/orders').send(data)
   },
 
-  // Country
+  // Countries
   getCountries(query = {}) {
     return agent.get('/api/countries').query(query)
   },
@@ -75,7 +75,7 @@ const Request = {
     })
   },
 
-  // School
+  // Schools
   getSchools(query = {}) {
     return agent.get('/api/schools').query(query)
   },
@@ -85,8 +85,12 @@ const Request = {
     })
   },
 
+  // Cities
+  getCities(query = {}) {
+    return agent.get('/api/districts').query(query)
+  },
 
-  // Major
+  // Majors
   getMajors(query = {}) {
     return agent.get('/api/majors').query(query)
   },
@@ -96,7 +100,17 @@ const Request = {
     })
   },
 
-  // tag
+  // Places
+  getPlaces(query = {}) {
+    return agent.get('/api/places').query(query)
+  },
+  createPlaces(idList) {
+    return agent.put('/api/users_places').send({
+      place_id: idList,
+    })
+  },
+
+  // tags
   createTag(content) {
     return agent.put('/api/tags').send({ content })
   },
@@ -104,14 +118,14 @@ const Request = {
     return agent.delete(`/api/tags/${tagId}`)
   },
 
-  // schedule
+  // schedules
   getSchedules(values = {
     teacher_id: undefined, student_id: undefined, page: 1, search: undefined,
   }) {
     return agent.get('/api/schedules').query(values)
   },
 
-  // class
+  // classes
   getClasses(values = {
     schedule_id: undefined,
   }) {
@@ -129,7 +143,7 @@ const Request = {
     return agent.post(`/api/classes/${classId}`).send(values)
   },
 
-  // course
+  // courses
   searchCourse(values = {
     user_id: null,
     search: null,

@@ -4,9 +4,9 @@ import _ from 'lodash'
 import { Anchor, Select, Radio, Pagination, Button } from 'antd'
 import { connect } from 'react-redux'
 
-import { TeacherInfoSnapshot, SelectMultiple, SelectCity } from '../../components'
+import { TeacherInfoSnapshot, SelectMultiple } from '../../components'
 import { Request } from '../../utils'
-import { COURSE_PLACE_OPTIONS, GENDER_OPTIONS, PRICE_ORDER_OPTIONS } from '../../Consts'
+import { GENDER_OPTIONS, PRICE_ORDER_OPTIONS } from '../../Consts'
 import './index.less'
 
 class Teachers extends Component {
@@ -34,6 +34,7 @@ class Teachers extends Component {
       place,
       major_id: _.map(this.props.accountInfo.majors, each => (each.id)),
       country_id: _.map(this.props.accountInfo.countries, each => (each.id)),
+      school_id: _.map(this.props.accountInfo.schools, each => (each.id)),
     })
 
 
@@ -47,6 +48,7 @@ class Teachers extends Component {
   defaultFilter = {
     major_id: null,
     country_id: null,
+    school_id: null,
     city: null,
     place: null,
     gender: null,
@@ -90,13 +92,13 @@ class Teachers extends Component {
               <SelectMultiple
                 resource="countries"
                 maxSelection={5}
+                onChange={(value) => { this.requestTeacherList({ country_id: value }) }}
                 value={(
                   _.reduce(this.state.filterOptions.countries, (r, v) => {
-                    r.push({ key: `${v.id}`, label: v.cn })
+                    r.push({ key: String(v.id), label: v.cn })
                     return r
                   }, [])
                 )}
-                onChange={(value) => { this.requestTeacherList({ country_id: value }) }}
               />
             </div>
 
@@ -105,13 +107,13 @@ class Teachers extends Component {
               <SelectMultiple
                 resource="schools"
                 maxSelection={5}
+                onChange={(value) => { this.requestTeacherList({ school_id: value }) }}
                 value={(
                   _.reduce(this.state.filterOptions.schools, (r, v) => {
-                    r.push({ key: `${v.id}`, label: v.cn })
+                    r.push({ key: String(v.id), label: v.cn })
                     return r
                   }, [])
                 )}
-                onChange={(value) => { this.requestTeacherList({ school_id: value }) }}
               />
             </div>
 
@@ -120,29 +122,47 @@ class Teachers extends Component {
               <SelectMultiple
                 resource="majors"
                 maxSelection={3}
+                onChange={(value) => { this.requestTeacherList({ major_id: value }) }}
                 value={(
                   _.reduce(this.state.filterOptions.majors, (r, v) => {
-                    r.push({ key: `${v.id}`, label: v.cn })
+                    r.push({ key: String(v.id), label: v.cn })
                     return r
                   }, [])
                 )}
-                onChange={(value) => { this.requestTeacherList({ major_id: value }) }}
               />
             </div>
 
             <div className="filter-item-wrap">
-              <div className="xfolio-text-info-title">授课方式</div>
-              <Select
-                defaultValue="请选择"
-                onChange={async (value) => { this.requestTeacherList({ place: value }) }}
-              >
-                {
-                  _.map(_.values(COURSE_PLACE_OPTIONS), (placeInfo, i) => {
-                    return <Select.Option value={placeInfo.value} key={i}>{placeInfo.name}</Select.Option>
-                  })
-                }
-              </Select>
+              <div className="xfolio-text-info-title">授课地点</div>
+              <SelectMultiple
+                resource="places"
+                maxSelection={4}
+                onChange={(value) => { this.requestTeacherList({ place_id: value }) }}
+                value={(
+                  _.reduce(this.state.filterOptions.places, (r, v) => {
+                    r.push({ key: String(v.id), label: v.cn })
+                    return r
+                  }, [])
+                )}
+              />
             </div>
+
+            <div className="filter-item-wrap">
+              <div className="xfolio-text-info-title">所在城市</div>
+              <SelectMultiple
+                resource="cities"
+                maxSelection={1}
+                onChange={(value) => { this.requestTeacherList({ city: value }) }}
+                value={(
+                  _.reduce(this.state.filterOptions.cities, (r, v) => {
+                    console.log(v)
+                    r.push({ key: String(v.id), label: v.fullname })
+                    return r
+                  }, [])
+                )}
+              />
+            </div>
+
             <div className="filter-item-wrap">
               <div className="xfolio-text-info-title">导师性别</div>
               <Select
@@ -156,12 +176,7 @@ class Teachers extends Component {
                 }
               </Select>
             </div>
-            <div className="filter-item-wrap">
-              <div className="xfolio-text-info-title">所在城市</div>
-              <SelectCity
-                onChange={(value) => { this.requestTeacherList({ city: value }) }}
-              />
-            </div>
+
             <div className="filter-item-wrap">
               <div className="xfolio-text-info-title">导师收费</div>
               <Radio.Group

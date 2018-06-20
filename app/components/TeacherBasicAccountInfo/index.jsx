@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import { UpdateAccountInfoItem } from '../../components'
 import './index.less'
-import { COURSE_PLACE_OPTIONS, GENDER_OPTIONS, GENDER_OPTIONS_NORMALIZED } from '../../Consts'
+import { GENDER_OPTIONS, GENDER_OPTIONS_NORMALIZED } from '../../Consts'
 import constDataHolder from '../../store/constDataHolder'
 
 import SelectMultiple from '../SelectMultiple'
@@ -18,6 +18,7 @@ class TeacherBasicAccountInfo extends Component {
     updateUserCountries: PropTypes.func.isRequired,
     updateUserSchools: PropTypes.func.isRequired,
     updateUserMajors: PropTypes.func.isRequired,
+    updateUserPlaces: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -98,25 +99,7 @@ class TeacherBasicAccountInfo extends Component {
             />
           </div>
         </div>
-        <div className="xfolio-account-info-item">
-          <div className="xfolio-current-info-wrapper">
-            <p className="xfolio-text-info-title">授课形式</p>
-            <p className="xfolio-text-info-value">
-              {COURSE_PLACE_OPTIONS[accountInfo.place] ? COURSE_PLACE_OPTIONS[accountInfo.place].name : '未设置'}
-            </p>
-          </div>
-          <div className="update-account-info-item">
-            <UpdateAccountInfoItem
-              inputType="select"
-              placeholder="请选择"
-              value={accountInfo.place}
-              options={_.values(COURSE_PLACE_OPTIONS)}
-              onSubmit={(value) => {
-                return this.props.updateUserIfo({ userId, field: 'place', value })
-              }}
-            />
-          </div>
-        </div>
+
         <div className="xfolio-account-info-item">
           <div className="xfolio-current-info-wrapper">
             <p className="xfolio-text-info-title">学历</p>
@@ -144,6 +127,40 @@ class TeacherBasicAccountInfo extends Component {
             />
           </div>
         </div>
+
+        <div className="xfolio-account-info-item">
+          <div className="xfolio-current-info-wrapper">
+            <p className="xfolio-text-info-title">授课地点</p>
+            {
+              accountInfo.places.length ?
+                _.map(accountInfo.places, (each, i) => {
+                  return <p className="xfolio-text-info-value" key={i}>{each.cn}</p>
+                }) :
+                <p className="xfolio-text-info-value">未设置</p>
+            }
+          </div>
+          <div className="update-account-info-item">
+            <UpdateAccountInfoItem
+              inputType="custom"
+              inputElem={(
+                <SelectMultiple
+                  resource="places"
+                  maxSelection={4}
+                  value={(
+                    _.reduce(accountInfo.places, (r, v) => {
+                      r.push({ key: `${v.id}`, label: v.cn })
+                      return r
+                    }, [])
+                  )}
+                />
+              )}
+              onSubmit={(value) => {
+                return this.props.updateUserPlaces(value)
+              }}
+            />
+          </div>
+        </div>
+
         <div className="xfolio-account-info-item">
           <div className="xfolio-current-info-wrapper">
             <p className="xfolio-text-info-title">毕业国家</p>
@@ -176,6 +193,7 @@ class TeacherBasicAccountInfo extends Component {
             />
           </div>
         </div>
+
         <div className="xfolio-account-info-item">
           <div className="xfolio-current-info-wrapper">
             <p className="xfolio-text-info-title">毕业院校</p>
@@ -208,6 +226,7 @@ class TeacherBasicAccountInfo extends Component {
             />
           </div>
         </div>
+
         <div className="xfolio-account-info-item">
           <div className="xfolio-current-info-wrapper">
             <p className="xfolio-text-info-title">授课专业</p>
@@ -240,6 +259,7 @@ class TeacherBasicAccountInfo extends Component {
             />
           </div>
         </div>
+
         <div className="xfolio-account-info-item">
           <div className="xfolio-current-info-wrapper">
             <p className="xfolio-text-info-title">一句话介绍</p>
@@ -270,6 +290,7 @@ const mapDispatchToProps = dispatch => ({
   updateUserCountries: dispatch.AccountInfo.updateUserCountries,
   updateUserSchools: dispatch.AccountInfo.updateUserSchools,
   updateUserMajors: dispatch.AccountInfo.updateUserMajors,
+  updateUserPlaces: dispatch.AccountInfo.updateUserPlaces,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeacherBasicAccountInfo)

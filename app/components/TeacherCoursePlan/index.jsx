@@ -6,7 +6,7 @@ import cx from 'classnames'
 import { connect } from 'react-redux'
 import to from 'await-to'
 
-import { USER_ROLE, COURSE_PLACE_OPTIONS, GENDER_OPTIONS_NORMALIZED } from '../../Consts'
+import { USER_ROLE, GENDER_OPTIONS_NORMALIZED } from '../../Consts'
 import { Request, formatClassDate } from '../../utils'
 import { ClassListItem, EditNewClassItem } from '../../components'
 import './index.less'
@@ -127,9 +127,9 @@ class TeacherCoursePlan extends Component {
   render() {
     const wrapStyle = _.assign({}, this.props.style)
     const { studentList, currentStudentIndex, classes } = this.state
-    let currentStudentInfo = {}
+    let currentStudent = {}
     if (studentList.length > 0) {
-      currentStudentInfo = studentList[currentStudentIndex]
+      currentStudent = studentList[currentStudentIndex]
     }
 
     return (
@@ -170,59 +170,76 @@ class TeacherCoursePlan extends Component {
               ) : (
                 <Fragment>
                   <img
-                    src={currentStudentInfo.avatar_id && `/api/avatars/${currentStudentInfo.avatar_id}`}
+                    src={currentStudent.avatar_id && `/api/avatars/${currentStudent.avatar_id}`}
                     alt="avatar"
                     className="student-avatar"
                   />
+
                   <div className="xfolio-current-info-wrapper">
                     <span className="xfolio-text-info-title">性别</span>
                     <span className="xfolio-text-info-value">
                       {
-                        _.isNil(currentStudentInfo.gender) === false
-                          ? GENDER_OPTIONS_NORMALIZED[Number(currentStudentInfo.gender)].name
+                        _.isNil(currentStudent.gender) === false
+                          ? GENDER_OPTIONS_NORMALIZED[Number(currentStudent.gender)].name
                           : '未设置'
                       }
                     </span>
                   </div>
-                  <div className="xfolio-current-info-wrapper">
-                    <span className="xfolio-text-info-title">专业</span>
-                    <span className="xfolio-text-info-value">{currentStudentInfo.majors || '未设置'}</span>
-                  </div>
-                  <div className="xfolio-current-info-wrapper">
-                    <span className="xfolio-text-info-title">授课形式</span>
-                    <span className="xfolio-text-info-value">
-                      {
-                        currentStudentInfo.place
-                          ? COURSE_PLACE_OPTIONS[currentStudentInfo.place].name
-                          : '未设置'
-                      }
-                    </span>
-                  </div>
+
                   <div className="xfolio-current-info-wrapper">
                     <span className="xfolio-text-info-title">申请学历</span>
                     <span className="xfolio-text-info-value">
                       {
-                        currentStudentInfo.degree_id
-                          ? constDataHolder.degrees[currentStudentInfo.degree_id].cn
+                        currentStudent.degree_id
+                          ? constDataHolder.degrees[currentStudent.degree_id].cn
                           : '未设置'
                       }
                     </span>
                   </div>
+
+                  <div className="xfolio-current-info-wrapper">
+                    <span className="xfolio-text-info-title">上课地点</span>
+                    {
+                      currentStudent.places.length ?
+                        _.map(currentStudent.places, (each, i) => {
+                          return <span className="xfolio-text-info-value" key={i}>{each.cn}</span>
+                        }) :
+                        <span className="xfolio-text-info-value">未设置</span>
+                    }
+                  </div>
+
+                  <div className="xfolio-current-info-wrapper">
+                    <span className="xfolio-text-info-title">申请专业</span>
+                    {
+                      currentStudent.majors.length ?
+                        _.map(currentStudent.majors, (each, i) => {
+                          return <span className="xfolio-text-info-value" key={i}>{each.cn}</span>
+                        }) :
+                        <span className="xfolio-text-info-value">未设置</span>
+                    }
+                  </div>
+
+
                   <div className="xfolio-current-info-wrapper">
                     <span className="xfolio-text-info-title">目标院校</span>
-                    <span className="xfolio-text-info-value">
-                      {currentStudentInfo.school ? currentStudentInfo.school.cn : '未设置'}
-                    </span>
+                    {
+                      currentStudent.schools.length ?
+                        _.map(currentStudent.schools, (each, i) => {
+                          return <span className="xfolio-text-info-value" key={i}>{each.cn}</span>
+                        }) :
+                        <span className="xfolio-text-info-value">未设置</span>
+                    }
                   </div>
+
                   <div className="xfolio-current-info-wrapper">
                     <span className="xfolio-text-info-title">申请国家</span>
-                    <span className="xfolio-text-info-value">
-                      {
-                        currentStudentInfo.country
-                          ? constDataHolder.countriesNormalized[currentStudentInfo.country].cn
-                          : '未设置'
-                      }
-                    </span>
+                    {
+                      currentStudent.countries.length ?
+                        _.map(currentStudent.countries, (each, i) => {
+                          return <span className="xfolio-text-info-value" key={i}>{each.cn}</span>
+                        }) :
+                        <span className="xfolio-text-info-value">未设置</span>
+                    }
                   </div>
                 </Fragment>
               )
