@@ -172,7 +172,7 @@ class Teachers extends Component {
             <div className="filter-item-wrap">
               <div className="xfolio-text-info-title">导师性别</div>
               <Select
-                defaultValue="请选择"
+                placeholder="请选择"
                 onChange={(value) => { this.requestTeacherList({ gender: value.split(',') }) }}
               >
                 {

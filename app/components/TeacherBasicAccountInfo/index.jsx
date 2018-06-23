@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { connect } from 'react-redux'
+import { Button } from 'antd'
 
 import { UpdateAccountInfoItem } from '../../components'
 import './index.less'
@@ -9,11 +10,13 @@ import { GENDER_OPTIONS } from '../../Consts'
 import constDataHolder from '../../store/constDataHolder'
 
 import SelectMultiple from '../SelectMultiple'
+import SelectSingle from '../SelectSingle'
+import InfoInput from '../InfoInput'
 
 class TeacherBasicAccountInfo extends Component {
   static propTypes = {
-    style: PropTypes.object,
     accountInfo: PropTypes.object.isRequired,
+    updateUser: PropTypes.func.isRequired,
     updateUserIfo: PropTypes.func.isRequired,
     updateUserCountries: PropTypes.func.isRequired,
     updateUserSchools: PropTypes.func.isRequired,
@@ -21,92 +24,86 @@ class TeacherBasicAccountInfo extends Component {
     updateUserPlaces: PropTypes.func.isRequired,
   }
 
-  static defaultProps = {
-    style: {},
+  state = {
+    toUpdate: {},
+    isEdit: false,
   }
 
-  componentDidMount() {
+  handleValueChange = (e, instance) => {
+    const field = e.target ? e.target.name : instance._owner.memoizedProps.id
+    const value = e.target ? e.target.value : e
+    this.state.toUpdate[field] = value
+    this.setState({ toUpdate: this.state.toUpdate })
+  }
 
+  handleSubmit = () => {
+    this.props.updateUser({
+      userId: this.props.accountInfo.id,
+      payload: this.state.toUpdate,
+    })
+    this.setState({ isEdit: false })
   }
 
   render() {
-    const wrapStyle = _.assign({}, this.props.style)
+    const { isEdit } = this.state
     const { accountInfo } = this.props
     const { id: userId } = accountInfo
 
     return (
-      <div className="teacher-basic-account-info" style={wrapStyle}>
+      <div className="teacher-basic-account-info">
+        <Button
+          onClick={() => { this.setState({ isEdit: !this.state.isEdit }) }}
+        >
+          { this.state.isEdit ? '取消' : '编辑信息' }
+        </Button>
+
+        <Button
+          onClick={this.handleSubmit}
+          type="primary"
+          style={{ display: this.state.isEdit ? 'block' : 'none' }}
+        >
+          确认
+        </Button>
+
         <div className="xfolio-account-info-item">
-          <div className="xfolio-current-info-wrapper">
-            <p className="xfolio-text-info-title">姓名</p>
-            <p className="xfolio-text-info-value">{accountInfo.name || '未设置'}</p>
-          </div>
-          <div className="update-account-info-item">
-            <UpdateAccountInfoItem
-              inputType="input"
-              placeholder="请输入姓名"
-              value=""
-              onSubmit={(value) => {
-                return this.props.updateUserIfo({ userId, field: 'name', value })
-              }}
-            />
-          </div>
-        </div>
-        <div className="xfolio-account-info-item">
-          <div className="xfolio-current-info-wrapper">
-            <p className="xfolio-text-info-title">性别</p>
-            <p className="xfolio-text-info-value">
-              {
-                accountInfo.gender !== null ?
-                GENDER_OPTIONS.filter(each => (Number(accountInfo.gender) === each.value))[0].name :
-                '未设置'
-              }
-            </p>
-          </div>
-          <div className="update-account-info-item">
-            <UpdateAccountInfoItem
-              inputType="select"
-              placeholder="请选择"
-              value={accountInfo.gender}
-              options={GENDER_OPTIONS}
-              onSubmit={(value) => {
-                return this.props.updateUserIfo({ userId, field: 'gender', value })
-              }}
-            />
-          </div>
-        </div>
-        <div className="xfolio-account-info-item">
-          <div className="xfolio-current-info-wrapper">
-            <p className="xfolio-text-info-title">手机号</p>
-            <p className="xfolio-text-info-value">{accountInfo.mobilephone || '未设置'}</p>
-          </div>
-          <div className="update-account-info-item">
-            <UpdateAccountInfoItem
-              inputType="input"
-              placeholder="请输入电话号码"
-              value=""
-              onSubmit={(value) => {
-                return this.props.updateUserIfo({ userId, field: 'mobilephone', value })
-              }}
-            />
-          </div>
+          <InfoInput
+            id="name"
+            label="姓名"
+            value={accountInfo.name}
+            isEdit={isEdit}
+            onChange={this.handleValueChange}
+          />
         </div>
 
         <div className="xfolio-account-info-item">
-          <div className="xfolio-current-info-wrapper">
-            <p className="xfolio-text-info-title">电子邮箱</p>
-            <p className="xfolio-text-info-value">{accountInfo.email || '未设置'}</p>
-          </div>
-          <div className="update-account-info-item">
-            <UpdateAccountInfoItem
-              inputType="input"
-              placeholder="请输入邮箱"
-              value=""
-              onSubmit={(value) => {
-                return this.props.updateUserIfo({ userId, field: 'email', value })
-              }}
-            />
-          </div>
+          <InfoInput
+            id="mobilephone"
+            label="手机号"
+            value={accountInfo.mobilephone}
+            isEdit={isEdit}
+            onChange={this.handleValueChange}
+          />
+        </div>
+
+        <div className="xfolio-account-info-item">
+          <InfoInput
+            id="email"
+            label="电子邮箱"
+            value={accountInfo.email}
+            isEdit={isEdit}
+            onChange={this.handleValueChange}
+          />
+        </div>
+
+        <div className="xfolio-account-info-item">
+          <SelectSingle
+            id="gender"
+            label="性别"
+            value={GENDER_OPTIONS[Number(accountInfo.gender)]}
+            isEdit={isEdit}
+            options={GENDER_OPTIONS}
+            onChange={this.handleValueChange}
+          />
         </div>
 
         <div className="xfolio-account-info-item">
@@ -333,6 +330,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  updateUser: dispatch.AccountInfo.updateUser,
   updateUserIfo: dispatch.AccountInfo.updateUserIfo,
   updateUserCountries: dispatch.AccountInfo.updateUserCountries,
   updateUserSchools: dispatch.AccountInfo.updateUserSchools,

@@ -23,6 +23,7 @@
     "log": true
   },
   "rules": {
+    "no-underscore-dangle": "off",
     "init-declarations": ["error", "always"],
     "semi": ["error", "never"],
     "camelcase": "off",

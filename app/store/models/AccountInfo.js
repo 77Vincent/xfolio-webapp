@@ -1,4 +1,5 @@
 import to from 'await-to'
+import { message } from 'antd'
 import _ from 'lodash'
 
 import { updateState, Request } from '../../utils'
@@ -58,6 +59,12 @@ const AccountInfo = {
           }, []),
         })
       }
+    },
+    async updateUser(data = {}) {
+      const { userId, payload } = data
+      const res = await Request.updateUserInfo(userId, payload)
+      this.updateAccountInfo(res.body)
+      message.success('修改成功')
     },
     async updateUserIfo(data = { userId: null, field: null, value: null }) {
       const { userId, field, value } = data
