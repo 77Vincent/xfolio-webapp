@@ -31,13 +31,8 @@ class TeacherInfoSnapshot extends Component {
     editMode: false,
   }
 
-  state = {
-    cityName: null,
-  }
+  componentDidMount() {
 
-  componentDidMount = async () => {
-    const data = await Request.getCities({ search: this.props.teacherInfo.city })
-    this.setState({ cityName: data.body[0].fullname })
   }
 
   componentWillUnmount() {
@@ -126,7 +121,13 @@ class TeacherInfoSnapshot extends Component {
               </section>
               <section>
                 <span>现居地</span>
-                <span>{ this.state.cityName ? this.state.cityName : '未设置' }</span>
+                <span>
+                  {
+                    teacherInfo.city ?
+                    constDataHolder.cities.filter(each => each.id === teacherInfo.city)[0].fullname :
+                    '未设置'
+                  }
+                </span>
               </section>
               <section>
                 <span>授课地点</span>

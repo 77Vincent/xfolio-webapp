@@ -265,6 +265,44 @@ class StudentBasicAccountInfo extends Component {
             />
           </div>
         </div>
+
+        <div className="xfolio-account-info-item">
+          <div className="xfolio-current-info-wrapper">
+            <p className="xfolio-text-info-title">现居地</p>
+            <p className="xfolio-text-info-value">
+              {
+                accountInfo.city ?
+                constDataHolder.cities.filter(each => each.id === accountInfo.city)[0].fullname :
+                '未设置'
+              }
+            </p>
+          </div>
+          <div className="update-account-info-item">
+            <UpdateAccountInfoItem
+              inputType="custom"
+              inputElem={(
+                <SelectMultiple
+                  resource="cities"
+                  maxSelection={1}
+                  onChange={(value) => { this.requestTeacherList({ city: value }) }}
+                  value={(
+                    _.reduce(constDataHolder.cities.filter(each => each.id === accountInfo.city), (r, v) => {
+                      r.push({ key: String(v.id), label: v.fullname })
+                      return r
+                    }, [])
+                  )}
+                />
+              )}
+              onSubmit={(value) => {
+                return this.props.updateUserIfo({
+                  userId,
+                  field: 'city',
+                  value: value.length ? String(value[0]) : null,
+                })
+              }}
+            />
+          </div>
+        </div>
       </div>
     )
   }

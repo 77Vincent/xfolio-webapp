@@ -28,6 +28,12 @@ class Teachers extends Component {
   }
 
   componentDidMount() {
+    this.GENDER_OPTIONS_FOR_FILTER = GENDER_OPTIONS.map(each => each)
+    this.GENDER_OPTIONS_FOR_FILTER.push({
+      value: [0, 1],
+      name: '不限',
+    })
+
     const { city, place } = this.props.accountInfo
     this.myFilter = _.assign({}, {
       city,
@@ -37,13 +43,14 @@ class Teachers extends Component {
       school_id: _.map(this.props.accountInfo.schools, each => (each.id)),
     })
 
-
     this.requestTeacherList(this.defaultFilter)
     this.props.getFollowingIds(this.props.accountInfo.id)
   }
 
   componentWillUnmount() {
+
   }
+
 
   defaultFilter = {
     major_id: null,
@@ -169,7 +176,7 @@ class Teachers extends Component {
                 onChange={(value) => { this.requestTeacherList({ gender: value.split(',') }) }}
               >
                 {
-                  _.map(_.values(GENDER_OPTIONS), (genderInfo, i) => {
+                  _.map(_.values(this.GENDER_OPTIONS_FOR_FILTER), (genderInfo, i) => {
                     return <Select.Option value={String(genderInfo.value)} key={i}>{genderInfo.name}</Select.Option>
                   })
                 }

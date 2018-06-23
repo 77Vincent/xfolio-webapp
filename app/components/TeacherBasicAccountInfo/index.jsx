@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { connect } from 'react-redux'
 
-import { Request } from '../../utils'
 import { UpdateAccountInfoItem } from '../../components'
 import './index.less'
 import { GENDER_OPTIONS } from '../../Consts'
@@ -26,13 +25,8 @@ class TeacherBasicAccountInfo extends Component {
     style: {},
   }
 
-  state = {
-    cityInfo: [],
-  }
+  componentDidMount() {
 
-  componentDidMount = async () => {
-    const data = await Request.getCities({ search: this.props.accountInfo.city })
-    this.setState({ cityInfo: data.body })
   }
 
   render() {
@@ -278,7 +272,11 @@ class TeacherBasicAccountInfo extends Component {
           <div className="xfolio-current-info-wrapper">
             <p className="xfolio-text-info-title">现居地</p>
             <p className="xfolio-text-info-value">
-              { this.state.cityInfo.length ? this.state.cityInfo[0].fullname : '未设置' }
+              {
+                accountInfo.city ?
+                constDataHolder.cities.filter(each => each.id === accountInfo.city)[0].fullname :
+                '未设置'
+              }
             </p>
           </div>
           <div className="update-account-info-item">
@@ -290,7 +288,7 @@ class TeacherBasicAccountInfo extends Component {
                   maxSelection={1}
                   onChange={(value) => { this.requestTeacherList({ city: value }) }}
                   value={(
-                    _.reduce(this.state.cityInfo, (r, v) => {
+                    _.reduce(constDataHolder.cities.filter(each => each.id === accountInfo.city), (r, v) => {
                       r.push({ key: String(v.id), label: v.fullname })
                       return r
                     }, [])
@@ -298,7 +296,11 @@ class TeacherBasicAccountInfo extends Component {
                 />
               )}
               onSubmit={(value) => {
-                return this.props.updateUserIfo({ userId, field: 'city', value: String(value[0]) })
+                return this.props.updateUserIfo({
+                  userId,
+                  field: 'city',
+                  value: value.length ? String(value[0]) : null,
+                })
               }}
             />
           </div>
