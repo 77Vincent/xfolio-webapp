@@ -77,7 +77,7 @@ class TeacherBasicAccountInfo extends Component {
         </div>
         <div className="xfolio-account-info-item">
           <div className="xfolio-current-info-wrapper">
-            <p className="xfolio-text-info-title">电话</p>
+            <p className="xfolio-text-info-title">手机号</p>
             <p className="xfolio-text-info-value">{accountInfo.mobilephone || '未设置'}</p>
           </div>
           <div className="update-account-info-item">
@@ -91,9 +91,10 @@ class TeacherBasicAccountInfo extends Component {
             />
           </div>
         </div>
+
         <div className="xfolio-account-info-item">
           <div className="xfolio-current-info-wrapper">
-            <p className="xfolio-text-info-title">邮箱</p>
+            <p className="xfolio-text-info-title">电子邮箱</p>
             <p className="xfolio-text-info-value">{accountInfo.email || '未设置'}</p>
           </div>
           <div className="update-account-info-item">
