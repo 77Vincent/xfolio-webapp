@@ -41,7 +41,7 @@ class SelectMultiple extends Component {
     const res = await Request[`get${_.capitalize(this.props.resource)}`]({ search })
     options = _.map(res.body, each => ({
       value: `${each.id}`,
-      name: each.cn || each.address,
+      name: each.cn || each.fullname,
     }))
     this.setState({
       options,

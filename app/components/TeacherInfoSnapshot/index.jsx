@@ -37,7 +37,7 @@ class TeacherInfoSnapshot extends Component {
 
   componentDidMount = async () => {
     const data = await Request.getCities({ search: this.props.teacherInfo.city })
-    this.setState({ cityName: data.body[0].address })
+    this.setState({ cityName: data.body[0].fullname })
   }
 
   componentWillUnmount() {

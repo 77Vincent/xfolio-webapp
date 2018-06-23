@@ -278,7 +278,7 @@ class TeacherBasicAccountInfo extends Component {
           <div className="xfolio-current-info-wrapper">
             <p className="xfolio-text-info-title">现居地</p>
             <p className="xfolio-text-info-value">
-              { this.state.cityInfo.length ? this.state.cityInfo[0].address : '未设置' }
+              { this.state.cityInfo.length ? this.state.cityInfo[0].fullname : '未设置' }
             </p>
           </div>
           <div className="update-account-info-item">
