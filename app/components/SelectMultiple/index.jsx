@@ -8,7 +8,10 @@ import constDataHolder from '../../store/constDataHolder'
 
 class SelectMultiple extends Component {
   static propTypes = {
-    resource: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    default: PropTypes.array.isRequired,
+    isEdit: PropTypes.bool,
     maxSelection: PropTypes.number,
     onChange: PropTypes.func,
     value: PropTypes.array,
@@ -16,13 +19,14 @@ class SelectMultiple extends Component {
 
   static defaultProps = {
     maxSelection: 1,
-    onChange: _.noop,
+    isEdit: false,
+    onChange: null,
     value: [],
   }
 
   constructor(props) {
     super(props)
-    this.entireOptions = _.map(constDataHolder[this.props.resource], each => ({
+    this.entireOptions = _.map(constDataHolder[this.props.id], each => ({
       value: String(each.id), // 数字转成字符
       name: each.cn || each.fullname,
     }))
@@ -38,7 +42,7 @@ class SelectMultiple extends Component {
 
   limitedRequest = _.throttle(_.debounce(async (search) => {
     let options = []
-    const res = await Request[`get${_.capitalize(this.props.resource)}`]({ search })
+    const res = await Request[`get${_.capitalize(this.props.id)}`]({ search })
     options = _.map(res.body, each => ({
       value: `${each.id}`,
       name: each.cn || each.fullname,
@@ -70,22 +74,43 @@ class SelectMultiple extends Component {
     const optionsData = _.isEmpty(this.state.options) ? this.entireOptions : this.state.options
 
     return (
-      <Select
-        mode="multiple"
-        placeholder="输入搜索"
-        notFoundContent={this.state.fetching ? <Spin size="small" /> : null}
-        labelInValue
-        filterOption={false}
-        value={this.state.value}
-        onSearch={this.handleInputChange}
-        onChange={this.handleOptionChange}
-      >
-        {
-          _.map(optionsData, (each, index) => (
-            <Select.Option value={each.value} key={index}>{each.name}</Select.Option>
-          ))
-        }
-      </Select>
+      <div>
+        <p className="xfolio-text-info-title">{this.props.label}</p>
+        <div
+          style={{
+            display: !this.props.isEdit ? 'block' : 'none',
+          }}
+        >
+          {
+            this.props.default.length ?
+              _.map(this.props.default, (each, i) => {
+                return <p className="xfolio-text-info-value" key={i}>{each.cn}</p>
+              }) :
+              <p className="xfolio-text-info-value">未设置</p>
+          }
+        </div>
+
+        <Select
+          style={{
+            width: '200px',
+            display: this.props.isEdit ? 'block' : 'none',
+          }}
+          mode="multiple"
+          placeholder="输入搜索"
+          notFoundContent={this.state.fetching ? <Spin size="small" /> : null}
+          labelInValue
+          filterOption={false}
+          value={this.state.value}
+          onSearch={this.handleInputChange}
+          onChange={this.handleOptionChange}
+        >
+          {
+            _.map(optionsData, (each, index) => (
+              <Select.Option value={each.value} key={index}>{each.name}</Select.Option>
+            ))
+          }
+        </Select>
+      </div>
     )
   }
 }

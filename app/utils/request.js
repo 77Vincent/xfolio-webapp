@@ -69,6 +69,9 @@ const Request = {
   getCountries(query = {}) {
     return agent.get('/api/countries').query(query)
   },
+  createCountries(idList) {
+    return agent.put('/api/users_countries').send({ country_id: idList })
+  },
 
   // Schools
   getSchools(query = {}) {

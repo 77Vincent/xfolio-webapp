@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 class SelectSingle extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
-    value: PropTypes.object.isRequired,
+    default: PropTypes.object.isRequired,
     options: PropTypes.array.isRequired,
     label: PropTypes.string.isRequired,
     isEdit: PropTypes.bool,
@@ -28,7 +28,7 @@ class SelectSingle extends Component {
           }}
           className="xfolio-text-info-value"
         >
-          {this.props.value.name}
+          {this.props.default.name || this.props.default.cn}
         </p>
         <Select
           style={{
@@ -39,7 +39,7 @@ class SelectSingle extends Component {
           name={this.props.id}
           disabled={!this.props.isEdit}
           placeholder={`请选择${this.props.label}`}
-          defaultValue={this.props.value.value}
+          defaultValue={this.props.default.cn || this.props.default.value}
           onSelect={this.props.onChange}
         >
           {
