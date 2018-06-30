@@ -9,7 +9,6 @@ import { GENDER_OPTIONS } from '../../Consts'
 import constDataHolder from '../../store/constDataHolder'
 import './index.less'
 
-
 class TeacherBasicAccountInfo extends Component {
   static propTypes = {
     accountInfo: PropTypes.object.isRequired,

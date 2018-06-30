@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { Anchor, Select, Radio, Pagination, Button } from 'antd'
+import { Anchor, Radio, Pagination, Button } from 'antd'
 import { connect } from 'react-redux'
 
-import { TeacherInfoSnapshot, SelectMultiple } from '../../components'
+import { TeacherInfoSnapshot, SelectMultiple, SelectSingle } from '../../components'
 import { Request } from '../../utils'
 import { GENDER_OPTIONS, PRICE_ORDER_OPTIONS } from '../../Consts'
 import './index.less'
@@ -25,14 +25,16 @@ class Teachers extends Component {
     teacherList: [],
     currentPage: 1,
     pageSize: 7,
+    GENDER_OPTIONS_FOR_FILTER: [],
   }
 
-  componentDidMount() {
-    this.GENDER_OPTIONS_FOR_FILTER = GENDER_OPTIONS.map(each => each)
-    this.GENDER_OPTIONS_FOR_FILTER.push({
+  componentWillMount() {
+    const GENDER_OPTIONS_FOR_FILTER = GENDER_OPTIONS.map(each => each)
+    GENDER_OPTIONS_FOR_FILTER.push({
       value: [0, 1],
       name: '不限',
     })
+    this.setState({ GENDER_OPTIONS_FOR_FILTER })
 
     const { city, place } = this.props.accountInfo
     this.myFilter = _.assign({}, {
@@ -95,12 +97,13 @@ class Teachers extends Component {
         >
           <div className="teachers-filter-wrap">
             <div className="filter-item-wrap">
-              <div className="xfolio-text-info-title">申请地区</div>
               <SelectMultiple
-                resource="countries"
+                id="countries"
+                label="申请地区"
+                isEdit
                 maxSelection={5}
                 onChange={(value) => { this.requestTeacherList({ country_id: value }) }}
-                value={(
+                default={(
                   _.reduce(this.state.filterOptions.countries, (r, v) => {
                     r.push({ key: String(v.id), label: v.cn })
                     return r
@@ -110,12 +113,13 @@ class Teachers extends Component {
             </div>
 
             <div className="filter-item-wrap">
-              <div className="xfolio-text-info-title">申请院校</div>
               <SelectMultiple
-                resource="schools"
+                id="schools"
+                label="申请院校"
+                isEdit
                 maxSelection={5}
                 onChange={(value) => { this.requestTeacherList({ school_id: value }) }}
-                value={(
+                default={(
                   _.reduce(this.state.filterOptions.schools, (r, v) => {
                     r.push({ key: String(v.id), label: v.cn })
                     return r
@@ -125,12 +129,13 @@ class Teachers extends Component {
             </div>
 
             <div className="filter-item-wrap">
-              <div className="xfolio-text-info-title">申请专业</div>
               <SelectMultiple
-                resource="majors"
+                id="majors"
+                label="申请专业"
+                isEdit
                 maxSelection={3}
                 onChange={(value) => { this.requestTeacherList({ major_id: value }) }}
-                value={(
+                default={(
                   _.reduce(this.state.filterOptions.majors, (r, v) => {
                     r.push({ key: String(v.id), label: v.cn })
                     return r
@@ -140,12 +145,13 @@ class Teachers extends Component {
             </div>
 
             <div className="filter-item-wrap">
-              <div className="xfolio-text-info-title">授课地点</div>
               <SelectMultiple
-                resource="places"
+                id="places"
+                isEdit
+                label="授课地点"
                 maxSelection={4}
                 onChange={(value) => { this.requestTeacherList({ place_id: value }) }}
-                value={(
+                default={(
                   _.reduce(this.state.filterOptions.places, (r, v) => {
                     r.push({ key: String(v.id), label: v.cn })
                     return r
@@ -155,12 +161,13 @@ class Teachers extends Component {
             </div>
 
             <div className="filter-item-wrap">
-              <div className="xfolio-text-info-title">所在城市</div>
               <SelectMultiple
-                resource="cities"
-                maxSelection={5}
+                id="cities"
+                label="导师所在城市"
+                isEdit
+                maxSelection={3}
                 onChange={(value) => { this.requestTeacherList({ city: value }) }}
-                value={(
+                default={(
                   _.reduce(this.state.filterOptions.cities, (r, v) => {
                     r.push({ key: String(v.id), label: v.fullname })
                     return r
@@ -169,18 +176,13 @@ class Teachers extends Component {
               />
             </div>
 
-            <div className="filter-item-wrap">
-              <div className="xfolio-text-info-title">导师性别</div>
-              <Select
-                placeholder="请选择"
+            <div className="xfolio-account-info-item">
+              <SelectSingle
+                label="导师性别"
+                isEdit
+                options={this.state.GENDER_OPTIONS_FOR_FILTER}
                 onChange={(value) => { this.requestTeacherList({ gender: value.split(',') }) }}
-              >
-                {
-                  _.map(_.values(this.GENDER_OPTIONS_FOR_FILTER), (genderInfo, i) => {
-                    return <Select.Option value={String(genderInfo.value)} key={i}>{genderInfo.name}</Select.Option>
-                  })
-                }
-              </Select>
+              />
             </div>
 
             <div className="filter-item-wrap">

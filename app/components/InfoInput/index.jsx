@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 class InfoInput extends Component {
   static propTypes = {
-    default: PropTypes.string.isRequired,
+    default: PropTypes.string,
     label: PropTypes.string.isRequired,
     isEdit: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
@@ -12,6 +12,7 @@ class InfoInput extends Component {
   }
 
   static defaultProps = {
+    default: '',
     isEdit: false,
     type: 'input',
   }
@@ -27,7 +28,7 @@ class InfoInput extends Component {
           }}
           className="xfolio-text-info-value"
         >
-          {this.props.default}
+          {this.props.default || '未填写'}
         </p>
         {
           this.props.type === 'input' ?

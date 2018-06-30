@@ -2,307 +2,220 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { connect } from 'react-redux'
+import { Button, Row, Col } from 'antd'
 
-import { UpdateAccountInfoItem } from '../../components'
-import './index.less'
+import { SelectMultiple, SelectSingle, InfoInput } from '../'
 import { GENDER_OPTIONS } from '../../Consts'
 import constDataHolder from '../../store/constDataHolder'
-
-import SelectMultiple from '../SelectMultiple'
+import './index.less'
 
 class StudentBasicAccountInfo extends Component {
   static propTypes = {
-    style: PropTypes.object,
     accountInfo: PropTypes.object.isRequired,
-    updateUserIfo: PropTypes.func.isRequired,
+    updateUser: PropTypes.func.isRequired,
     updateUserCountries: PropTypes.func.isRequired,
     updateUserSchools: PropTypes.func.isRequired,
     updateUserMajors: PropTypes.func.isRequired,
     updateUserPlaces: PropTypes.func.isRequired,
   }
 
-  static defaultProps = {
-    style: {},
+  state = {
+    toUpdate: {},
+    isEdit: false,
+  }
+
+  handleSubmit = () => {
+    this.props.updateUser({
+      userId: this.props.accountInfo.id,
+      payload: this.state.toUpdate,
+    })
+    this.setState({ isEdit: false })
   }
 
   render() {
-    const wrapStyle = _.assign({}, this.props.style)
+    const { isEdit } = this.state
     const { accountInfo } = this.props
-    const { id: userId } = accountInfo
 
     return (
-      <div className="student-basic-account-info" style={wrapStyle}>
-        <div className="xfolio-account-info-item">
-          <div className="xfolio-current-info-wrapper">
-            <p className="xfolio-text-info-title">姓名</p>
-            <p className="xfolio-text-info-value">{accountInfo.name || '未设置'}</p>
-          </div>
-          <div className="update-account-info-item">
-            <UpdateAccountInfoItem
-              inputType="input"
-              placeholder="请输入姓名"
-              value=""
-              onSubmit={(value) => {
-                return this.props.updateUserIfo({ userId, field: 'name', value })
-              }}
-            />
-          </div>
-        </div>
+      <div className="student-basic-account-info">
+        <Row>
+          <Col span={12}>
+            <div className="xfolio-account-info-item">
+              <InfoInput
+                label="姓名"
+                default={accountInfo.name}
+                isEdit={isEdit}
+                onChange={(e) => {
+                  this.state.toUpdate.name = e.target.value
+                  this.setState({ toUpdate: this.state.toUpdate })
+                }}
+              />
+            </div>
 
-        <div className="xfolio-account-info-item">
-          <div className="xfolio-current-info-wrapper">
-            <p className="xfolio-text-info-title">性别</p>
-            <p className="xfolio-text-info-value">
-              {
-                accountInfo.gender !== null ?
-                GENDER_OPTIONS.filter(each => (Number(accountInfo.gender) === each.value))[0].name :
-                '未设置'
-              }
-            </p>
-          </div>
-          <div className="update-account-info-item">
-            <UpdateAccountInfoItem
-              inputType="select"
-              placeholder="请选择"
-              value={accountInfo.gender}
-              options={GENDER_OPTIONS}
-              onSubmit={(value) => {
-                return this.props.updateUserIfo({ userId, field: 'gender', value })
-              }}
-            />
-          </div>
-        </div>
+            <div className="xfolio-account-info-item">
+              <InfoInput
+                label="手机号"
+                default={accountInfo.mobilephone}
+                isEdit={isEdit}
+                onChange={(e) => {
+                  this.state.toUpdate.mobilephone = e.target.value
+                  this.setState({ toUpdate: this.state.toUpdate })
+                }}
+              />
+            </div>
 
-        <div className="xfolio-account-info-item">
-          <div className="xfolio-current-info-wrapper">
-            <p className="xfolio-text-info-title">电话</p>
-            <p className="xfolio-text-info-value">{accountInfo.mobilephone || '未设置'}</p>
-          </div>
-          <div className="update-account-info-item">
-            <UpdateAccountInfoItem
-              inputType="input"
-              placeholder="请输入电话号码"
-              value=""
-              onSubmit={(value) => {
-                return this.props.updateUserIfo({ userId, field: 'mobilephone', value })
-              }}
-            />
-          </div>
-        </div>
+            <div className="xfolio-account-info-item">
+              <InfoInput
+                label="电子邮箱"
+                default={accountInfo.email}
+                isEdit={isEdit}
+                onChange={(e) => {
+                  this.state.toUpdate.email = e.target.value
+                  this.setState({ toUpdate: this.state.toUpdate })
+                }}
+              />
+            </div>
 
-        <div className="xfolio-account-info-item">
-          <div className="xfolio-current-info-wrapper">
-            <p className="xfolio-text-info-title">邮箱</p>
-            <p className="xfolio-text-info-value">{accountInfo.email || '未设置'}</p>
-          </div>
-          <div className="update-account-info-item">
-            <UpdateAccountInfoItem
-              inputType="input"
-              placeholder="请输入邮箱"
-              value=""
-              onSubmit={(value) => {
-                return this.props.updateUserIfo({ userId, field: 'email', value })
-              }}
-            />
-          </div>
-        </div>
+            <div className="xfolio-account-info-item">
+              <SelectSingle
+                label="性别"
+                default={GENDER_OPTIONS[Number(accountInfo.gender)]}
+                isEdit={isEdit}
+                options={GENDER_OPTIONS}
+                onChange={(e) => {
+                  this.state.toUpdate.gender = e
+                  this.setState({ toUpdate: this.state.toUpdate })
+                }}
+              />
+            </div>
 
-        <div className="xfolio-account-info-item">
-          <div className="xfolio-current-info-wrapper">
-            <p className="xfolio-text-info-title">授课地点</p>
-            {
-              accountInfo.places.length ?
-                _.map(accountInfo.places, (each, i) => {
-                  return <p className="xfolio-text-info-value" key={i}>{each.cn}</p>
-                }) :
-                <p className="xfolio-text-info-value">未设置</p>
-            }
-          </div>
-          <div className="update-account-info-item">
-            <UpdateAccountInfoItem
-              inputType="custom"
-              inputElem={(
-                <SelectMultiple
-                  resource="places"
-                  maxSelection={4}
-                  value={(
-                    _.reduce(accountInfo.places, (r, v) => {
-                      r.push({ key: `${v.id}`, label: v.cn })
-                      return r
-                    }, [])
-                  )}
-                />
-              )}
-              onSubmit={(value) => {
-                return this.props.updateUserPlaces(value)
-              }}
-            />
-          </div>
-        </div>
+            <div className="xfolio-account-info-item">
+              <InfoInput
+                label="一句话介绍"
+                type="textarea"
+                default={accountInfo.bio}
+                isEdit={isEdit}
+                onChange={(e) => {
+                  this.state.toUpdate.bio = e.target.value
+                  this.setState({ toUpdate: this.state.toUpdate })
+                }}
+              />
+            </div>
+          </Col>
 
-        <div className="xfolio-account-info-item">
-          <div className="xfolio-current-info-wrapper">
-            <p className="xfolio-text-info-title">申请国家</p>
-            {
-              accountInfo.countries.length ?
-                _.map(accountInfo.countries, (country, i) => {
-                  return <p className="xfolio-text-info-value" key={i}>{country.cn}</p>
-                }) :
-                <p className="xfolio-text-info-value">未设置</p>
-            }
-          </div>
-          <div className="update-account-info-item">
-            <UpdateAccountInfoItem
-              inputType="custom"
-              inputElem={(
-                <SelectMultiple
-                  resource="countries"
-                  maxSelection={5}
-                  value={(
-                    _.reduce(accountInfo.countries, (r, v) => {
-                      r.push({ key: `${v.id}`, label: v.cn })
-                      return r
-                    }, [])
-                  )}
-                />
-              )}
-              onSubmit={(value) => {
-                return this.props.updateUserCountries(value)
-              }}
-            />
-          </div>
-        </div>
-        <div className="xfolio-account-info-item">
-          <div className="xfolio-current-info-wrapper">
-            <p className="xfolio-text-info-title">目标院校</p>
-            {
-              accountInfo.schools.length ?
-                _.map(accountInfo.schools, (each, i) => {
-                  return <p className="xfolio-text-info-value" key={i}>{each.cn}</p>
-                }) :
-                <p className="xfolio-text-info-value">未设置</p>
-            }
-          </div>
-          <div className="update-account-info-item">
-            <UpdateAccountInfoItem
-              inputType="custom"
-              inputElem={(
-                <SelectMultiple
-                  resource="schools"
-                  maxSelection={5}
-                  value={(
-                    _.reduce(accountInfo.schools, (r, v) => {
-                      r.push({ key: `${v.id}`, label: v.cn })
-                      return r
-                    }, [])
-                  )}
-                />
-              )}
-              onSubmit={(value) => {
-                return this.props.updateUserSchools(value)
-              }}
-            />
-          </div>
-        </div>
+          <Col span={12}>
+            <div className="xfolio-account-info-item">
+              <SelectSingle
+                label="申请学历"
+                default={constDataHolder.degrees[accountInfo.degree_id]}
+                isEdit={isEdit}
+                options={(
+                  _.reduce(constDataHolder.degrees, (r, v, i) => {
+                    r[i] = { value: i, name: v.cn }
+                    return r
+                  }, [])
+                )}
+                onChange={(e) => {
+                  this.state.toUpdate.degree_id = e
+                  this.setState({ toUpdate: this.state.toUpdate })
+                }}
+              />
+            </div>
 
-        <div className="xfolio-account-info-item">
-          <div className="xfolio-current-info-wrapper">
-            <p className="xfolio-text-info-title">申请专业</p>
-            {
-              accountInfo.majors.length ?
-                _.map(accountInfo.majors, (each, i) => {
-                  return <p className="xfolio-text-info-value" key={i}>{each.cn}</p>
-                }) :
-                <p className="xfolio-text-info-value">未设置</p>
-            }
-          </div>
-          <div className="update-account-info-item">
-            <UpdateAccountInfoItem
-              inputType="custom"
-              inputElem={(
-                <SelectMultiple
-                  resource="majors"
-                  maxSelection={3}
-                  value={(
-                    _.reduce(accountInfo.majors, (r, v) => {
-                      r.push({ key: `${v.id}`, label: v.cn })
-                      return r
-                    }, [])
-                  )}
-                />
-              )}
-              onSubmit={(value) => {
-                return this.props.updateUserMajors(value)
-              }}
-            />
-          </div>
-        </div>
+            <div className="xfolio-account-info-item">
+              <SelectMultiple
+                id="places"
+                label="可以接受的授课地点"
+                default={accountInfo.places}
+                isEdit={isEdit}
+                maxSelection={4}
+                onChange={(e) => {
+                  this.props.updateUserPlaces(e)
+                }}
+                value={(
+                  _.reduce(accountInfo.places, (r, v) => {
+                    r.push({ key: `${v.id}`, label: v.cn })
+                    return r
+                  }, [])
+                )}
+              />
+            </div>
 
-        <div className="xfolio-account-info-item">
-          <div className="xfolio-current-info-wrapper">
-            <p className="xfolio-text-info-title">申请学历</p>
-            <p className="xfolio-text-info-value">
-              {accountInfo.degree_id !== null ? constDataHolder.degrees[accountInfo.degree_id].cn : '未设置'}
-            </p>
-          </div>
-          <div className="update-account-info-item">
-            <UpdateAccountInfoItem
-              inputType="select"
-              placeholder="请选择"
-              value={accountInfo.degree_id}
-              options={(
-                _.reduce(constDataHolder.degrees, (r, v, i) => {
-                  r[i] = {
-                    value: i,
-                    name: v.cn,
-                  }
-                  return r
-                }, [])
-              )}
-              onSubmit={(value) => {
-                return this.props.updateUserIfo({ userId, field: 'degree_id', value })
-              }}
-            />
-          </div>
-        </div>
+            <div className="xfolio-account-info-item">
+              <SelectMultiple
+                id="schools"
+                label="目标院校"
+                default={accountInfo.schools}
+                isEdit={isEdit}
+                maxSelection={5}
+                onChange={(e) => {
+                  this.props.updateUserSchools(e)
+                }}
+                value={(
+                  _.reduce(accountInfo.schools, (r, v) => {
+                    r.push({ key: `${v.id}`, label: v.cn })
+                    return r
+                  }, [])
+                )}
+              />
+            </div>
 
-        <div className="xfolio-account-info-item">
-          <div className="xfolio-current-info-wrapper">
-            <p className="xfolio-text-info-title">现居地</p>
-            <p className="xfolio-text-info-value">
-              {
-                accountInfo.city ?
-                constDataHolder.cities.filter(each => each.id === accountInfo.city)[0].fullname :
-                '未设置'
-              }
-            </p>
-          </div>
-          <div className="update-account-info-item">
-            <UpdateAccountInfoItem
-              inputType="custom"
-              inputElem={(
-                <SelectMultiple
-                  resource="cities"
-                  maxSelection={1}
-                  onChange={(value) => { this.requestTeacherList({ city: value }) }}
-                  value={(
-                    _.reduce(constDataHolder.cities.filter(each => each.id === accountInfo.city), (r, v) => {
-                      r.push({ key: String(v.id), label: v.fullname })
-                      return r
-                    }, [])
-                  )}
-                />
-              )}
-              onSubmit={(value) => {
-                return this.props.updateUserIfo({
-                  userId,
-                  field: 'city',
-                  value: value.length ? String(value[0]) : null,
-                })
-              }}
-            />
-          </div>
-        </div>
+            <div className="xfolio-account-info-item">
+              <SelectMultiple
+                id="majors"
+                label="申请专业"
+                default={accountInfo.majors}
+                isEdit={isEdit}
+                maxSelection={3}
+                onChange={(e) => {
+                  this.props.updateUserMajors(e)
+                }}
+                value={(
+                  _.reduce(accountInfo.majors, (r, v) => {
+                    r.push({ key: `${v.id}`, label: v.cn })
+                    return r
+                  }, [])
+                )}
+              />
+            </div>
+
+            <div className="xfolio-account-info-item">
+              <SelectMultiple
+                id="countries"
+                label="申请国家"
+                default={accountInfo.countries}
+                isEdit={isEdit}
+                maxSelection={5}
+                onChange={(e) => {
+                  this.props.updateUserCountries(e)
+                }}
+                value={(
+                  _.reduce(accountInfo.countries, (r, v) => {
+                    r.push({ key: `${v.id}`, label: v.cn })
+                    return r
+                  }, [])
+                )}
+              />
+            </div>
+          </Col>
+        </Row>
+
+        <Row type="flex" justify="end">
+          <Button
+            onClick={() => { this.setState({ isEdit: !this.state.isEdit }) }}
+            style={{ display: !this.state.isEdit ? 'block' : 'none' }}
+          >
+            编辑
+          </Button>
+
+          <Button
+            onClick={this.handleSubmit}
+            type="primary"
+            style={{ display: this.state.isEdit ? 'block' : 'none' }}
+          >
+            完成
+          </Button>
+        </Row>
       </div>
     )
   }
@@ -313,7 +226,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  updateUserIfo: dispatch.AccountInfo.updateUserIfo,
+  updateUser: dispatch.AccountInfo.updateUser,
   updateUserCountries: dispatch.AccountInfo.updateUserCountries,
   updateUserSchools: dispatch.AccountInfo.updateUserSchools,
   updateUserMajors: dispatch.AccountInfo.updateUserMajors,

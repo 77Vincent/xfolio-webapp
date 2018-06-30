@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 class SelectSingle extends Component {
   static propTypes = {
-    default: PropTypes.object.isRequired,
+    default: PropTypes.object,
     options: PropTypes.array.isRequired,
     label: PropTypes.string.isRequired,
     isEdit: PropTypes.bool,
@@ -13,6 +13,7 @@ class SelectSingle extends Component {
   }
 
   static defaultProps = {
+    default: {},
     isEdit: false,
   }
 
@@ -42,7 +43,7 @@ class SelectSingle extends Component {
         >
           {
             _.map(this.props.options, ({ value, name }, index) => (
-              <Select.Option value={value} key={index}>{name}</Select.Option>
+              <Select.Option value={String(value)} key={index}>{name}</Select.Option>
             ))
           }
         </Select>
