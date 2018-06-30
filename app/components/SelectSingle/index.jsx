@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 
 class SelectSingle extends Component {
   static propTypes = {
-    id: PropTypes.string.isRequired,
     default: PropTypes.object.isRequired,
     options: PropTypes.array.isRequired,
     label: PropTypes.string.isRequired,
@@ -36,7 +35,6 @@ class SelectSingle extends Component {
             width: '200px',
             display: this.props.isEdit ? 'block' : 'none',
           }}
-          name={this.props.id}
           disabled={!this.props.isEdit}
           placeholder={`请选择${this.props.label}`}
           defaultValue={this.props.default.cn || this.props.default.value}
