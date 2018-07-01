@@ -9,19 +9,19 @@ import constDataHolder from '../../store/constDataHolder'
 class SelectMultiple extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-    default: PropTypes.array.isRequired,
+    label: PropTypes.string,
     isEdit: PropTypes.bool,
     maxSelection: PropTypes.number,
     onChange: PropTypes.func,
-    value: PropTypes.array,
+    default: PropTypes.array,
   }
 
   static defaultProps = {
+    label: '',
     maxSelection: 1,
     isEdit: false,
     onChange: null,
-    value: [],
+    default: [],
   }
 
   constructor(props) {
@@ -34,7 +34,7 @@ class SelectMultiple extends Component {
 
   state = {
     options: [],
-    value: this.props.value,
+    values: this.props.default,
     fetching: false,
   }
 
@@ -64,7 +64,7 @@ class SelectMultiple extends Component {
       return
     }
     this.setState({
-      value: _.uniqWith(value, (a, b) => `${a.key}` === `${b.key}`),
+      values: _.uniqWith(value, (a, b) => `${a.key}` === `${b.key}`),
       options: [],
     })
     this.props.onChange(_.map(value, each => Number(each.key))) // 字符转回数字
@@ -75,7 +75,10 @@ class SelectMultiple extends Component {
 
     return (
       <div>
-        <p className="xfolio-text-info-title">{this.props.label}</p>
+        {
+          this.props.label &&
+          <p className="xfolio-text-info-title">{this.props.label}</p>
+        }
         <div
           style={{
             display: !this.props.isEdit ? 'block' : 'none',
@@ -84,7 +87,7 @@ class SelectMultiple extends Component {
           {
             this.props.default.length ?
               _.map(this.props.default, (each, i) => {
-                return <p className="xfolio-text-info-value" key={i}>{each.cn}</p>
+                return <p className="xfolio-text-info-value" key={i}>{each.label}</p>
               }) :
               <p className="xfolio-text-info-value">未设置</p>
           }
@@ -100,7 +103,7 @@ class SelectMultiple extends Component {
           notFoundContent={this.state.fetching ? <Spin size="small" /> : null}
           labelInValue
           filterOption={false}
-          value={this.state.value}
+          value={this.state.values}
           onSearch={this.handleInputChange}
           onChange={this.handleOptionChange}
         >

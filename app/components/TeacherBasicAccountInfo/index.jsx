@@ -90,6 +90,24 @@ class TeacherBasicAccountInfo extends Component {
             </div>
 
             <div className="xfolio-account-info-item">
+              <SelectMultiple
+                id="cities"
+                label="现居地"
+                isEdit={isEdit}
+                maxSelection={1}
+                onChange={(e) => {
+                  this.state.toUpdate.city = e && String(e[0])
+                  this.setState({ toUpdate: this.state.toUpdate })
+                }}
+                default={(
+                  constDataHolder.cities
+                    .filter(each => each.id === accountInfo.city)
+                    .map(each => ({ key: String(each.id), label: each.fullname }))
+                )}
+              />
+            </div>
+
+            <div className="xfolio-account-info-item">
               <InfoInput
                 label="一句话介绍"
                 type="textarea"
@@ -126,13 +144,12 @@ class TeacherBasicAccountInfo extends Component {
               <SelectMultiple
                 id="places"
                 label="授课地点"
-                default={accountInfo.places}
                 isEdit={isEdit}
                 maxSelection={4}
                 onChange={(e) => {
                   this.props.updateUserPlaces(e)
                 }}
-                value={(
+                default={(
                   _.reduce(accountInfo.places, (r, v) => {
                     r.push({ key: `${v.id}`, label: v.cn })
                     return r
@@ -145,13 +162,12 @@ class TeacherBasicAccountInfo extends Component {
               <SelectMultiple
                 id="schools"
                 label="毕业院校"
-                default={accountInfo.schools}
                 isEdit={isEdit}
                 maxSelection={1}
                 onChange={(e) => {
                   this.props.updateUserSchools(e)
                 }}
-                value={(
+                default={(
                   _.reduce(accountInfo.schools, (r, v) => {
                     r.push({ key: `${v.id}`, label: v.cn })
                     return r
@@ -164,13 +180,12 @@ class TeacherBasicAccountInfo extends Component {
               <SelectMultiple
                 id="majors"
                 label="授课专业"
-                default={accountInfo.majors}
                 isEdit={isEdit}
                 maxSelection={3}
                 onChange={(e) => {
                   this.props.updateUserMajors(e)
                 }}
-                value={(
+                default={(
                   _.reduce(accountInfo.majors, (r, v) => {
                     r.push({ key: `${v.id}`, label: v.cn })
                     return r
@@ -183,13 +198,12 @@ class TeacherBasicAccountInfo extends Component {
               <SelectMultiple
                 id="countries"
                 label="毕业国家"
-                default={accountInfo.countries}
                 isEdit={isEdit}
                 maxSelection={1}
                 onChange={(e) => {
                   this.props.updateUserCountries(e)
                 }}
-                value={(
+                default={(
                   _.reduce(accountInfo.countries, (r, v) => {
                     r.push({ key: `${v.id}`, label: v.cn })
                     return r

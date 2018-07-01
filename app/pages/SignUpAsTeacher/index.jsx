@@ -53,9 +53,9 @@ class SignUpAsTeacher extends Component {
             <div className="user-base-info">
               <Form.Item label="性别" >
                 <SelectMultiple
-                  resource="places"
+                  id="places"
                   maxSelection={4}
-                  value={(
+                  default={(
                     _.reduce(accountInfo.places, (r, v) => {
                       r.push({ key: `${v.id}`, label: v.cn })
                       return r
@@ -84,10 +84,11 @@ class SignUpAsTeacher extends Component {
 
               <Form.Item label="现居地" >
                 <SelectMultiple
-                  resource="cities"
+                  id="cities"
                   maxSelection={1}
                   onChange={() => { }}
-                  value={(
+                  isEdit
+                  default={(
                     _.reduce(constDataHolder.cities.filter(each => each.id === accountInfo.city), (r, v) => {
                       r.push({ key: String(v.id), label: v.fullname })
                       return r
@@ -98,10 +99,10 @@ class SignUpAsTeacher extends Component {
 
               <Form.Item label="毕业国家" >
                 <SelectMultiple
-                  resource="schools"
+                  id="schools"
                   maxSelection={1}
                   onChange={() => { }}
-                  value={(
+                  default={(
                     _.reduce(accountInfo.schools, (r, v) => {
                       r.push({ key: `${v.id}`, label: v.cn })
                       return r
