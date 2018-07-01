@@ -14,6 +14,7 @@ const AccountInfo = {
     email: null,
     role_id: 2,
     degree_id: null,
+    status_id: null,
     avatar_id: null,
     city: null,
     places: [],

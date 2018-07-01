@@ -7,12 +7,13 @@ class SelectSingle extends Component {
   static propTypes = {
     default: PropTypes.object,
     options: PropTypes.array.isRequired,
-    label: PropTypes.string.isRequired,
+    label: PropTypes.string,
     isEdit: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
+    label: '',
     default: {},
     isEdit: false,
   }

@@ -195,6 +195,24 @@ class TeacherBasicAccountInfo extends Component {
             </div>
 
             <div className="xfolio-account-info-item">
+              <SelectSingle
+                label="职业状态"
+                default={constDataHolder.status[Number(accountInfo.status_id)]}
+                isEdit={isEdit}
+                options={(
+                  _.reduce(constDataHolder.status, (r, v, i) => {
+                    r[i] = { value: i, name: v.cn }
+                    return r
+                  }, [])
+                )}
+                onChange={(e) => {
+                  this.state.toUpdate.status_id = e
+                  this.setState({ toUpdate: this.state.toUpdate })
+                }}
+              />
+            </div>
+
+            <div className="xfolio-account-info-item">
               <SelectMultiple
                 id="countries"
                 label="毕业国家"
