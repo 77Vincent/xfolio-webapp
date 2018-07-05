@@ -90,20 +90,45 @@ class StudentBasicAccountInfo extends Component {
             </div>
 
             <div className="xfolio-account-info-item">
-              <SelectMultiple
-                id="cities"
+              <SelectSingle
                 label="现居地"
-                isEdit={isEdit}
-                maxSelection={1}
-                onChange={(e) => {
-                  this.state.toUpdate.city = e && String(e[0])
-                  this.setState({ toUpdate: this.state.toUpdate })
-                }}
-                default={(
+                default={
                   constDataHolder.cities
                     .filter(each => each.id === accountInfo.city)
-                    .map(each => ({ key: String(each.id), label: each.fullname }))
+                    .map(v => ({ value: String(v.id), name: v.fullname }))[0]
+                }
+                isEdit={isEdit}
+                options={
+                  _.reduce(constDataHolder.cities, (r, v, i) => {
+                    r[i] = { value: i, name: v.fullname }
+                    return r
+                  }, [])
+                }
+                onChange={(e) => {
+                  this.state.toUpdate.city = String(constDataHolder.cities[e].id)
+                  this.setState({ toUpdate: this.state.toUpdate })
+                }}
+              />
+            </div>
+
+            <div className="xfolio-account-info-item">
+              <SelectSingle
+                label="职业状态"
+                default={{
+                  value: accountInfo.status_id,
+                  name: constDataHolder.status[Number(accountInfo.status_id)].cn,
+                }}
+                isEdit={isEdit}
+                options={(
+                  _.reduce(constDataHolder.status, (r, v, i) => {
+                    r[i] = { value: i, name: v.cn }
+                    return r
+                  }, [])
                 )}
+                onChange={(e) => {
+                  this.state.toUpdate.status_id = e
+                  this.setState({ toUpdate: this.state.toUpdate })
+                }}
               />
             </div>
 
@@ -125,8 +150,11 @@ class StudentBasicAccountInfo extends Component {
             <div className="xfolio-account-info-item">
               <SelectSingle
                 label="申请学历"
-                default={constDataHolder.degrees[accountInfo.degree_id]}
                 isEdit={isEdit}
+                default={{
+                  value: accountInfo.degree_id,
+                  name: constDataHolder.degrees[Number(accountInfo.degree_id)].cn,
+                }}
                 options={(
                   _.reduce(constDataHolder.degrees, (r, v, i) => {
                     r[i] = { value: i, name: v.cn }
