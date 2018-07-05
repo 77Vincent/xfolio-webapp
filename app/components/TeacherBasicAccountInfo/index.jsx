@@ -90,20 +90,24 @@ class TeacherBasicAccountInfo extends Component {
             </div>
 
             <div className="xfolio-account-info-item">
-              <SelectMultiple
-                id="cities"
+              <SelectSingle
                 label="现居地"
-                isEdit={isEdit}
-                maxSelection={1}
-                onChange={(e) => {
-                  this.state.toUpdate.city = e && String(e[0])
-                  this.setState({ toUpdate: this.state.toUpdate })
-                }}
-                default={(
+                default={
                   constDataHolder.cities
                     .filter(each => each.id === accountInfo.city)
-                    .map(each => ({ key: String(each.id), label: each.fullname }))
-                )}
+                    .map(v => ({ value: String(v.id), name: v.fullname }))[0]
+                }
+                isEdit={isEdit}
+                options={
+                  _.reduce(constDataHolder.cities, (r, v, i) => {
+                    r[i] = { value: i, name: v.fullname }
+                    return r
+                  }, [])
+                }
+                onChange={(e) => {
+                  this.state.toUpdate.city = String(constDataHolder.cities[e].id)
+                  this.setState({ toUpdate: this.state.toUpdate })
+                }}
               />
             </div>
 
@@ -123,9 +127,65 @@ class TeacherBasicAccountInfo extends Component {
 
           <Col span={12}>
             <div className="xfolio-account-info-item">
+              <SelectMultiple
+                id="majors"
+                label="授课专业"
+                isEdit={isEdit}
+                maxSelection={3}
+                onChange={(e) => {
+                  this.props.updateUserMajors(e)
+                }}
+                default={(
+                  _.reduce(accountInfo.majors, (r, v) => {
+                    r.push({ key: String(v.id), label: v.cn })
+                    return r
+                  }, [])
+                )}
+              />
+            </div>
+
+            <div className="xfolio-account-info-item">
+              <SelectMultiple
+                id="places"
+                label="授课地点"
+                isEdit={isEdit}
+                maxSelection={4}
+                onChange={(e) => {
+                  this.props.updateUserPlaces(e)
+                }}
+                default={(
+                  _.reduce(accountInfo.places, (r, v) => {
+                    r.push({ key: String(v.id), label: v.cn })
+                    return r
+                  }, [])
+                )}
+              />
+            </div>
+
+            <div className="xfolio-account-info-item">
               <SelectSingle
-                label="学历"
-                default={constDataHolder.degrees[accountInfo.degree_id]}
+                label="毕业院校"
+                default={accountInfo.schools.map(v => ({ value: v.id, name: v.cn }))[0]}
+                isEdit={isEdit}
+                options={(
+                  _.reduce(constDataHolder.schools, (r, v, i) => {
+                    r[i] = { value: i, name: v.cn }
+                    return r
+                  }, [])
+                )}
+                onChange={(e) => {
+                  this.props.updateUserSchools([constDataHolder.schools[e].id])
+                }}
+              />
+            </div>
+
+            <div className="xfolio-account-info-item">
+              <SelectSingle
+                label="最高学历"
+                default={{
+                  value: accountInfo.degree_id,
+                  name: constDataHolder.degrees[Number(accountInfo.degree_id)].cn,
+                }}
                 isEdit={isEdit}
                 options={(
                   _.reduce(constDataHolder.degrees, (r, v, i) => {
@@ -141,63 +201,12 @@ class TeacherBasicAccountInfo extends Component {
             </div>
 
             <div className="xfolio-account-info-item">
-              <SelectMultiple
-                id="places"
-                label="授课地点"
-                isEdit={isEdit}
-                maxSelection={4}
-                onChange={(e) => {
-                  this.props.updateUserPlaces(e)
-                }}
-                default={(
-                  _.reduce(accountInfo.places, (r, v) => {
-                    r.push({ key: `${v.id}`, label: v.cn })
-                    return r
-                  }, [])
-                )}
-              />
-            </div>
-
-            <div className="xfolio-account-info-item">
-              <SelectMultiple
-                id="schools"
-                label="毕业院校"
-                isEdit={isEdit}
-                maxSelection={1}
-                onChange={(e) => {
-                  this.props.updateUserSchools(e)
-                }}
-                default={(
-                  _.reduce(accountInfo.schools, (r, v) => {
-                    r.push({ key: `${v.id}`, label: v.cn })
-                    return r
-                  }, [])
-                )}
-              />
-            </div>
-
-            <div className="xfolio-account-info-item">
-              <SelectMultiple
-                id="majors"
-                label="授课专业"
-                isEdit={isEdit}
-                maxSelection={3}
-                onChange={(e) => {
-                  this.props.updateUserMajors(e)
-                }}
-                default={(
-                  _.reduce(accountInfo.majors, (r, v) => {
-                    r.push({ key: `${v.id}`, label: v.cn })
-                    return r
-                  }, [])
-                )}
-              />
-            </div>
-
-            <div className="xfolio-account-info-item">
               <SelectSingle
                 label="职业状态"
-                default={constDataHolder.status[Number(accountInfo.status_id)]}
+                default={{
+                  value: accountInfo.status_id,
+                  name: constDataHolder.status[Number(accountInfo.status_id)].cn,
+                }}
                 isEdit={isEdit}
                 options={(
                   _.reduce(constDataHolder.status, (r, v, i) => {
@@ -213,20 +222,21 @@ class TeacherBasicAccountInfo extends Component {
             </div>
 
             <div className="xfolio-account-info-item">
-              <SelectMultiple
-                id="countries"
+              <SelectSingle
                 label="毕业国家"
+                default={
+                  accountInfo.countries.map(v => ({ value: v.id, name: v.cn }))[0]
+                }
                 isEdit={isEdit}
-                maxSelection={1}
-                onChange={(e) => {
-                  this.props.updateUserCountries(e)
-                }}
-                default={(
-                  _.reduce(accountInfo.countries, (r, v) => {
-                    r.push({ key: `${v.id}`, label: v.cn })
+                options={(
+                  _.reduce(constDataHolder.countries, (r, v, i) => {
+                    r[i] = { value: i, name: v.cn }
                     return r
                   }, [])
                 )}
+                onChange={(e) => {
+                  this.props.updateUserCountries([constDataHolder.countries[e].id])
+                }}
               />
             </div>
           </Col>

@@ -19,6 +19,8 @@ class SelectSingle extends Component {
   }
 
   render() {
+    const { name } = this.props.default
+
     return (
       <div>
         <p className="xfolio-text-info-title">{this.props.label}</p>
@@ -29,7 +31,7 @@ class SelectSingle extends Component {
           }}
           className="xfolio-text-info-value"
         >
-          {this.props.default.name || this.props.default.cn}
+          {name}
         </p>
         <Select
           style={{
@@ -39,12 +41,12 @@ class SelectSingle extends Component {
           }}
           disabled={!this.props.isEdit}
           placeholder={`请选择${this.props.label}`}
-          defaultValue={this.props.default.cn || this.props.default.value}
+          defaultValue={name}
           onSelect={this.props.onChange}
         >
           {
-            _.map(this.props.options, ({ value, name }, index) => (
-              <Select.Option value={String(value)} key={index}>{name}</Select.Option>
+            _.map(this.props.options, (v, i) => (
+              <Select.Option value={String(v.value)} key={i}>{v.name}</Select.Option>
             ))
           }
         </Select>
