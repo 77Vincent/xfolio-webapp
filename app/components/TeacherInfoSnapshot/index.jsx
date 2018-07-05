@@ -101,13 +101,24 @@ class TeacherInfoSnapshot extends Component {
                 <span>已教授学生</span>
                 <span>{ teacherInfo.students - teacherInfo.students_onboard }</span>
               </section>
+
               <section>
                 <span>在授学生</span>
                 <span>{ teacherInfo.students_onboard }</span>
               </section>
+
               <section>
                 <span>可预约时间</span>
                 <span>{ teacherInfo.available }</span>
+              </section>
+
+              <section>
+                <span>职业状态</span>
+                <span>
+                  {
+                    teacherInfo.status_id !== null ? constDataHolder.status[teacherInfo.status_id].cn : '未设置'
+                  }
+                </span>
               </section>
             </Col>
             <Col span={12}>
@@ -119,6 +130,7 @@ class TeacherInfoSnapshot extends Component {
                   }
                 </span>
               </section>
+
               <section>
                 <span>现居地</span>
                 <span>
@@ -129,6 +141,7 @@ class TeacherInfoSnapshot extends Component {
                   }
                 </span>
               </section>
+
               <section>
                 <span>授课地点</span>
                 {
@@ -137,6 +150,7 @@ class TeacherInfoSnapshot extends Component {
                     '未设置'
                 }
               </section>
+
               <section>
                 <span>收费</span>
                 <span>{ teacherInfo.cost !== null ? `${teacherInfo.cost} ¥/小时` : '未设置' }</span>

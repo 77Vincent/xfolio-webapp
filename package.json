@@ -5,8 +5,8 @@
   "author": "77Vincent@<wentianqi77@outlook.com>",
   "contributors": [],
   "scripts": {
-    "start": "webpack-dev-server --config ./config/webpack.dev-remote.config.js --progress",
-    "start-local": "webpack-dev-server --config ./config/webpack.dev-local.config.js --progress",
+    "start-remote": "webpack-dev-server --config ./config/webpack.dev-remote.config.js --progress",
+    "start": "webpack-dev-server --config ./config/webpack.dev-local.config.js --progress",
     "build": "webpack --config ./config/webpack.prod.config.js",
     "lint:js": "./node_modules/.bin/eslint --ext .js --ext .jsx --fix app/",
     "test": "echo \"Error: no test specified\" && exit 1"
