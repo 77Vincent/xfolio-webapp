@@ -25,7 +25,7 @@ class TeacherCalendarAndPrice extends Component {
     return (
       <div className="teacher-calendar-and-price-wrap" style={wrapStyle}>
         <div className="calendar-wrap">
-          <h5 className="calendar-title">时间安排</h5>
+          <h5 className="xfolio-text-info-title">时间安排</h5>
           <p className="calendar-tip">请至少填写您当月可用于教学的时间表</p>
           <div className="calendar-detail">
             <Calendar
@@ -36,19 +36,20 @@ class TeacherCalendarAndPrice extends Component {
             />
           </div>
         </div>
+
         <div className="price-wrap">
-          <h5 className="price-title">费用设置</h5>
-          <div className="price-detail-wrap">
-            <PriceDetail
-              price={accountInfo.cost}
-              onSubmit={(cost) => {
-                this.props.updateUser({
-                  userId: accountInfo.id,
-                  payload: { cost },
-                })
-              }}
-            />
-          </div>
+          <h5 className="xfolio-text-info-title">费用设置</h5>
+
+          <PriceDetail
+            price={accountInfo.cost}
+            onSubmit={(cost) => {
+              this.props.updateUser({
+                userId: accountInfo.id,
+                payload: { cost },
+              })
+            }}
+          />
+
           <p className="share-tip">
             当前费用的
             <span className="high-light"> 30% </span>
