@@ -37,10 +37,9 @@ export default class TeacherControlPanel extends Component {
           >
             <div className="menu-list-wrap">
               <NavLink to="/dashboard/profile" className="menu-item" activeClassName="current">基本信息</NavLink>
-              <NavLink to="/dashboard/notification" className="menu-item" activeClassName="current">我的消息</NavLink>
+              <NavLink to="/dashboard/price" className="menu-item" activeClassName="current">教学设置</NavLink>
               <NavLink to="/dashboard/plan" className="menu-item" activeClassName="current">学生&课程</NavLink>
-              <NavLink to="/dashboard/price" className="menu-item" activeClassName="current">时间&安排</NavLink>
-              <NavLink to="/dashboard/account" className="menu-item" activeClassName="current">账户</NavLink>
+              <NavLink to="/dashboard/notification" className="menu-item" activeClassName="current">我的消息</NavLink>
             </div>
           </Anchor>
         </div>

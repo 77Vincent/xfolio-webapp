@@ -24,6 +24,25 @@ class TeacherBasicAccountInfo extends Component {
     isEdit: false,
   }
 
+  componentDidMount() {
+    document.body.addEventListener('click', this.handleClickBody)
+  }
+
+  componentWillUnmount() {
+    document.body.removeEventListener('click', this.handleClickBody)
+  }
+
+  updateInfoWrapElem
+
+  handleClickBody = (e) => {
+    if (!this.updateInfoWrapElem.contains(e.target)
+        && e.target.closest('.ant-select-dropdown') === null
+        && e.target !== this.submitBtn) {
+      // ant-select-dropdown 为 ant design select 组件下拉框最外层的 className
+      this.setState({ isEdit: false })
+    }
+  }
+
   handleSubmit = () => {
     this.props.updateUser({
       userId: this.props.accountInfo.id,
@@ -37,7 +56,7 @@ class TeacherBasicAccountInfo extends Component {
     const { accountInfo } = this.props
 
     return (
-      <div className="teacher-basic-account-info">
+      <div className="teacher-basic-account-info" ref={(r) => { this.updateInfoWrapElem = r }}>
         <Row>
           <Col span={12}>
             <div className="xfolio-account-info-item">
