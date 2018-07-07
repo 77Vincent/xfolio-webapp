@@ -41,6 +41,7 @@ class Teachers extends Component {
       city,
       place,
       major_id: _.map(this.props.accountInfo.majors, each => (each.id)),
+      status_id: _.map(this.props.accountInfo.status, each => (each.id)),
       country_id: _.map(this.props.accountInfo.countries, each => (each.id)),
       school_id: _.map(this.props.accountInfo.schools, each => (each.id)),
     })
@@ -58,6 +59,7 @@ class Teachers extends Component {
     major_id: null,
     country_id: null,
     school_id: null,
+    status_id: null,
     city: null,
     place: null,
     gender: null,
@@ -98,6 +100,22 @@ class Teachers extends Component {
           <div className="teachers-filter-wrap">
             <div className="filter-item-wrap">
               <SelectMultiple
+                id="majors"
+                label="申请专业"
+                isEdit
+                maxSelection={3}
+                onChange={(value) => { this.requestTeacherList({ major_id: value }) }}
+                default={(
+                  _.reduce(this.state.filterOptions.majors, (r, v) => {
+                    r.push({ key: String(v.id), label: v.cn })
+                    return r
+                  }, [])
+                )}
+              />
+            </div>
+
+            <div className="filter-item-wrap">
+              <SelectMultiple
                 id="countries"
                 label="申请地区"
                 isEdit
@@ -121,22 +139,6 @@ class Teachers extends Component {
                 onChange={(value) => { this.requestTeacherList({ school_id: value }) }}
                 default={(
                   _.reduce(this.state.filterOptions.schools, (r, v) => {
-                    r.push({ key: String(v.id), label: v.cn })
-                    return r
-                  }, [])
-                )}
-              />
-            </div>
-
-            <div className="filter-item-wrap">
-              <SelectMultiple
-                id="majors"
-                label="申请专业"
-                isEdit
-                maxSelection={3}
-                onChange={(value) => { this.requestTeacherList({ major_id: value }) }}
-                default={(
-                  _.reduce(this.state.filterOptions.majors, (r, v) => {
                     r.push({ key: String(v.id), label: v.cn })
                     return r
                   }, [])
