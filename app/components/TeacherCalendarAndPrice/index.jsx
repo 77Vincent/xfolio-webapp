@@ -11,20 +11,12 @@ class TeacherCalendarAndPrice extends Component {
   static propTypes = {
     style: PropTypes.object,
     accountInfo: PropTypes.object.isRequired,
-    updateUserIfo: PropTypes.func.isRequired,
+    updateUser: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
     style: {},
   };
-
-  componentDidMount() {
-
-  }
-
-  componentWillUnmount() {
-
-  }
 
   render() {
     const wrapStyle = _.assign({}, this.props.style)
@@ -50,10 +42,9 @@ class TeacherCalendarAndPrice extends Component {
             <PriceDetail
               price={accountInfo.cost}
               onSubmit={(cost) => {
-                return this.props.updateUserIfo({
+                this.props.updateUser({
                   userId: accountInfo.id,
-                  field: 'cost',
-                  value: cost,
+                  payload: { cost },
                 })
               }}
             />
@@ -75,7 +66,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  updateUserIfo: dispatch.AccountInfo.updateUserIfo,
+  updateUser: dispatch.AccountInfo.updateUser,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeacherCalendarAndPrice)

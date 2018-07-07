@@ -67,16 +67,6 @@ const AccountInfo = {
       this.updateAccountInfo(res.body)
       message.success('修改成功')
     },
-    async updateUserIfo(data = { userId: null, field: null, value: null }) {
-      const { userId, field, value } = data
-      const requestData = {
-        [field]: value,
-      }
-      // 发请求更新
-      const res = await Request.updateUserInfo(userId, requestData)
-      // 更新本地数据
-      this.updateAccountInfo(res.body)
-    },
     async updateUserCountries(idList) {
       return await Request.createCountries(idList).then((res) => {
         this.updateAccountInfo({ countries: res.body })
