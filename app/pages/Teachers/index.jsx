@@ -178,7 +178,7 @@ class Teachers extends Component {
               />
             </div>
 
-            <div className="xfolio-account-info-item">
+            <div className="xfolio-section">
               <SelectSingle
                 label="导师性别"
                 isEdit

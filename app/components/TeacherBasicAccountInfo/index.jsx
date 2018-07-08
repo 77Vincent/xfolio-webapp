@@ -63,7 +63,7 @@ class TeacherBasicAccountInfo extends Component {
               label="姓名"
               default={accountInfo.name}
               isEdit={isEdit}
-              className="xfolio-account-info-item"
+              className="xfolio-section"
               onChange={(e) => {
                 this.state.toUpdate.name = e.target.value
                 this.setState({ toUpdate: this.state.toUpdate })
@@ -74,7 +74,7 @@ class TeacherBasicAccountInfo extends Component {
               label="手机号"
               default={accountInfo.mobilephone}
               isEdit={isEdit}
-              className="xfolio-account-info-item"
+              className="xfolio-section"
               onChange={(e) => {
                 this.state.toUpdate.mobilephone = e.target.value
                 this.setState({ toUpdate: this.state.toUpdate })
@@ -84,7 +84,7 @@ class TeacherBasicAccountInfo extends Component {
             <InfoInput
               label="电子邮箱"
               default={accountInfo.email}
-              className="xfolio-account-info-item"
+              className="xfolio-section"
               isEdit={isEdit}
               onChange={(e) => {
                 this.state.toUpdate.email = e.target.value
@@ -95,7 +95,7 @@ class TeacherBasicAccountInfo extends Component {
             <SelectSingle
               label="性别"
               default={GENDER_OPTIONS[Number(accountInfo.gender)]}
-              className="xfolio-account-info-item"
+              className="xfolio-section"
               isEdit={isEdit}
               options={GENDER_OPTIONS}
               onChange={(e) => {
@@ -111,7 +111,7 @@ class TeacherBasicAccountInfo extends Component {
                   .filter(each => each.id === accountInfo.city)
                   .map(v => ({ value: String(v.id), name: v.fullname }))[0]
               }
-              className="xfolio-account-info-item"
+              className="xfolio-section"
               isEdit={isEdit}
               options={
                 _.reduce(constDataHolder.cities, (r, v, i) => {
@@ -129,7 +129,7 @@ class TeacherBasicAccountInfo extends Component {
               label="一句话介绍"
               type="textarea"
               default={accountInfo.bio}
-              className="xfolio-account-info-item"
+              className="xfolio-section"
               isEdit={isEdit}
               onChange={(e) => {
                 this.state.toUpdate.bio = e.target.value
@@ -143,7 +143,7 @@ class TeacherBasicAccountInfo extends Component {
               id="majors"
               label="授课专业"
               isEdit={isEdit}
-              className="xfolio-account-info-item"
+              className="xfolio-section"
               maxSelection={3}
               onChange={(e) => {
                 this.props.updateUserMajors(e)
@@ -160,7 +160,7 @@ class TeacherBasicAccountInfo extends Component {
               id="places"
               label="授课地点"
               isEdit={isEdit}
-              className="xfolio-account-info-item"
+              className="xfolio-section"
               maxSelection={4}
               onChange={(e) => {
                 this.props.updateUserPlaces(e)
@@ -177,7 +177,7 @@ class TeacherBasicAccountInfo extends Component {
               label="毕业院校"
               default={accountInfo.schools.map(v => ({ value: v.id, name: v.cn }))[0]}
               isEdit={isEdit}
-              className="xfolio-account-info-item"
+              className="xfolio-section"
               options={(
                 _.reduce(constDataHolder.schools, (r, v, i) => {
                   r[i] = { value: i, name: v.cn }
@@ -196,7 +196,7 @@ class TeacherBasicAccountInfo extends Component {
                 name: constDataHolder.degrees[Number(accountInfo.degree_id)].cn,
               }}
               isEdit={isEdit}
-              className="xfolio-account-info-item"
+              className="xfolio-section"
               options={(
                 _.reduce(constDataHolder.degrees, (r, v, i) => {
                   r[i] = { value: i, name: v.cn }
@@ -216,7 +216,7 @@ class TeacherBasicAccountInfo extends Component {
                 name: constDataHolder.status[Number(accountInfo.status_id)].cn,
               }}
               isEdit={isEdit}
-              className="xfolio-account-info-item"
+              className="xfolio-section"
               options={(
                 _.reduce(constDataHolder.status, (r, v, i) => {
                   r[i] = { value: i, name: v.cn }
@@ -234,7 +234,7 @@ class TeacherBasicAccountInfo extends Component {
               default={
                 accountInfo.countries.map(v => ({ value: v.id, name: v.cn }))[0]
               }
-              className="xfolio-account-info-item"
+              className="xfolio-section"
               isEdit={isEdit}
               options={(
                 _.reduce(constDataHolder.countries, (r, v, i) => {

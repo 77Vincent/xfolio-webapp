@@ -28,7 +28,6 @@ class SelectSingle extends Component {
         <p className="xfolio-text-info-title">{this.props.label}</p>
         <p
           style={{
-            height: '32px',
             display: !this.props.isEdit ? 'block' : 'none',
           }}
           className="xfolio-text-info-value"

@@ -40,7 +40,7 @@ class StudentBasicAccountInfo extends Component {
       <div className="student-basic-account-info">
         <Row>
           <Col span={12}>
-            <div className="xfolio-account-info-item">
+            <div className="xfolio-section">
               <InfoInput
                 label="姓名"
                 default={accountInfo.name}
@@ -52,7 +52,7 @@ class StudentBasicAccountInfo extends Component {
               />
             </div>
 
-            <div className="xfolio-account-info-item">
+            <div className="xfolio-section">
               <InfoInput
                 label="手机号"
                 default={accountInfo.mobilephone}
@@ -64,7 +64,7 @@ class StudentBasicAccountInfo extends Component {
               />
             </div>
 
-            <div className="xfolio-account-info-item">
+            <div className="xfolio-section">
               <InfoInput
                 label="电子邮箱"
                 default={accountInfo.email}
@@ -76,7 +76,7 @@ class StudentBasicAccountInfo extends Component {
               />
             </div>
 
-            <div className="xfolio-account-info-item">
+            <div className="xfolio-section">
               <SelectSingle
                 label="性别"
                 default={GENDER_OPTIONS[Number(accountInfo.gender)]}
@@ -89,7 +89,7 @@ class StudentBasicAccountInfo extends Component {
               />
             </div>
 
-            <div className="xfolio-account-info-item">
+            <div className="xfolio-section">
               <SelectSingle
                 label="现居地"
                 default={
@@ -111,7 +111,7 @@ class StudentBasicAccountInfo extends Component {
               />
             </div>
 
-            <div className="xfolio-account-info-item">
+            <div className="xfolio-section">
               <SelectSingle
                 label="职业状态"
                 default={{
@@ -132,7 +132,7 @@ class StudentBasicAccountInfo extends Component {
               />
             </div>
 
-            <div className="xfolio-account-info-item">
+            <div className="xfolio-section">
               <InfoInput
                 label="一句话介绍"
                 type="textarea"
@@ -147,7 +147,7 @@ class StudentBasicAccountInfo extends Component {
           </Col>
 
           <Col span={12}>
-            <div className="xfolio-account-info-item">
+            <div className="xfolio-section">
               <SelectSingle
                 label="申请学历"
                 isEdit={isEdit}
@@ -168,7 +168,7 @@ class StudentBasicAccountInfo extends Component {
               />
             </div>
 
-            <div className="xfolio-account-info-item">
+            <div className="xfolio-section">
               <SelectMultiple
                 id="places"
                 label="可以接受的授课地点"
@@ -186,7 +186,7 @@ class StudentBasicAccountInfo extends Component {
               />
             </div>
 
-            <div className="xfolio-account-info-item">
+            <div className="xfolio-section">
               <SelectMultiple
                 id="schools"
                 label="目标院校"
@@ -204,7 +204,7 @@ class StudentBasicAccountInfo extends Component {
               />
             </div>
 
-            <div className="xfolio-account-info-item">
+            <div className="xfolio-section">
               <SelectMultiple
                 id="majors"
                 label="申请专业"
@@ -222,7 +222,7 @@ class StudentBasicAccountInfo extends Component {
               />
             </div>
 
-            <div className="xfolio-account-info-item">
+            <div className="xfolio-section">
               <SelectMultiple
                 id="countries"
                 label="申请国家"

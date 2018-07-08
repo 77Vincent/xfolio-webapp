@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Calendar } from 'antd'
 import { connect } from 'react-redux'
-import { InfoInput } from '../'
+import { Divider } from 'antd'
+import { InfoInput, Calendar } from '../'
 
 import './index.less'
 
@@ -26,8 +26,8 @@ class TeacherTeaching extends Component {
           default={`¥${accountInfo.cost}/h`}
           isEdit={this.state.isEdit}
           type="number"
-          customClass={['xfolio-text-primary']}
-          className="xfolio-account-info-item"
+          valueClassName="xfolio-text-primary"
+          className="xfolio-section"
           onChange={(e) => {
             this.props.updateUser({
               userId: this.props.accountInfo.id,
@@ -37,28 +37,24 @@ class TeacherTeaching extends Component {
           }}
         />
 
+        <Divider />
+
         <InfoInput
           label="平台服务费比例"
           default={`${100 - accountInfo.commission}%`}
           isEdit={this.state.isEdit}
-          className="xfolio-account-info-item"
+          className="xfolio-section"
           type="number"
         />
 
-        <div className="calendar-wrap">
-          <h5 className="xfolio-text-info-title">时间安排</h5>
+        <Divider />
 
-          <p className="calendar-tip">请至少填写您当月可用于教学的时间表</p>
+        <h5 className="xfolio-text-info-title">时间安排</h5>
+        <p className="calendar-tip">请至少填写您当月可用于教学的时间表</p>
 
-          <div className="calendar-detail">
-            <Calendar
-              fullscreen={false}
-              disabledDate={(targetDate, currentDate) => {
-                return targetDate.month() !== currentDate.month()
-              }}
-            />
-          </div>
-        </div>
+        <Divider />
+
+        <Calendar />
       </div>
     )
   }

@@ -5,7 +5,8 @@ import PropTypes from 'prop-types'
 class InfoInput extends Component {
   static propTypes = {
     default: PropTypes.string,
-    customClass: PropTypes.array,
+    labelClassName: PropTypes.string,
+    valueClassName: PropTypes.string,
     className: PropTypes.string,
     label: PropTypes.string.isRequired,
     isEdit: PropTypes.bool,
@@ -16,7 +17,8 @@ class InfoInput extends Component {
   static defaultProps = {
     default: '',
     className: '',
-    customClass: [],
+    labelClassName: '',
+    valueClassName: '',
     isEdit: false,
     type: 'input',
     onChange: null,
@@ -25,13 +27,16 @@ class InfoInput extends Component {
   render() {
     return (
       <div className={this.props.className}>
-        <p className="xfolio-text-info-title">{this.props.label}</p>
+        <p
+          className={this.props.labelClassName ? this.props.labelClassName : 'xfolio-text-info-title'}
+        >
+          {this.props.label}
+        </p>
         <p
           style={{
-            height: '32px',
             display: !this.props.isEdit ? 'block' : 'none',
           }}
-          className={this.props.customClass.length ? this.props.customClass.join(' ') : 'xfolio-text-info-value'}
+          className={this.props.valueClassName ? this.props.valueClassName : 'xfolio-text-info-value'}
         >
           {this.props.default || '未填写'}
         </p>
