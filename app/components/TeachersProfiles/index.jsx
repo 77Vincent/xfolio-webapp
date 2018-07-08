@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Divider } from 'antd'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
@@ -22,6 +23,8 @@ class TeachersProfiles extends Component {
           />
 
           <TagsEditor />
+
+          <Divider />
 
           <TeacherBasicAccountInfo />
         </div>

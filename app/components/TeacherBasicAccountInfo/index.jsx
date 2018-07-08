@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { connect } from 'react-redux'
-import { Button, Row, Col } from 'antd'
+import { Button, Row, Col, Divider } from 'antd'
 
 import { SelectMultiple, SelectSingle, InfoInput } from '../'
 import { GENDER_OPTIONS } from '../../Consts'
@@ -262,6 +262,8 @@ class TeacherBasicAccountInfo extends Component {
         </Row>
 
         <Row type="flex" justify="end">
+          <Divider />
+
           <Button
             onClick={() => { this.setState({ isEdit: !this.state.isEdit }) }}
             style={{ display: !this.state.isEdit ? 'block' : 'none' }}
