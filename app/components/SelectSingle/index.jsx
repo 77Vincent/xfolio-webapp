@@ -10,19 +10,21 @@ class SelectSingle extends Component {
     label: PropTypes.string,
     isEdit: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
+    className: PropTypes.string,
   }
 
   static defaultProps = {
     label: '',
     default: {},
     isEdit: false,
+    className: '',
   }
 
   render() {
     const { name } = this.props.default
 
     return (
-      <div>
+      <div className={this.props.className}>
         <p className="xfolio-text-info-title">{this.props.label}</p>
         <p
           style={{

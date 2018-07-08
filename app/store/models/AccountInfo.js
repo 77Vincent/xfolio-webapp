@@ -22,6 +22,7 @@ const AccountInfo = {
     schools: [],
     majors: [],
     cost: null,
+    commission: null,
     followingIds: [], // 已关注用户的 id
     tags: [],
     available: 0,

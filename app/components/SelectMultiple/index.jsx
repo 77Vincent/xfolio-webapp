@@ -14,6 +14,7 @@ class SelectMultiple extends Component {
     maxSelection: PropTypes.number,
     onChange: PropTypes.func,
     default: PropTypes.array,
+    className: PropTypes.string,
   }
 
   static defaultProps = {
@@ -22,6 +23,7 @@ class SelectMultiple extends Component {
     isEdit: false,
     onChange: null,
     default: [],
+    className: '',
   }
 
   constructor(props) {
@@ -74,7 +76,7 @@ class SelectMultiple extends Component {
     const optionsData = _.isEmpty(this.state.options) ? this.entireOptions : this.state.options
 
     return (
-      <div>
+      <div className={this.props.className}>
         {
           this.props.label &&
           <p className="xfolio-text-info-title">{this.props.label}</p>
