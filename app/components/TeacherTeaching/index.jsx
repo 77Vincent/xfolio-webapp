@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import PriceDetail from './PriceDetail'
 import './index.less'
 
-class TeacherCalendarAndPrice extends Component {
+class TeacherTeaching extends Component {
   static propTypes = {
     style: PropTypes.object,
     accountInfo: PropTypes.object.isRequired,
@@ -49,13 +49,6 @@ class TeacherCalendarAndPrice extends Component {
               })
             }}
           />
-
-          <p className="share-tip">
-            当前费用的
-            <span className="high-light"> 30% </span>
-            将作为平台维护费用。
-            <a href="" className="share-link">太多了？我想降低分成</a>
-          </p>
         </div>
       </div>
     )
@@ -70,4 +63,4 @@ const mapDispatchToProps = dispatch => ({
   updateUser: dispatch.AccountInfo.updateUser,
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(TeacherCalendarAndPrice)
+export default connect(mapStateToProps, mapDispatchToProps)(TeacherTeaching)

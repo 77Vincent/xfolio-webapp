@@ -12,7 +12,7 @@ import {
   StudentCoursePlan,
   TeachersProfiles,
   TeacherCoursePlan,
-  TeacherCalendarAndPrice,
+  TeacherTeaching,
   PrivateRoute,
 } from '../components'
 import {
@@ -114,7 +114,7 @@ class App extends Component {
                 path="/dashboard/price"
                 render={() => (
                   <TeacherControlPanel
-                    content={TeacherCalendarAndPrice}
+                    content={TeacherTeaching}
                   />
                 )}
               />
