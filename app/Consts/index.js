@@ -35,3 +35,13 @@ export const PRICE_ORDER_OPTIONS = {
   LOW_TO_HIGH: 'ASC',
   HIGH_TO_LOW: 'DESC',
 }
+
+export const DAY_OF_WEEK = [
+  '星期一',
+  '星期二',
+  '星期三',
+  '星期四',
+  '星期五',
+  '星期六',
+  '星期日',
+]
