@@ -23,10 +23,24 @@ class XfolioCalendar extends Component {
     events: [],
     newEvent: {},
     isEditing: false,
+    mode: {},
+  }
+
+  onModeChange = (mode) => {
+    return () => {
+      Object.keys(this.state.mode).map((key) => {
+        this.state.mode[key] = false
+        return null
+      })
+      this.state.mode[mode] = true
+      this.setState({
+        mode: this.state.mode,
+      })
+    }
   }
 
   render() {
-    const { events } = this.state
+    const { events, mode } = this.state
     let { newEvent } = this.state
     // const { accountInfo } = this.props
 
@@ -59,32 +73,49 @@ class XfolioCalendar extends Component {
             <div className="xfolio-text-title-s">重复模式</div>
 
             <Row type="flex" justify="space-between">
-              <Col><span className="xfolio-text-info-value">仅当天</span></Col>
-              <Col><Switch defaultChecked /></Col>
-            </Row>
-
-            <Row type="flex" justify="space-between">
               <Col>
-                <span className="xfolio-text-info-value">
-                  本月每个{DAY_OF_WEEK[moment(newEvent.start).weekday()]}
+                <span
+                  className={`xfolio-text-info-value ${this.state.mode.singleDay ? 'xfolio-color-primary' : ''}`}
+                >
+                  仅当天
                 </span>
               </Col>
               <Col>
                 <Switch
-                  onChange={() => {
-
-                  }}
+                  checked={mode.singleDay}
+                  onChange={this.onModeChange('singleDay')}
                 />
               </Col>
             </Row>
 
             <Row type="flex" justify="space-between">
-              <Col><span className="xfolio-text-info-value">本月每一天</span></Col>
+              <Col>
+                <span
+                  className={`xfolio-text-info-value ${this.state.mode.dayOfWeek ? 'xfolio-color-primary' : ''}`}
+                >
+                  本月每个{DAY_OF_WEEK[moment(newEvent.start).weekday()]}
+                </span>
+              </Col>
               <Col>
                 <Switch
-                  onChange={() => {
+                  checked={mode.dayOfWeek}
+                  onChange={this.onModeChange('dayOfWeek')}
+                />
+              </Col>
+            </Row>
 
-                  }}
+            <Row type="flex" justify="space-between">
+              <Col>
+                <span
+                  className={`xfolio-text-info-value ${this.state.mode.everyday ? 'xfolio-color-primary' : ''}`}
+                >
+                  本月每一天
+                </span>
+              </Col>
+              <Col>
+                <Switch
+                  checked={mode.everyday}
+                  onChange={this.onModeChange('everyday')}
                 />
               </Col>
             </Row>
@@ -125,6 +156,13 @@ class XfolioCalendar extends Component {
               duration,
             }
             this.setState({ newEvent })
+            this.setState({
+              mode: {
+                singleDay: true,
+                dayOfWeek: false,
+                everyday: false,
+              },
+            })
             this.setState({ isEditing: true })
           }}
         />
