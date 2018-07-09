@@ -28,7 +28,7 @@ class InfoInput extends Component {
     return (
       <div className={this.props.className}>
         <p
-          className={this.props.labelClassName ? this.props.labelClassName : 'xfolio-text-info-title'}
+          className={this.props.labelClassName ? this.props.labelClassName : 'xfolio-text-title-s'}
         >
           {this.props.label}
         </p>

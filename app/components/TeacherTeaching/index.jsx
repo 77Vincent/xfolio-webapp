@@ -49,7 +49,7 @@ class TeacherTeaching extends Component {
 
         <Divider />
 
-        <h5 className="xfolio-text-info-title">时间安排</h5>
+        <h5 className="xfolio-text-title-s">时间安排</h5>
         <p className="calendar-tip">请至少填写您当月可用于教学的时间表</p>
 
         <Divider />

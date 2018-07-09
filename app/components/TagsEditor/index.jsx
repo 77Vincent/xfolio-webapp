@@ -65,7 +65,7 @@ class TagsEditor extends Component {
   render() {
     return (
       <div className="TagsEditor">
-        <p className="xfolio-text-info-title">标签</p>
+        <p className="xfolio-text-title-s">标签</p>
 
         <div className="current-tags-wrap">
           <Button className="btn-show-add-tags" onClick={this.toggleTagInput}>

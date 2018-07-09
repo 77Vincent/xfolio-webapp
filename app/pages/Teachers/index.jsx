@@ -188,7 +188,7 @@ class Teachers extends Component {
             </div>
 
             <div className="filter-item-wrap">
-              <div className="xfolio-text-info-title">导师收费</div>
+              <div className="xfolio-text-title-s">导师收费</div>
               <Radio.Group
                 onChange={(e) => { this.requestTeacherList({ cost: e.target.value }) }}
               >

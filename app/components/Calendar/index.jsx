@@ -46,14 +46,16 @@ class XfolioCalendar extends Component {
           }}
         >
           <div className="xfolio-section">
-            <p className="xfolio-text-info-title">时间</p>
-            <span className="timeframe"> { moment(newEvent.start).format('LT') } </span>
-            <span> - </span>
-            <span className="xfolio-calendar-timeframe"> { moment(newEvent.end).format('LT') } </span>
+            <h5>{ moment(newEvent.start).format('LL') }</h5>
+            <div className="timeframe">
+              <span>{ moment(newEvent.start).format('LT') }</span>
+              -
+              <span>{ moment(newEvent.end).format('LT') }</span>
+            </div>
           </div>
 
           <div className="xfolio-section">
-            <p className="xfolio-text-info-title">模式</p>
+            <div className="xfolio-text-title-s xfolio-divider">重复模式</div>
 
             <Row type="flex" justify="space-between">
               <Col><span className="xfolio-text-info-value">仅当天</span></Col>

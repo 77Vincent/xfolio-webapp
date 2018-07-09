@@ -176,7 +176,7 @@ class TeacherCoursePlan extends Component {
                   />
 
                   <div className="xfolio-current-info-wrapper">
-                    <span className="xfolio-text-info-title">性别</span>
+                    <span className="xfolio-text-title-s">性别</span>
                     <span className="xfolio-text-info-value">
                       {
                         currentStudent.gender !== null ?
@@ -187,7 +187,7 @@ class TeacherCoursePlan extends Component {
                   </div>
 
                   <div className="xfolio-current-info-wrapper">
-                    <span className="xfolio-text-info-title">申请学历</span>
+                    <span className="xfolio-text-title-s">申请学历</span>
                     <span className="xfolio-text-info-value">
                       {
                         currentStudent.degree_id
@@ -198,7 +198,7 @@ class TeacherCoursePlan extends Component {
                   </div>
 
                   <div className="xfolio-current-info-wrapper">
-                    <span className="xfolio-text-info-title">上课地点</span>
+                    <span className="xfolio-text-title-s">上课地点</span>
                     {
                       currentStudent.places.length ?
                         _.map(currentStudent.places, (each, i) => {
@@ -209,7 +209,7 @@ class TeacherCoursePlan extends Component {
                   </div>
 
                   <div className="xfolio-current-info-wrapper">
-                    <span className="xfolio-text-info-title">申请专业</span>
+                    <span className="xfolio-text-title-s">申请专业</span>
                     {
                       currentStudent.majors.length ?
                         _.map(currentStudent.majors, (each, i) => {
@@ -221,7 +221,7 @@ class TeacherCoursePlan extends Component {
 
 
                   <div className="xfolio-current-info-wrapper">
-                    <span className="xfolio-text-info-title">目标院校</span>
+                    <span className="xfolio-text-title-s">目标院校</span>
                     {
                       currentStudent.schools.length ?
                         _.map(currentStudent.schools, (each, i) => {
@@ -232,7 +232,7 @@ class TeacherCoursePlan extends Component {
                   </div>
 
                   <div className="xfolio-current-info-wrapper">
-                    <span className="xfolio-text-info-title">申请国家</span>
+                    <span className="xfolio-text-title-s">申请国家</span>
                     {
                       currentStudent.countries.length ?
                         _.map(currentStudent.countries, (each, i) => {

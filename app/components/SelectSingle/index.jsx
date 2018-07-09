@@ -25,7 +25,7 @@ class SelectSingle extends Component {
 
     return (
       <div className={this.props.className}>
-        <p className="xfolio-text-info-title">{this.props.label}</p>
+        <p className="xfolio-text-title-s">{this.props.label}</p>
         <p
           style={{
             display: !this.props.isEdit ? 'block' : 'none',

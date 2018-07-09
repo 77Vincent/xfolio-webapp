@@ -79,7 +79,7 @@ class SelectMultiple extends Component {
       <div className={this.props.className}>
         {
           this.props.label &&
-          <p className="xfolio-text-info-title">{this.props.label}</p>
+          <p className="xfolio-text-title-s">{this.props.label}</p>
         }
         <div
           style={{
