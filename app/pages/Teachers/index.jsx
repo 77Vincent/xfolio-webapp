@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import _ from 'lodash'
 import { Anchor, Radio, Pagination, Button } from 'antd'
 import { connect } from 'react-redux'
+import uuidv4 from 'uuid/v4'
 
 import { TeacherInfoSnapshot, SelectMultiple, SelectSingle } from '../../components'
 import { Request } from '../../utils'
@@ -21,7 +21,13 @@ class Teachers extends Component {
   }
 
   state = {
-    filterOptions: {},
+    filterOptions: {
+      majors: [],
+      countries: [],
+      schools: [],
+      places: [],
+      cities: [],
+    },
     teacherList: [],
     currentPage: 1,
     pageSize: 7,
@@ -32,14 +38,14 @@ class Teachers extends Component {
   }
 
   componentDidMount() {
-    const { city, place } = this.props.accountInfo
-    this.myFilter = _.assign({}, {
-      city,
-      place,
-      major_id: _.map(this.props.accountInfo.majors, each => (each.id)),
-      status_id: _.map(this.props.accountInfo.status, each => (each.id)),
-      country_id: _.map(this.props.accountInfo.countries, each => (each.id)),
-      school_id: _.map(this.props.accountInfo.schools, each => (each.id)),
+    const { accountInfo } = this.props
+
+    this.myFilter = Object.assign({}, {
+      city: accountInfo.city,
+      place: accountInfo.place,
+      major_id: accountInfo.majors.map(v => (v.id)),
+      country_id: accountInfo.countries.map(v => (v.id)),
+      school_id: accountInfo.schools.map(v => (v.id)),
     })
 
     this.requestTeacherList(this.defaultFilter)
@@ -50,7 +56,6 @@ class Teachers extends Component {
     major_id: null,
     country_id: null,
     school_id: null,
-    status_id: null,
     city: null,
     place: null,
     gender: null,
@@ -58,11 +63,12 @@ class Teachers extends Component {
   }
 
   requestTeacherList = async (query = {}) => {
+    const { filterOptions } = this.state
     this.setState({
-      filterOptions: _.assign(this.state.filterOptions, query),
+      filterOptions: Object.assign(filterOptions, query),
     })
     try {
-      const res = await Request.getTeachers(this.state.filterOptions)
+      const res = await Request.getTeachers(filterOptions)
       this.setState({ teacherList: res.body })
     } catch (err) {
       log('getTeachers e ', err)
@@ -77,13 +83,14 @@ class Teachers extends Component {
   }
 
   render() {
-    const wrapStyle = _.assign({}, this.props.style)
-    const { teacherList, currentPage, pageSize } = this.state
+    const {
+      teacherList, currentPage, pageSize, filterOptions,
+    } = this.state
     const teacherListDataStart = (currentPage - 1) * pageSize
     const teacherListData = teacherList.slice(teacherListDataStart, teacherListDataStart + pageSize)
 
     return (
-      <div className="teachers-wrap" style={wrapStyle}>
+      <div className="teachers-wrap" style={this.props.style}>
         <Anchor
           showInkInFixed={false}
           getContainer={() => (document.body)}
@@ -97,7 +104,7 @@ class Teachers extends Component {
                 maxSelection={3}
                 onChange={(value) => { this.requestTeacherList({ major_id: value }) }}
                 default={(
-                  _.reduce(this.state.filterOptions.majors, (r, v) => {
+                  filterOptions.majors.reduce((r, v) => {
                     r.push({ key: String(v.id), label: v.cn })
                     return r
                   }, [])
@@ -113,7 +120,7 @@ class Teachers extends Component {
                 maxSelection={5}
                 onChange={(value) => { this.requestTeacherList({ country_id: value }) }}
                 default={(
-                  _.reduce(this.state.filterOptions.countries, (r, v) => {
+                  filterOptions.countries.reduce((r, v) => {
                     r.push({ key: String(v.id), label: v.cn })
                     return r
                   }, [])
@@ -129,7 +136,7 @@ class Teachers extends Component {
                 maxSelection={5}
                 onChange={(value) => { this.requestTeacherList({ school_id: value }) }}
                 default={(
-                  _.reduce(this.state.filterOptions.schools, (r, v) => {
+                  filterOptions.schools.reduce((r, v) => {
                     r.push({ key: String(v.id), label: v.cn })
                     return r
                   }, [])
@@ -145,7 +152,7 @@ class Teachers extends Component {
                 maxSelection={4}
                 onChange={(value) => { this.requestTeacherList({ place_id: value }) }}
                 default={(
-                  _.reduce(this.state.filterOptions.places, (r, v) => {
+                  filterOptions.places.reduce((r, v) => {
                     r.push({ key: String(v.id), label: v.cn })
                     return r
                   }, [])
@@ -161,7 +168,7 @@ class Teachers extends Component {
                 maxSelection={3}
                 onChange={(value) => { this.requestTeacherList({ city: value }) }}
                 default={(
-                  _.reduce(this.state.filterOptions.cities, (r, v) => {
+                  filterOptions.cities.reduce((r, v) => {
                     r.push({ key: String(v.id), label: v.fullname })
                     return r
                   }, [])
@@ -196,11 +203,11 @@ class Teachers extends Component {
           <div className="content-wrap">
             {
               teacherList.length > 0 && (
-                _.map(teacherListData, (teacherInfo, index) => (
+                teacherListData.map(teacherInfo => (
                   <TeacherInfoSnapshot
                     teacherInfo={teacherInfo}
-                    isFollowing={_.includes(this.props.accountInfo.followingIds, teacherInfo.id)}
-                    key={index}
+                    isFollowing={this.props.accountInfo.followingIds.indexOf(teacherInfo.id) !== -1}
+                    key={uuidv4()}
                   />
                 ))
               )
