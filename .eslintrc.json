@@ -29,6 +29,7 @@
     "camelcase": "off",
     "linebreak-style": "off",
     "curly": "error",
+    "react/jsx-filename-extension": "off",
     "no-console": ["error", {
       "allow": ["warn", "error"]
     }],
