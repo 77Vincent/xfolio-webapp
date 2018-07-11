@@ -14,7 +14,7 @@ export default class TeacherControlPanel extends Component {
 
   static defaultProps = {
     style: {},
-    content: _.noop,
+    content: null,
   };
 
   componentDidMount() {

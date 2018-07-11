@@ -1,6 +1,5 @@
 import to from 'await-to'
 import { message } from 'antd'
-import _ from 'lodash'
 
 import { updateState, Request } from '../../utils'
 
@@ -34,14 +33,14 @@ const AccountInfo = {
       return updateState(state, payload)
     },
     removeFollowingId(state, id) {
-      const index = _.indexOf(state.followingIds, id)
+      const index = state.followingIds.indexOf(id)
       if (index !== -1) {
         state.followingIds.splice(index, 1)
       }
       return state
     },
     addFollowingId(state, id) {
-      const index = _.indexOf(state.followingIds, id)
+      const index = state.followingIds.indexOf(id)
       if (index === -1) {
         state.followingIds.push(id)
       }
@@ -55,9 +54,9 @@ const AccountInfo = {
       }).then(res => res.text))
       if (!err) {
         this.updateAccountInfo({
-          followingIds: _.reduce(body, (r, v) => {
-            r.push(v.following_id)
-            return r
+          followingIds: body.reduce((a, b) => {
+            a.push(b.following_id)
+            return a
           }, []),
         })
       }

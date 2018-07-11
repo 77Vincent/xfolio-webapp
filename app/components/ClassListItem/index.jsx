@@ -26,14 +26,6 @@ export default class ClassListItem extends Component {
     classInfo: this.props.classInfo,
   }
 
-  componentDidMount() {
-
-  }
-
-  componentWillUnmount() {
-
-  }
-
   handleToggleRatePanel = () => {
     this.setState({
       showRatePanel: !this.state.showRatePanel,
@@ -83,7 +75,6 @@ export default class ClassListItem extends Component {
   }
 
   render() {
-    const wrapStyle = _.assign({}, this.props.style)
     const { userRole } = this.props
     const { classInfo } = this.state
 
@@ -190,7 +181,7 @@ export default class ClassListItem extends Component {
     )
 
     return (
-      <div className="class-list-item" style={wrapStyle}>
+      <div className="class-list-item" style={this.props.style}>
         {
           userRole === USER_ROLE.STUDENT && (
             <Fragment>

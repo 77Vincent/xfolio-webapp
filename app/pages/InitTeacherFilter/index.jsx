@@ -14,12 +14,12 @@ class InitTeacherFilter extends Component {
     style: PropTypes.object,
     history: PropTypes.object,
     updateTeacherFilterInitStatus: PropTypes.func.isRequired,
-  };
+  }
 
   static defaultProps = {
     style: {},
     history: {},
-  };
+  }
 
   state = {
     stepIndex: 0,
@@ -79,7 +79,6 @@ class InitTeacherFilter extends Component {
   }
 
   render() {
-    const wrapStyle = _.assign({}, this.props.style)
     const currentFilterStepInfo = filterStepInfo[this.state.stepIndex]
     const filterStepInitedNumber = (
       _.sumBy(this.state.filterInitResult, value => (
@@ -89,7 +88,7 @@ class InitTeacherFilter extends Component {
     const { stepIndex, filterInitResult } = this.state
 
     return (
-      <div className="init-teacher-filter" style={wrapStyle}>
+      <div className="init-teacher-filter" style={this.props.style}>
         <div className="filter-steps-wrap">
           <div className="content-wrap">
             <div className="filter-step filter-step-one">

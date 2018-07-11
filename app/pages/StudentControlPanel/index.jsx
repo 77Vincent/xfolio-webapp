@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import _ from 'lodash'
 import { NavLink } from 'react-router-dom'
 import { Anchor } from 'antd'
 
@@ -14,7 +13,7 @@ export default class StudentControlPanel extends Component {
 
   static defaultProps = {
     style: {},
-    content: _.noop,
+    content: null,
   };
 
   componentDidMount() {
@@ -26,10 +25,8 @@ export default class StudentControlPanel extends Component {
   }
 
   render() {
-    const wrapStyle = _.assign({}, this.props.style)
-
     return (
-      <div className="student-control-panel" style={wrapStyle}>
+      <div className="student-control-panel" style={this.props.style}>
         <div className="menus-wrap">
           <Anchor
             showInkInFixed={false}

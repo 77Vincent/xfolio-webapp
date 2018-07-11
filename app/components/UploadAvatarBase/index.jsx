@@ -107,7 +107,7 @@ export default class UploadAvatarBase extends Component {
           listType="picture-card"
           showUploadList={false}
           beforeUpload={this.handleBeforeUpload}
-          customRequest={_.noop}
+          customRequest={null}
         >
           {
             this.state.cropped === true && (
