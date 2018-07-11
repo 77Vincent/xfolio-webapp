@@ -9,19 +9,11 @@ export default class StudentControlPanel extends Component {
   static propTypes = {
     style: PropTypes.object,
     content: PropTypes.func,
-  };
+  }
 
   static defaultProps = {
     style: {},
     content: null,
-  };
-
-  componentDidMount() {
-
-  }
-
-  componentWillUnmount() {
-
   }
 
   render() {

@@ -31,14 +31,6 @@ class TeacherInfoSnapshot extends Component {
     editMode: false,
   }
 
-  componentDidMount() {
-
-  }
-
-  componentWillUnmount() {
-
-  }
-
   handleUpdateFollowStatus = () => {
     const userId = this.props.teacherInfo.id
     if (this.props.isFollowing) {

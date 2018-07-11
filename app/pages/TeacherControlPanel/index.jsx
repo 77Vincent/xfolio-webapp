@@ -17,14 +17,6 @@ export default class TeacherControlPanel extends Component {
     content: null,
   };
 
-  componentDidMount() {
-
-  }
-
-  componentWillUnmount() {
-
-  }
-
   render() {
     const wrapStyle = _.assign({}, this.props.style)
 

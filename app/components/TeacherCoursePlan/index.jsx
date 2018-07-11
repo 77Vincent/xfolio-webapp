@@ -45,9 +45,6 @@ class TeacherCoursePlan extends Component {
     }
   }
 
-  componentWillUnmount() {
-  }
-
   getStudents = async () => {
     // 初始化学生列表
     let studentList = await Request.getStudents(this.props.accountInfo.id).then(res => res.body)

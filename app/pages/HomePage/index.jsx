@@ -13,18 +13,10 @@ class HomePage extends Component {
   static propTypes = {
     style: PropTypes.object,
     teacherFilterInited: PropTypes.bool.isRequired,
-  };
+  }
 
   static defaultProps = {
     style: {},
-  };
-
-  componentDidMount() {
-
-  }
-
-  componentWillUnmount() {
-
   }
 
   render() {

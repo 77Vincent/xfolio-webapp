@@ -25,17 +25,13 @@ class Teachers extends Component {
     teacherList: [],
     currentPage: 1,
     pageSize: 7,
-    GENDER_OPTIONS_FOR_FILTER: [],
-  }
-
-  componentWillMount() {
-    const GENDER_OPTIONS_FOR_FILTER = GENDER_OPTIONS.map(each => each)
-    GENDER_OPTIONS_FOR_FILTER.push({
+    GENDER_OPTIONS_FOR_FILTER: GENDER_OPTIONS.concat([{
       value: [0, 1],
       name: '不限',
-    })
-    this.setState({ GENDER_OPTIONS_FOR_FILTER })
+    }]),
+  }
 
+  componentDidMount() {
     const { city, place } = this.props.accountInfo
     this.myFilter = _.assign({}, {
       city,
@@ -49,11 +45,6 @@ class Teachers extends Component {
     this.requestTeacherList(this.defaultFilter)
     this.props.getFollowingIds(this.props.accountInfo.id)
   }
-
-  componentWillUnmount() {
-
-  }
-
 
   defaultFilter = {
     major_id: null,

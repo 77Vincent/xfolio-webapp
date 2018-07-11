@@ -14,14 +14,6 @@ export default class SignUpChooseRole extends Component {
     style: {},
   }
 
-  componentDidMount() {
-
-  }
-
-  componentWillUnmount() {
-
-  }
-
   render() {
     return (
       <div className="register-choose-role" style={this.props.style}>

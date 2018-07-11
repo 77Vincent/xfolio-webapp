@@ -19,14 +19,6 @@ class SignUpAsTeacher extends Component {
     style: {},
   };
 
-  componentDidMount() {
-
-  }
-
-  componentWillUnmount() {
-
-  }
-
   render() {
     const wrapStyle = _.assign({}, this.props.style)
     const { alreadySignIn, accountInfo } = this.props

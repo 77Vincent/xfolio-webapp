@@ -25,14 +25,6 @@ class SignUpAsStudent extends Component {
     loading: false,
   }
 
-  componentDidMount() {
-
-  }
-
-  componentWillUnmount() {
-
-  }
-
   handleSubmitSignUp = (data) => {
     this.setState({ loading: true })
     Request.signUp({

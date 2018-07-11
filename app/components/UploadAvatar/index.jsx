@@ -16,14 +16,6 @@ export default class UploadAvatar extends Component {
     avatar_id: null,
   };
 
-  componentDidMount() {
-
-  }
-
-  componentWillUnmount() {
-
-  }
-
   render() {
     const wrapStyle = _.assign({}, this.props.style)
 

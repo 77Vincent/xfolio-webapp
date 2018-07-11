@@ -26,14 +26,6 @@ class InitTeacherFilter extends Component {
     filterInitResult: [], // 存储用户选择的结果，整数表示选择过，-1表示未选择
   }
 
-  componentDidMount() {
-
-  }
-
-  componentWillUnmount() {
-
-  }
-
   updateStepIndex = (payload) => {
     const currentStepIndex = this.state.stepIndex
     if ((payload === -1 && currentStepIndex > 0) || (payload === 1 && currentStepIndex < filterStepInfo.length - 1)) {

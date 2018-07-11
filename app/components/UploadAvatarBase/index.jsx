@@ -28,14 +28,6 @@ export default class UploadAvatarBase extends Component {
     showModal: false,
   }
 
-  componentDidMount() {
-
-  }
-
-  componentWillUnmount() {
-
-  }
-
   uploadImageInfo = {}
   uploadImageBase64 = ''
 

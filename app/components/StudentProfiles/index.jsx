@@ -17,14 +17,6 @@ class StudentProfiles extends Component {
     avatar_id: null,
   };
 
-  componentDidMount() {
-
-  }
-
-  componentWillUnmount() {
-
-  }
-
   render() {
     return (
       <div className="student-profiles-wrap" style={this.props.style}>
