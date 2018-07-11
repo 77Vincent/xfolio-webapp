@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import _ from 'lodash'
 import { connect } from 'react-redux'
 
 import { StudentBasicAccountInfo, UploadAvatar } from '../index'
@@ -27,10 +26,8 @@ class StudentProfiles extends Component {
   }
 
   render() {
-    const wrapStyle = _.assign({}, this.props.style)
-
     return (
-      <div className="student-profiles-wrap" style={wrapStyle}>
+      <div className="student-profiles-wrap" style={this.props.style}>
         <UploadAvatar
           avatar_id={this.props.avatar_id}
           userId={this.props.userId}

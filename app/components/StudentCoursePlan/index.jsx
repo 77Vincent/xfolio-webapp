@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import _ from 'lodash'
 import { USER_ROLE } from '../../Consts'
 
 import { getImage } from '../../utils'
@@ -10,25 +9,15 @@ import './index.less'
 export default class StudentCoursePlan extends Component {
   static propTypes = {
     style: PropTypes.object,
-  };
+  }
 
   static defaultProps = {
     style: {},
-  };
-
-  componentDidMount() {
-
-  }
-
-  componentWillUnmount() {
-
   }
 
   render() {
-    const wrapStyle = _.assign({}, this.props.style)
-
     return (
-      <div className="student-course-plan" style={wrapStyle}>
+      <div className="student-course-plan" style={this.props.style}>
         <div className="my-fav-teachers module-wrap">
           <h5 className="title">我的关注</h5>
           <div className="teacher-name-list list-wrap">

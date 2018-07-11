@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import _ from 'lodash'
 
 import './index.less'
 
@@ -17,26 +16,16 @@ export default class NotificationItem extends Component {
   static propTypes = {
     style: PropTypes.object,
     type: PropTypes.string,
-  };
+  }
 
   static defaultProps = {
     style: {},
     type: '',
-  };
-
-  componentDidMount() {
-
-  }
-
-  componentWillUnmount() {
-
   }
 
   render() {
-    const wrapStyle = _.assign({}, this.props.style)
-
     return (
-      <div className="notification-item" style={wrapStyle}>
+      <div className="notification-item" style={this.props.style}>
         {
           this.props.type === NotificationTypes.SUBMIT_ORDER && (
             <p className="item-detail-wrap item-submit-order">

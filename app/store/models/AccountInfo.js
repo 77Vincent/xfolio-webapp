@@ -51,7 +51,7 @@ const AccountInfo = {
     async getFollowingIds(userId) {
       const [err, body] = await to(Request.getFollowerFollowings({
         follower_id: userId,
-      }).then(res => res.text))
+      }).then(res => res.body))
       if (!err) {
         this.updateAccountInfo({
           followingIds: body.reduce((a, b) => {

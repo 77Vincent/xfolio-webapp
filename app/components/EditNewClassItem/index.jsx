@@ -14,11 +14,11 @@ class EditNewClassItem extends Component {
     classInfo: PropTypes.object.isRequired,
     onDelete: PropTypes.func.isRequired,
     form: PropTypes.object.isRequired,
-  };
+  }
 
   static defaultProps = {
     style: {},
-  };
+  }
 
   state = {
     showEditCourseModal: false,
@@ -26,12 +26,6 @@ class EditNewClassItem extends Component {
     fetchingCourses: false,
     searchCourseOptions: [],
     selectedCourses: [],
-  }
-
-  componentDidMount() {
-  }
-
-  componentWillUnmount() {
   }
 
   newClassItemElem
@@ -87,11 +81,10 @@ class EditNewClassItem extends Component {
   }
 
   render() {
-    const wrapStyle = _.assign({}, this.props.style)
     const { getFieldDecorator } = this.props.form
 
     return (
-      <div className="edit-new-class-item" style={wrapStyle} ref={(r) => { this.newClassItemElem = r }}>
+      <div className="edit-new-class-item" style={this.props.style} ref={(r) => { this.newClassItemElem = r }}>
         <div className="new-course-content-wrap">
           <div className="class-order">{this.props.classInfo.order}</div>
           <div className="content-wrap">

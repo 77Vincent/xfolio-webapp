@@ -24,7 +24,7 @@ class TagsEditor extends Component {
       message.warning('最多允许五个标签')
       return
     }
-    const newTag = _.trim(this.inputTagElem.value)
+    const newTag = this.inputTagElem.value.trim()
     if (newTag !== '') {
       this.handleClickAddTag(newTag)
       this.inputTagElem.value = ''
@@ -33,10 +33,9 @@ class TagsEditor extends Component {
 
   handleClickAddTag = (tagContent) => {
     Request.createTag(tagContent).then((res) => {
-      const tagInfo = res.body
       this.state.tagList.push({
-        id: tagInfo.id,
-        content: tagInfo.content,
+        id: res.body.id,
+        content: res.body.content,
       })
       this.setState({
         tagList: this.state.tagList,
@@ -73,15 +72,15 @@ class TagsEditor extends Component {
           </Button>
 
           {
-            _.map(this.state.tagList, tagInfo => (
+            this.state.tagList.map(each => (
               <Tag
                 closable
-                key={tagInfo.id}
+                key={each.id}
                 afterClose={() => {
-                  this.handleDeleteTag(tagInfo.id)
+                  this.handleDeleteTag(each.id)
                 }}
               >
-                {tagInfo.content}
+                {each.content}
               </Tag>
             ))
           }

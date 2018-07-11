@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import _ from 'lodash'
 import { Button, Icon, Card } from 'antd'
 import cx from 'classnames'
 import uuidv4 from 'uuid/v4'
@@ -16,11 +15,11 @@ export default class SubmitOrder extends Component {
   static propTypes = {
     style: PropTypes.object,
     location: PropTypes.object.isRequired,
-  };
+  }
 
   static defaultProps = {
     style: {},
-  };
+  }
 
   state = {
     teacherInfoInited: false,
@@ -39,10 +38,6 @@ export default class SubmitOrder extends Component {
         })
       })
     }
-  }
-
-  componentWillUnmount() {
-
   }
 
   updateCourseHoursIndex = (i) => {
@@ -80,11 +75,10 @@ export default class SubmitOrder extends Component {
   }
 
   render() {
-    const wrapStyle = _.assign({}, this.props.style)
     const { courseCount, courseHoursIndex } = this.state
 
     return (
-      <div className="submit-order-wrap" style={wrapStyle}>
+      <div className="submit-order-wrap" style={this.props.style}>
         <Card
           loading={this.state.teacherInfoInited === false}
           bordered={false}
@@ -106,7 +100,7 @@ export default class SubmitOrder extends Component {
               <p className="title">课程包</p>
               <div className="course-number-options">
                 {
-                  _.map(courseHours, (hours, index) => (
+                  courseHours.map((hours, index) => (
                     <Button
                       className={cx({
                         current: courseHoursIndex === index,
