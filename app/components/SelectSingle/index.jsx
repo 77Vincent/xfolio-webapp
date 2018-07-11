@@ -1,59 +1,56 @@
-import React, { Component } from 'react'
-import _ from 'lodash'
+import React from 'react'
+import uuidv4 from 'uuid/v4'
 import { Select } from 'antd'
 import PropTypes from 'prop-types'
 
-class SelectSingle extends Component {
-  static propTypes = {
-    default: PropTypes.object,
-    options: PropTypes.array.isRequired,
-    label: PropTypes.string,
-    isEdit: PropTypes.bool,
-    onChange: PropTypes.func.isRequired,
-    className: PropTypes.string,
-  }
+const SelectSingle = (props) => {
+  const { name } = props.default
 
-  static defaultProps = {
-    label: '',
-    default: {},
-    isEdit: false,
-    className: '',
-  }
+  return (
+    <div className={props.className}>
+      <p className="xfolio-text-title-s">{props.label}</p>
+      <p
+        style={{
+          display: !props.isEdit ? 'block' : 'none',
+        }}
+        className="xfolio-text-info-value"
+      >
+        {name}
+      </p>
+      <Select
+        style={{
+          height: '32px',
+          width: '200px',
+          display: props.isEdit ? 'block' : 'none',
+        }}
+        disabled={!props.isEdit}
+        placeholder={`请选择${props.label}`}
+        defaultValue={name}
+        onSelect={props.onChange}
+      >
+        {
+          props.options.map(v => (
+            <Select.Option value={String(v.value)} key={uuidv4()}>{v.name}</Select.Option>
+          ))
+        }
+      </Select>
+    </div>
+  )
+}
 
-  render() {
-    const { name } = this.props.default
-
-    return (
-      <div className={this.props.className}>
-        <p className="xfolio-text-title-s">{this.props.label}</p>
-        <p
-          style={{
-            display: !this.props.isEdit ? 'block' : 'none',
-          }}
-          className="xfolio-text-info-value"
-        >
-          {name}
-        </p>
-        <Select
-          style={{
-            height: '32px',
-            width: '200px',
-            display: this.props.isEdit ? 'block' : 'none',
-          }}
-          disabled={!this.props.isEdit}
-          placeholder={`请选择${this.props.label}`}
-          defaultValue={name}
-          onSelect={this.props.onChange}
-        >
-          {
-            _.map(this.props.options, (v, i) => (
-              <Select.Option value={String(v.value)} key={i}>{v.name}</Select.Option>
-            ))
-          }
-        </Select>
-      </div>
-    )
-  }
+SelectSingle.propTypes = {
+  default: PropTypes.object,
+  options: PropTypes.array.isRequired,
+  label: PropTypes.string,
+  isEdit: PropTypes.bool,
+  onChange: PropTypes.func.isRequired,
+  className: PropTypes.string,
+}
+SelectSingle.defaultProps = {
+  label: '',
+  default: {},
+  isEdit: false,
+  className: '',
 }
 
 export default SelectSingle
