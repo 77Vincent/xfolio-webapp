@@ -9,11 +9,13 @@ import './index.less'
 class SignUpInputAccountInfo extends Component {
   static propTypes = {
     form: PropTypes.object.isRequired,
+    style: PropTypes.object,
     submitButton: PropTypes.object,
     onSubmit: PropTypes.func,
   }
 
   static defaultProps = {
+    style: {},
     submitButton: null,
     onSubmit: null,
   }
@@ -58,7 +60,7 @@ class SignUpInputAccountInfo extends Component {
     const { getFieldDecorator, getFieldValue } = this.props.form
 
     return (
-      <div className="sign-up-input-account-info">
+      <div className="sign-up-input-account-info" style={this.props.style}>
         <Form
           layout="horizontal"
           hideRequiredMark
