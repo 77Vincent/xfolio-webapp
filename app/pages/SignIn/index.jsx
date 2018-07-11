@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import _ from 'lodash'
 import { Form, Input, Button } from 'antd'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -12,27 +11,14 @@ import './index.less'
 
 class SignIn extends Component {
   static propTypes = {
-    style: PropTypes.object,
     form: PropTypes.object.isRequired,
     updateAccountInfo: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
   }
 
-  static defaultProps = {
-    style: {},
-  }
-
   state = {
     submitting: false,
-  }
-
-  componentDidMount() {
-
-  }
-
-  componentWillUnmount() {
-
   }
 
   handleSubmit = (e) => {
@@ -73,11 +59,10 @@ class SignIn extends Component {
   }
 
   render() {
-    const wrapStyle = _.assign({}, this.props.style)
     const { getFieldDecorator, getFieldValue } = this.props.form
 
     return (
-      <div className="sign-in-wrap" style={wrapStyle}>
+      <div className="sign-in-wrap">
         <Form
           layout="horizontal"
           hideRequiredMark
@@ -90,7 +75,7 @@ class SignIn extends Component {
                   { required: true, message: '请输入手机号码/电子邮箱' },
                   {
                     validator: (rule, value, callback) => {
-                      const mobilephone = _.trim(getFieldValue('mobilephone'))
+                      const mobilephone = getFieldValue('mobilephone').trim()
                       Request.getUserInfo(mobilephone).then(() => {
                         callback()
                       }).catch(() => {

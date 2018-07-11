@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import _ from 'lodash'
 import { Form, Input, Button, Row, Col } from 'antd'
 
 import { SEND_CAPTCHA_COUNT_DOWN } from '../../Consts'
@@ -9,29 +8,19 @@ import './index.less'
 
 class SignUpInputAccountInfo extends Component {
   static propTypes = {
-    style: PropTypes.object,
     form: PropTypes.object.isRequired,
     submitButton: PropTypes.object,
     onSubmit: PropTypes.func,
-  };
+  }
 
   static defaultProps = {
-    style: {},
     submitButton: null,
-    onSubmit: _.noop,
-  };
+    onSubmit: null,
+  }
 
   state = {
     canSendCaptcha: true,
     sendCaptchaCountDown: SEND_CAPTCHA_COUNT_DOWN,
-  }
-
-  componentDidMount() {
-
-  }
-
-  componentWillUnmount() {
-
   }
 
   handleClickSendCaptcha = () => {
@@ -66,11 +55,10 @@ class SignUpInputAccountInfo extends Component {
   }
 
   render() {
-    const wrapStyle = _.assign({}, this.props.style)
     const { getFieldDecorator, getFieldValue } = this.props.form
 
     return (
-      <div className="sign-up-input-account-info" style={wrapStyle}>
+      <div className="sign-up-input-account-info">
         <Form
           layout="horizontal"
           hideRequiredMark
@@ -96,7 +84,7 @@ class SignUpInputAccountInfo extends Component {
                   { pattern: /^1\d{10}$/, message: '手机号为11位数字' },
                   {
                     validator: (rule, value, callback) => {
-                      const mobilephone = _.trim(getFieldValue('mobilephone'))
+                      const mobilephone = getFieldValue('mobilephone').trim()
                       Request.getUserInfo(mobilephone).then(() => {
                         callback('该手机号已注册')
                       }).catch(() => {

@@ -44,10 +44,6 @@ class App extends Component {
 
   }
 
-  componentWillUnmount() {
-
-  }
-
   render() {
     return (
       <Fragment>
@@ -155,5 +151,3 @@ const mapDispatchToProps = () => ({
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))
-
-// export default App
