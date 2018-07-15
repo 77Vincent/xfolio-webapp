@@ -13,6 +13,12 @@ import './index.less'
 
 BigCalendar.momentLocalizer(moment)
 
+const modeReference = {
+  singleDay: 'singleDay',
+  dayOfWeek: 'dayOfWeek',
+  everyday: 'everyDay',
+}
+
 class XfolioCalendar extends Component {
   static propTypes = {
     // accountInfo: PropTypes.object.isRequired,
@@ -23,19 +29,12 @@ class XfolioCalendar extends Component {
     events: [],
     newEvent: {},
     isEditing: false,
-    mode: {},
+    mode: null,
   }
 
   onModeChange = (mode) => {
     return () => {
-      Object.keys(this.state.mode).map((key) => {
-        this.state.mode[key] = false
-        return null
-      })
-      this.state.mode[mode] = true
-      this.setState({
-        mode: this.state.mode,
-      })
+      this.setState({ mode })
     }
   }
 
@@ -55,7 +54,9 @@ class XfolioCalendar extends Component {
             this.setState({ isEditing: false })
           }}
           onOk={() => {
-            events.push(newEvent)
+            if (this.state.mode === modeReference.singleDay) {
+              events.push(newEvent)
+            }
             this.setState({ events })
             this.setState({ isEditing: false })
           }}
@@ -75,15 +76,17 @@ class XfolioCalendar extends Component {
             <Row type="flex" justify="space-between">
               <Col>
                 <span
-                  className={`xfolio-text-info-value ${this.state.mode.singleDay ? 'xfolio-color-primary' : ''}`}
+                  className={
+                    `xfolio-text-info-value ${mode === modeReference.singleDay ? 'xfolio-color-primary' : ''}`
+                  }
                 >
                   仅当天
                 </span>
               </Col>
               <Col>
                 <Switch
-                  checked={mode.singleDay}
-                  onChange={this.onModeChange('singleDay')}
+                  checked={mode === modeReference.singleDay}
+                  onChange={this.onModeChange(modeReference.singleDay)}
                 />
               </Col>
             </Row>
@@ -91,15 +94,17 @@ class XfolioCalendar extends Component {
             <Row type="flex" justify="space-between">
               <Col>
                 <span
-                  className={`xfolio-text-info-value ${this.state.mode.dayOfWeek ? 'xfolio-color-primary' : ''}`}
+                  className={
+                    `xfolio-text-info-value ${mode === modeReference.dayOfWeek ? 'xfolio-color-primary' : ''}`
+                  }
                 >
                   本月每个{DAY_OF_WEEK[moment(newEvent.start).weekday()]}
                 </span>
               </Col>
               <Col>
                 <Switch
-                  checked={mode.dayOfWeek}
-                  onChange={this.onModeChange('dayOfWeek')}
+                  checked={mode === modeReference.dayOfWeek}
+                  onChange={this.onModeChange(modeReference.dayOfWeek)}
                 />
               </Col>
             </Row>
@@ -107,15 +112,17 @@ class XfolioCalendar extends Component {
             <Row type="flex" justify="space-between">
               <Col>
                 <span
-                  className={`xfolio-text-info-value ${this.state.mode.everyday ? 'xfolio-color-primary' : ''}`}
+                  className={
+                    `xfolio-text-info-value ${mode === modeReference.everyday ? 'xfolio-color-primary' : ''}`
+                  }
                 >
                   本月每一天
                 </span>
               </Col>
               <Col>
                 <Switch
-                  checked={mode.everyday}
-                  onChange={this.onModeChange('everyday')}
+                  checked={mode === modeReference.everyday}
+                  onChange={this.onModeChange(modeReference.everyday)}
                 />
               </Col>
             </Row>
@@ -157,11 +164,7 @@ class XfolioCalendar extends Component {
             }
             this.setState({ newEvent })
             this.setState({
-              mode: {
-                singleDay: true,
-                dayOfWeek: false,
-                everyday: false,
-              },
+              mode: modeReference.singleDay,
             })
             this.setState({ isEditing: true })
           }}
