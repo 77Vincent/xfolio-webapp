@@ -39,8 +39,8 @@ class XfolioCalendar extends Component {
   }
 
   render() {
-    const { events, mode } = this.state
-    let { newEvent } = this.state
+    const { mode } = this.state
+    let { events, newEvent } = this.state
     // const { accountInfo } = this.props
 
     return (
@@ -54,8 +54,22 @@ class XfolioCalendar extends Component {
             this.setState({ isEditing: false })
           }}
           onOk={() => {
-            if (this.state.mode === modeReference.singleDay) {
+            if (mode === modeReference.singleDay) {
               events.push(newEvent)
+            } else if (mode === modeReference.dayOfWeek) {
+              newEvent.is_recurring = true
+
+              const dates = []
+              for (let i = 0; i <= 4; i += 1) {
+                dates.push({
+                  id: uuidv4(),
+                  title: `可预约: ${newEvent.duration}小时`,
+                  start: moment(newEvent.start).add(7 * i, 'days').toDate(),
+                  end: moment(newEvent.end).add(7 * i, 'days').toDate(),
+                  duration: newEvent.duration,
+                })
+              }
+              events = events.concat(dates)
             }
             this.setState({ events })
             this.setState({ isEditing: false })
