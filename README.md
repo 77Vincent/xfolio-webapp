@@ -1,16 +1,16 @@
 # Client Documentation
 
 ## Development 
-#### Use remote server
+#### Use local server
 ```js
 npm i
 npm start
 ```
 
-#### Use local server
+#### Use remote server
 ```js
 npm i
-npm start-local
+npm run start-remote
 ```
 
 ## Production 
@@ -22,23 +22,5 @@ npm run build
 ## Runtime
 * node@8+
 
-## File Structure
-```
-xfolio-webapp/
-    |---app/
-        |   index.jsx    // Entry file
-        |   theme.less  // Global less variables
-        |
-        |---assets/     // Static files
-        |
-        |---base/       // Base layout for the whole app
-        |
-        |---pages/      // Components that represent pages
-        |
-        |---components/ // Components
-        |
-        |---utils/      // Functions
-```
-
-## API
+## REST API
 * [REST API](https://xfolio.cn/doc/index.html)
